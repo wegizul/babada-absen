@@ -38,12 +38,12 @@ class Login extends CI_Controller
 			if ($cek->num_rows() > 0) {
 				$data = $cek->row();
 				foreach ($cek->result() as $qad) {
-					$sess_data['id_user'] = $qad->id_user;
-					$sess_data['username'] = $qad->username;
-					$sess_data['password'] = $qad->password;
-					$sess_data['nama'] = $qad->nama;
-					$sess_data['id_karyawan'] = $qad->id_karyawan;
-					$sess_data['level'] = $qad->level;
+					$sess_data['id_user'] = $qad->usr_id;
+					$sess_data['username'] = $qad->usr_username;
+					$sess_data['password'] = $qad->usr_password;
+					$sess_data['nama'] = $qad->kry_nama;
+					$sess_data['id_karyawan'] = $qad->kry_id;
+					$sess_data['level'] = $qad->usr_role;
 					$this->session->set_userdata($sess_data);
 				}
 				$res['status'] = 1;

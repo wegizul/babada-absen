@@ -76,10 +76,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost', // Nama host
-	'username' => 'root', // Username
-	'password' => '', // Jika menggunakan password isi, jika tidak kosongkan saja
-	'database' => 'wdp_absensi_online', // Nama databasenya
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'babada-absen',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -1,10 +1,10 @@
 <?php
-class Model_History extends CI_Model
+class Model_Absensi extends CI_Model
 {
-	var $table = 'history';
-	var $column_order = array('his_id', 'his_tanggal', 'his_id_karyawan', 'his_lok_id', 'his_waktu_in', 'his_waktu_out', 'his_ket'); //set column field database for datatable orderable
-	var $column_search = array('his_id', 'his_tanggal', 'his_id_karyawan', 'his_lok_id', 'his_waktu_in', 'his_waktu_out', 'his_ket'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('his_id' => 'desc'); // default order
+	var $table = 'ba_absensi';
+	var $column_order = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable orderable
+	var $column_search = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('abs_id' => 'desc'); // default order
 
 	public function __construct()
 	{
@@ -17,16 +17,16 @@ class Model_History extends CI_Model
 		$level = $this->session->userdata('level');
 		$user = $this->session->userdata('id_karyawan');
 		$this->db->from($this->table);
-		$this->db->join('karyawan', 'kry_id = his_id_karyawan', 'left');
-		$this->db->join('lokasi', 'lok_kode = his_lok_kode', 'left');
+		$this->db->join('karyawan', 'kry_id = abs_kry_id', 'left');
+		$this->db->join('company', 'cpy_id = abs_cpy_id', 'left');
 		if ($karyawan != 'null') {
 			$this->db->where('kry_id', $karyawan);
 		}
 		if ($bln != 'null') {
-			$this->db->where('MONTH(his_tanggal)', $bln);
+			$this->db->where('MONTH(abs_tanggal)', $bln);
 		}
 		if ($level == 3) {
-			$this->db->where('his_id_karyawan', $user);
+			$this->db->where('abs_kry_id', $user);
 		}
 		$i = 0;
 
@@ -82,28 +82,28 @@ class Model_History extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function get_history()
+	public function get_absensi()
 	{
-		$this->db->from("history");
+		$this->db->from("ba_absensi");
 		$query = $this->db->get();
 
 		return $query->result();
 	}
 
-	public function cari_history($id)
+	public function cari_absensi($id)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id', $id);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function cek_history($kry, $tgl)
+	public function cek_absensi($kry, $tgl)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id_karyawan', $kry);
-		$this->db->where('his_tanggal', $tgl);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
+		$this->db->where('abs_tanggal', $tgl);
 		$query = $this->db->get();
 
 		return $query->row();

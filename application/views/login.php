@@ -51,7 +51,7 @@
 		}
 
 		.child {
-			margin-top: 10%;
+			margin-top: 2%;
 			width: 100%;
 			height: 90%;
 		}

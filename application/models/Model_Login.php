@@ -1,10 +1,10 @@
 <?php
 class Model_Login extends CI_Model
 {
-	var $table = 'login';
-	var $column_order = array('id_user', 'nama', 'username', 'level'); //set column field database for datatable orderable
-	var $column_search = array('id_user', 'nama', 'username', 'level'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('nama' => 'asc'); // default order  	private $db_sts;
+	var $table = 'ba_user';
+	var $column_order = array('usr_id', 'usr_username', 'kry_nama', 'cpy_nama', 'usr_role'); //set column field database for datatable orderable
+	var $column_search = array('usr_id', 'usr_username', 'kry_nama', 'cpy_nama', 'usr_role'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('usr_username' => 'asc'); // default order  	private $db_sts;
 
 	public function __construct()
 	{
@@ -15,6 +15,7 @@ class Model_Login extends CI_Model
 	private function _get_datatables_query()
 	{
 		$this->db->from($this->table);
+		$this->db->join('ba_karyawan', 'kry_id = usr_kry_id', 'left');
 		$this->db->where('level > 2');
 		$i = 0;
 
@@ -72,7 +73,7 @@ class Model_Login extends CI_Model
 
 	public function get_pengguna()
 	{
-		$this->db->from("login");
+		$this->db->from("ba_user");
 		$query = $this->db->get();
 
 		return $query->result();
@@ -80,7 +81,7 @@ class Model_Login extends CI_Model
 
 	public function cek_pengguna()
 	{
-		$this->db->from("login");
+		$this->db->from("ba_user");
 		$query = $this->db->get();
 
 		return $query->row();
@@ -88,8 +89,8 @@ class Model_Login extends CI_Model
 
 	public function cari_pengguna($id)
 	{
-		$this->db->from("login");
-		$this->db->where('id_user', $id);
+		$this->db->from("ba_user");
+		$this->db->where('usr_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -97,21 +98,22 @@ class Model_Login extends CI_Model
 
 	function cek($username, $password)
 	{
-		$this->db->where("username", $username);
-		$this->db->where("password", md5($password));
-		return $this->db->get("login");
+		$this->db->join('ba_karyawan', 'kry_id = usr_kry_id', 'left');
+		$this->db->where("usr_username", $username);
+		$this->db->where("usr_password", md5($password));
+		return $this->db->get("ba_user");
 	}
 
 	function cek_password($id, $password)
 	{
-		$this->db->where("password", md5($password));
-		$this->db->where("id_user", $id);
-		return $this->db->get("login");
+		$this->db->where("usr_password", md5($password));
+		$this->db->where("usr_id", $id);
+		return $this->db->get("ba_user");
 	}
 
 	public function ambil_nama($id)
 	{
-		$this->db->from("karyawan");
+		$this->db->from("ba_karyawan");
 		$this->db->where('kry_id', $id);
 		$query = $this->db->get();
 

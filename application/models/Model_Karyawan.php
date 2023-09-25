@@ -1,9 +1,9 @@
 <?php
 class Model_Karyawan extends CI_Model
 {
-	var $table = 'karyawan';
-	var $column_order = array('kry_id', 'kry_foto', 'kry_nama', 'kry_telp'); //set column field database for datatable orderable
-	var $column_search = array('kry_id', 'kry_foto', 'kry_nama', 'kry_telp'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $table = 'ba_karyawan';
+	var $column_order = array('kry_id', 'kry_foto', 'kry_nama', 'kry_notelp'); //set column field database for datatable orderable
+	var $column_search = array('kry_id', 'kry_foto', 'kry_nama', 'kry_notelp'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('kry_nama' => 'asc'); // default order  	private $db_sts;
 
 	public function __construct()
@@ -71,7 +71,7 @@ class Model_Karyawan extends CI_Model
 
 	public function get_karyawan()
 	{
-		$this->db->from("karyawan");
+		$this->db->from("ba_karyawan");
 		$query = $this->db->get();
 
 		return $query->result();
@@ -79,7 +79,7 @@ class Model_Karyawan extends CI_Model
 
 	public function cari_karyawan($id)
 	{
-		$this->db->from("karyawan");
+		$this->db->from("ba_karyawan");
 		$this->db->where('kry_id', $id);
 		$query = $this->db->get();
 

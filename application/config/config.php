@@ -380,7 +380,7 @@ $config['encryption_key'] = 'w3bd3v3l0p3rpku';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ikpibyw3bd3v';
+$config['sess_cookie_name'] = 'absensibyw3bd3v';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
 $config['sess_match_ip'] = FALSE;

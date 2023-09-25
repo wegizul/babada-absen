@@ -1,10 +1,10 @@
 <?php
-class Model_Lokasi extends CI_Model
+class Model_Company extends CI_Model
 {
-	var $table = 'lokasi';
-	var $column_order = array('lok_id', 'lok_nama', 'lat', 'lang'); //set column field database for datatable orderable
-	var $column_search = array('lok_id', 'lok_nama', 'lat', 'lang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('lok_nama' => 'asc'); // default order  	private $db_sts;
+	var $table = 'ba_company';
+	var $column_order = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable orderable
+	var $column_search = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('cpy_nama' => 'asc'); // default order  	private $db_sts;
 
 	public function __construct()
 	{
@@ -69,18 +69,18 @@ class Model_Lokasi extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function get_lokasi()
+	public function get_company()
 	{
-		$this->db->from("lokasi");
+		$this->db->from("ba_company");
 		$query = $this->db->get();
 
 		return $query->result();
 	}
 
-	public function cari_lokasi($id)
+	public function cari_company($id)
 	{
-		$this->db->from("lokasi");
-		$this->db->where('lok_id', $id);
+		$this->db->from("ba_company");
+		$this->db->where('cpy_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -88,9 +88,9 @@ class Model_Lokasi extends CI_Model
 
 	public function ambil_qrcode($id)
 	{
-		$this->db->select('lok_qr_code');
-		$this->db->from("lokasi");
-		$this->db->where('lok_id', $id);
+		$this->db->select('cpy_qr_code');
+		$this->db->from("company");
+		$this->db->where('cpy_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();
