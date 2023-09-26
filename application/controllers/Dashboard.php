@@ -11,19 +11,14 @@ class Dashboard extends CI_Controller
 			redirect(base_url("login"));
 		}
 		$this->load->model('Model_Dashboard', 'dashboard');
-		$this->load->model('Model_History', 'history');
+		$this->load->model('Model_Absensi', 'absensi');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()
 	{
-		redirect(base_url("Dashboard/tampil"));
-	}
-
-	public function tampil()
-	{
-		$jam_masuk = "06:00:00";
-		$jam_pulang = "16:00:00";
+		$jam_masuk = "05:00:00";
+		$jam_pulang = "17:00:00";
 		$jam_sekarang = date('H:i:s');
 		$user = $this->session->userdata('id_karyawan');
 		$cek = $this->dashboard->cek_absen($user, $jam_masuk);
@@ -51,10 +46,6 @@ class Dashboard extends CI_Controller
 		$this->load->view('background_atas', $ba);
 		$this->load->view('dashboard', $d);
 		$this->load->view('background_bawah');
-	}
-
-	public function ajax_list_history()
-	{
 	}
 
 	public function scan()
@@ -114,13 +105,13 @@ class Dashboard extends CI_Controller
 
 	public function simpan()
 	{
-		$id = $this->input->post('his_id');
+		$id = $this->input->post('abs_id');
 		$data = $this->input->post();
 
 		if ($id == 0) {
-			$insert = $this->history->simpan("history", $data);
+			$insert = $this->absensi->simpan("ba_absensi", $data);
 		} else {
-			$insert = $this->history->update("history", array('his_id' => $id), $data);
+			$insert = $this->absensi->update("ba_absensi", array('abs_id' => $id), $data);
 		}
 
 		$error = $this->db->error();

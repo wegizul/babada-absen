@@ -1,10 +1,10 @@
 <?php
 class Model_Dashboard extends CI_Model
 {
-	var $table = 'history';
-	var $column_order = array('his_id', 'his_tanggal', 'his_id_karyawan', 'his_lok_id', 'his_waktu_in', 'his_waktu_out', 'his_ket'); //set column field database for datatable orderable
-	var $column_search = array('his_id', 'his_tanggal', 'his_id_karyawan', 'his_lok_id', 'his_waktu_in', 'his_waktu_out', 'his_ket'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('his_id' => 'desc'); // default order
+	var $table = 'ba_absensi';
+	var $column_order = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable orderable
+	var $column_search = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('abs_id' => 'desc'); // default order
 
 	public function __construct()
 	{
@@ -15,9 +15,9 @@ class Model_Dashboard extends CI_Model
 	private function _get_datatables_query()
 	{
 		$this->db->from($this->table);
-		$this->db->join('karyawan', 'kry_id = his_id_karyawan', 'left');
-		$this->db->join('lokasi', 'lok_kode = his_lok_kode', 'left');
-		$this->db->where('his_tanggal', date('Y-m-d'));
+		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
+		$this->db->join('ba_company', 'cpy_id = abs_cpy_id', 'left');
+		$this->db->where('abs_tanggal', date('Y-m-d'));
 		$i = 0;
 
 		foreach ($this->column_search as $item) // loop column 
@@ -75,9 +75,9 @@ class Model_Dashboard extends CI_Model
 	public function get_absen_hari_ini()
 	{
 		$this->db->from($this->table);
-		$this->db->join('karyawan', 'kry_id = his_id_karyawan', 'left');
-		$this->db->join('lokasi', 'lok_kode = his_lok_kode', 'left');
-		$this->db->where('his_tanggal', date('Y-m-d'));
+		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
+		$this->db->join('ba_company', 'cpy_id = abs_cpy_id', 'left');
+		$this->db->where('abs_tanggal', date('Y-m-d'));
 		$query = $this->db->get();
 
 		return $query->result();
@@ -85,7 +85,7 @@ class Model_Dashboard extends CI_Model
 
 	public function get_karyawan()
 	{
-		$this->db->from("karyawan");
+		$this->db->from("ba_karyawan");
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -93,7 +93,7 @@ class Model_Dashboard extends CI_Model
 
 	public function ambil_karyawan($id)
 	{
-		$this->db->from("karyawan");
+		$this->db->from("ba_karyawan");
 		$this->db->where("kry_id", $id);
 		$query = $this->db->get();
 
@@ -102,9 +102,9 @@ class Model_Dashboard extends CI_Model
 
 	public function get_hadir()
 	{
-		$this->db->from("history");
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_status != 3");
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_status != 3");
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -112,9 +112,9 @@ class Model_Dashboard extends CI_Model
 
 	public function get_terlambat()
 	{
-		$this->db->from("history");
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_status", 2);
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_status", 2);
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -122,9 +122,9 @@ class Model_Dashboard extends CI_Model
 
 	public function get_tidak_hadir()
 	{
-		$this->db->from("history");
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_status > 2");
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_status > 2");
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -132,8 +132,8 @@ class Model_Dashboard extends CI_Model
 
 	public function ambil_lokasi($kode)
 	{
-		$this->db->from("lokasi");
-		$this->db->where('lok_kode', $kode);
+		$this->db->from("ba_company");
+		$this->db->where('cpy_kode', $kode);
 		$query = $this->db->get();
 
 		return $query->result();
@@ -141,11 +141,11 @@ class Model_Dashboard extends CI_Model
 
 	public function cek_absen($id, $jam_masuk)
 	{
-		$this->db->from("history");
-		$this->db->where("his_id_karyawan", $id);
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_waktu_in >", $jam_masuk);
-		$this->db->where("his_status <", 3);
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_kry_id", $id);
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_jam_masuk >", $jam_masuk);
+		$this->db->where("abs_status <", 3);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -153,11 +153,11 @@ class Model_Dashboard extends CI_Model
 
 	public function cek_jam_pulang($id, $jam_pulang)
 	{
-		$this->db->from("history");
-		$this->db->where("his_id_karyawan", $id);
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_waktu_out >=", $jam_pulang);
-		$this->db->where("his_status <", 3);
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_kry_id", $id);
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_jam_pulang >=", $jam_pulang);
+		$this->db->where("abs_status <", 3);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -165,10 +165,10 @@ class Model_Dashboard extends CI_Model
 
 	public function cek_sakit_izin($id)
 	{
-		$this->db->from("history");
-		$this->db->where("his_id_karyawan", $id);
-		$this->db->where("his_tanggal", date('Y-m-d'));
-		$this->db->where("his_status >", 2);
+		$this->db->from("ba_absensi");
+		$this->db->where("abs_kry_id", $id);
+		$this->db->where("abs_tanggal", date('Y-m-d'));
+		$this->db->where("abs_status >", 2);
 		$query = $this->db->get();
 
 		return $query->row();

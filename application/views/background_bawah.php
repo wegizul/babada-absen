@@ -3,7 +3,7 @@
 </div> <!-- content -->
 
 <footer class="footer text-right">
-  © 2023. PT. Jaringan Media Jaya. All rights reserved.
+  © 2023. PT. Digital Solution and Information Technology
 </footer>
 
 </div>

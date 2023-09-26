@@ -16,7 +16,7 @@ class Model_Login extends CI_Model
 	{
 		$this->db->from($this->table);
 		$this->db->join('ba_karyawan', 'kry_id = usr_kry_id', 'left');
-		$this->db->where('level > 2');
+		$this->db->where('usr_role > 2');
 		$i = 0;
 
 		foreach ($this->column_search as $item) // loop column 

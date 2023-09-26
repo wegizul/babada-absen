@@ -158,7 +158,7 @@
 					if (res.status == 1) {
 						toastr.success('Login Berhasil!<br/>' + res.desc);
 						setTimeout(function() {
-							document.location.href = "Dashboard/tampil";
+							document.location.href = "Dashboard";
 						}, 1000);
 					} else {
 						$(".btn").attr("disabled", false);

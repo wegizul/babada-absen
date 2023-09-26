@@ -216,9 +216,9 @@
             <li class="text-muted menu-title">Menu</li>
 
             <li class="has_sub">
-              <a href="<?= base_url('Dashboard/tampil') ?>" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></a>
+              <a href="<?= base_url('Dashboard') ?>" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></a>
             </li>
-            <?php if ($this->session->userdata('level') < 2) { ?>
+            <!-- <?php if ($this->session->userdata('level') < 2) { ?>
               <li class="has_sub">
                 <a href="<?= base_url('Karyawan/tampil') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Karyawan </span></a>
               </li>
@@ -226,9 +226,8 @@
                 <a href="<?= base_url('Pengguna/tampil') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Pengguna</span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Lokasi/tampil') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Lokasi Kantor </span></a>
+                <a href="<?= base_url('Lokasi/tampil') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Perusahaan </span></a>
               </li>
-            <?php } else if ($this->session->userdata('level') < 3) { ?>
               <li class="has_sub">
                 <a href="<?= base_url('History/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
@@ -239,7 +238,7 @@
               <li class="has_sub">
                 <a href="<?= base_url('History/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
-            <?php } ?>
+            <?php } ?> -->
             <li class="has_sub">
               <a href="#" data-target="#ubah_pass" data-toggle="modal" class="waves-effect"><i class="ti-settings"></i> <span> Setting </span></a>
             </li>

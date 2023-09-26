@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Karyawan extends CI_Controller
 {
-
 	function __construct()
 	{
 		parent::__construct();
@@ -52,7 +51,9 @@ class Karyawan extends CI_Controller
 			$row[] = $no;
 			$row[] = '<img width="100" src="' . base_url("aset/foto/karyawan/{$karyawan->kry_foto}") . '" alt="">';
 			$row[] = $karyawan->kry_nama;
-			$row[] = $karyawan->kry_telp;
+			$row[] = $karyawan->kry_jk == 1 ? "Laki-laki" : "Perempuan";
+			$row[] = $karyawan->kry_notelp;
+			$row[] = $karyawan->kry_alamat;
 			$row[] = $status;
 			$row[] = "<a href='#' onClick='ubah_karyawan(" . $karyawan->kry_id . ")' class='btn btn-default btn-sm' title='Ubah data karyawan'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_karyawan(" . $karyawan->kry_id . ")' class='btn btn-danger btn-sm' title='Hapus data karyawan'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
@@ -81,7 +82,7 @@ class Karyawan extends CI_Controller
 		$id = $this->input->post('kry_id');
 		$data = $this->input->post();
 
-		$nmfile = "karyawan_" . time();
+		$nmfile = "foto_" . $data['kry_nama'];
 
 		$config['upload_path'] = 'aset/foto/karyawan/';
 		$config['allowed_types'] = 'jpg|png|jpeg';
@@ -100,9 +101,9 @@ class Karyawan extends CI_Controller
 		}
 
 		if ($id == 0) {
-			$insert = $this->karyawan->simpan("karyawan", $data);
+			$insert = $this->karyawan->simpan("ba_karyawan", $data);
 		} else {
-			$insert = $this->karyawan->update("karyawan", array('kry_id' => $id), $data);
+			$insert = $this->karyawan->update("ba_karyawan", array('kry_id' => $id), $data);
 		}
 
 		$error = $this->db->error();
@@ -113,7 +114,7 @@ class Karyawan extends CI_Controller
 		}
 		if ($insert) {
 			$resp['status'] = 1;
-			$resp['desc'] = "Berhasil menyimpan data";
+			$resp['desc'] = "Data Karyawan berhasil disimpan";
 		} else {
 			$resp['status'] = 0;
 			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
@@ -124,10 +125,10 @@ class Karyawan extends CI_Controller
 
 	public function hapus($id)
 	{
-		$delete = $this->karyawan->delete('karyawan', 'kry_id', $id);
+		$delete = $this->karyawan->delete('ba_karyawan', 'kry_id', $id);
 		if ($delete) {
 			$resp['status'] = 1;
-			$resp['desc'] = "<i class='fa fa-check-circle text-success'></i>&nbsp;&nbsp;&nbsp; Berhasil menghapus data";
+			$resp['desc'] = "<i class='fa fa-check-circle text-success'></i>&nbsp;&nbsp;&nbsp; Data Karyawan berhasil dihapus";
 		} else {
 			$resp['status'] = 0;
 			$resp['desc'] = "<i class='fa fa-exclamation-triangle text-warning'></i>&nbsp;&nbsp;&nbsp; Data gagal dihapus";

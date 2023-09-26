@@ -17,8 +17,8 @@ class Model_Absensi extends CI_Model
 		$level = $this->session->userdata('level');
 		$user = $this->session->userdata('id_karyawan');
 		$this->db->from($this->table);
-		$this->db->join('karyawan', 'kry_id = abs_kry_id', 'left');
-		$this->db->join('company', 'cpy_id = abs_cpy_id', 'left');
+		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
+		$this->db->join('ba_company', 'cpy_id = abs_cpy_id', 'left');
 		if ($karyawan != 'null') {
 			$this->db->where('kry_id', $karyawan);
 		}

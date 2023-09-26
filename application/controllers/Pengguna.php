@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pengguna extends CI_Controller
 {
-
 	function __construct()
 	{
 		parent::__construct();
@@ -43,11 +42,11 @@ class Pengguna extends CI_Controller
 		foreach ($list as $pengguna) {
 			$no++;
 			$level = "";
-			switch ($pengguna->level) {
-				case 2:
+			switch ($pengguna->usr_role) {
+				case 1:
 					$level = "Admin";
 					break;
-				case 3:
+				case 2:
 					$level = "Karyawan";
 					break;
 			}
@@ -56,7 +55,8 @@ class Pengguna extends CI_Controller
 			$row[] = $pengguna->nama;
 			$row[] = $pengguna->username;
 			$row[] = $level;
-			$row[] = "<a href='#' onClick='ubah_pengguna(" . $pengguna->id_user . ")' class='btn btn-default' title='Ubah data Pengguna'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_pengguna(" . $pengguna->id_user . ")' class='btn btn-danger' title='Hapus data Pengguna'><i class='fa fa-trash'></i></a>";
+			$row[] = $pengguna->status == 0 ? "<span class='badge badge-danger'>nonaktif</span>" : "<span class='badge badge-success'>aktif</span>";
+			$row[] = "<a href='#' onClick='ubah_pengguna(" . $pengguna->usr_id . ")' class='btn btn-default' title='Ubah data Pengguna'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_pengguna(" . $pengguna->usr_id . ")' class='btn btn-danger' title='Hapus data Pengguna'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
 		}
 
@@ -73,33 +73,30 @@ class Pengguna extends CI_Controller
 
 	public function cari()
 	{
-		$id = $this->input->post('id_user');
+		$id = $this->input->post('usr_id');
 		$data = $this->pengguna->cari_pengguna($id);
 		echo json_encode($data);
 	}
 
 	public function simpan()
 	{
-		$id = $this->input->post('id_user');
-		$pass = $this->input->post('password');
+		$id = $this->input->post('usr_id');
+		$pass = $this->input->post('usr_password');
 		$data = $this->input->post();
-		$ambil_nama = $this->pengguna->ambil_nama($this->input->post('id_karyawan'));
-
-		$data['nama'] = $ambil_nama->kry_nama;
-		$data['status'] = 1;
 
 		if (!empty($pass)) {
-			$data['password'] = md5($pass);
+			$data['usr_password'] = md5($pass);
 		}
 
 		if ($id == 0) {
 			if (empty($pass)) {
-				$data['password'] = md5("user123");
+				$data['usr_password'] = md5("12345");
 			}
-			$insert = $this->pengguna->simpan("login", $data);
+			$insert = $this->pengguna->simpan("ba_user", $data);
 		} else {
-			$insert = $this->pengguna->update("login", array('id_user' => $id), $data);
+			$insert = $this->pengguna->update("ba_user", array('usr_id' => $id), $data);
 		}
+
 		$error = $this->db->error();
 		if (!empty($error)) {
 			$err = $error['message'];
@@ -108,7 +105,7 @@ class Pengguna extends CI_Controller
 		}
 		if ($insert) {
 			$resp['status'] = 1;
-			$resp['desc'] = "Berhasil menyimpan data";
+			$resp['desc'] = "Data Pengguna berhasil disimpan";
 		} else {
 			$resp['status'] = 0;
 			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
@@ -119,13 +116,13 @@ class Pengguna extends CI_Controller
 
 	public function hapus($id)
 	{
-		$delete = $this->pengguna->delete('login', 'id_user', $id);
+		$delete = $this->pengguna->delete('ba_user', 'usr_id', $id);
 		if ($delete) {
 			$resp['status'] = 1;
-			$resp['desc'] = "<i class='fa fa-exclamation-circle text-success'></i>&nbsp;&nbsp;&nbsp; Berhasil menghapus data";
+			$resp['desc'] = "<i class='fa fa-exclamation-circle text-success'></i>&nbsp;&nbsp;&nbsp; Data Pengguna berhasil dihapus";
 		} else {
 			$resp['status'] = 0;
-			$resp['desc'] = "<i class='fa fa-exclamation-triangle text-warning'></i>&nbsp;&nbsp;&nbsp; Administrator tidak dapat dihapus";
+			$resp['desc'] = "<i class='fa fa-exclamation-triangle text-warning'></i>&nbsp;&nbsp;&nbsp; Data gagal dihapus !!";
 		}
 		echo json_encode($resp);
 	}
