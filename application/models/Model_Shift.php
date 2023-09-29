@@ -1,10 +1,10 @@
 <?php
-class Model_Company extends CI_Model
+class Model_Shift extends CI_Model
 {
-	var $table = 'ba_company';
-	var $column_order = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable orderable
-	var $column_search = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('cpy_nama' => 'asc'); // default order  	private $db_sts;
+	var $table = 'ba_data_shift';
+	var $column_order = array('sft_id', 'sft_nama', 'sft_jam_masuk', 'sft_jam_pulang'); //set column field database for datatable orderable
+	var $column_search = array('sft_id', 'sft_nama', 'sft_jam_masuk', 'sft_jam_pulang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('sft_nama' => 'asc'); // default order  	private $db_sts;
 
 	public function __construct()
 	{
@@ -69,28 +69,18 @@ class Model_Company extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function get_company()
+	public function get_data_shift()
 	{
-		$this->db->from("ba_company");
+		$this->db->from("ba_data_shift");
 		$query = $this->db->get();
 
 		return $query->result();
 	}
 
-	public function cari_company($id)
+	public function cari_data_shift($id)
 	{
-		$this->db->from("ba_company");
-		$this->db->where('cpy_id', $id);
-		$query = $this->db->get();
-
-		return $query->row();
-	}
-
-	public function ambil_qrcode($id)
-	{
-		$this->db->select('cpy_qr_code');
-		$this->db->from("ba_company");
-		$this->db->where('cpy_id', $id);
+		$this->db->from("ba_data_shift");
+		$this->db->where('sft_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();

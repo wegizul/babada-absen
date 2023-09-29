@@ -15,18 +15,15 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Karyawan</b></h3>
+				<h3 class="m-t-0 header-title"><b>Data Shift</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>No.</th>
-							<th>Foto</th>
+							<th>Nomor</th>
 							<th>Nama</th>
-							<th>Jenis Kelamin</th>
-							<th>No. Handphone</th>
-							<th>Perusahaan</th>
-							<th>Status</th>
+							<th>Jam Masuk</th>
+							<th>Jam Pulang</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -42,65 +39,32 @@
 </div>
 
 <!-- Bootstrap modal -->
-<div class="modal fade" id="modal_tambah" role="dialog">
-	<div class="modal-dialog modal-lg">
+<div class="modal fade" id="modal_shift" role="dialog">
+	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Karyawan</h3>
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Shift</h3>
 			</div>
-			<form role="form" name="Tambah" id="frm_tambah">
+			<form role="form col-lg-6" name="Shift" id="frm_shift">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="kry_id" name="kry_id" value="">
-						<div class="col-lg-4">
+						<input type="hidden" id="sft_id" name="sft_id" value="">
+						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Nama karyawan</label>
-								<input type="text" class="form-control" name="kry_nama" id="kry_nama" required>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Jenis Kelamin</label>
-								<select class="form-control" name="kry_jk" id="kry_jk">
-									<option value="1">Laki-laki</option>
-									<option value="2">Perempuan</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>No. Handphone</label>
-								<input type="number" min="0" class="form-control" name="kry_notelp" id="kry_notelp" required>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Tanggal Masuk</label>
-								<input type="date" class="form-control" name="kry_tgl_masuk" id="kry_tgl_masuk">
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Perusahaan</label>
-								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id">
-									<option value="">Pilih Perusahaan</option>
-									<?php foreach ($company as $com) { ?>
-										<option value="<?= $com->cpy_id ?>"><?= $com->cpy_nama ?></option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Foto</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
-								<div id="preview"></div>
-								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="kry_foto" id="kry_foto">
+								<label>Nama Shift</label>
+								<input type="text" class="form-control" name="sft_nama" id="sft_nama" required>
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Alamat</label>
-								<input type="text" class="form-control" name="kry_alamat" id="kry_alamat">
+								<label>Jam Masuk</label>
+								<input type="time" class="form-control" name="sft_jam_masuk" id="sft_jam_masuk" required>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label>Jam Pulang</label>
+								<input type="time" class="form-control" name="sft_jam_pulang" id="sft_jam_pulang" required>
 							</div>
 						</div>
 					</div>
@@ -173,7 +137,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_karyawan/",
+				"url": "ajax_list_data_shift/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -191,16 +155,16 @@
 
 	function tambah() {
 		reset_form();
-		$("#kry_id").val(0);
-		$("frm_tambah").trigger("reset");
-		$('#modal_tambah').modal({
+		$("#sft_id").val(0);
+		$("frm_shift").trigger("reset");
+		$('#modal_shift').modal({
 			show: true,
 			keyboard: false,
 			backdrop: 'static'
 		});
 	}
 
-	$("#frm_tambah").submit(function(e) {
+	$("#frm_shift").submit(function(e) {
 		e.preventDefault();
 		$("#simpan").html("Menyimpan...");
 		$(".btn").attr("disabled", true);
@@ -217,7 +181,7 @@
 					toastr.success(res.desc);
 					drawTable();
 					reset_form();
-					$("#modal_tambah").modal("hide");
+					$("#modal_shift").modal("hide");
 				} else {
 					toastr.error(res.desc);
 				}
@@ -230,11 +194,12 @@
 				alert('Error get data from ajax');
 			}
 		});
+
 	});
 
-	function hapus_karyawan(id) {
+	function hapus_data_shift(id) {
 		event.preventDefault();
-		$("#kry_id").val(id);
+		$("#sft_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -244,25 +209,20 @@
 		});
 	}
 
-	function ubah_karyawan(id) {
+	function ubah_data_shift(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
 			url: "cari",
-			data: "kry_id=" + id,
+			data: "sft_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
 				obj.map((dt) => {
-					if (dt[0] == "kry_foto") {
-						$("#preview").append('<img src="<?= base_url('aset/foto/karyawan/') ?>' + dt[1] + '" width="100px">');
-						$("#kry_foto").val();
-					} else {
-						$("#" + dt[0]).val(dt[1]);
-					}
+					$("#" + dt[0]).val(dt[1]);
 				});
 				$(".inputan").attr("disabled", false);
-				$("#modal_tambah").modal({
+				$("#modal_shift").modal({
 					show: true,
 					keyboard: false,
 					backdrop: 'static'
@@ -273,13 +233,12 @@
 	}
 
 	function reset_form() {
-		$("#kry_id").val(0);
-		$("#frm_tambah")[0].reset();
-		$("#preview").html('');
+		$("#sft_id").val(0);
+		$("#frm_shift")[0].reset();
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#kry_id").val();
+		var id = $("#sft_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);

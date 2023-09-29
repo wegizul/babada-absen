@@ -57,7 +57,7 @@
 
 <body class="fixed-left">
   <div class="modal fade" id="frmKonfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="jdlKonfirm">Konfirmasi Hapus</h4>
@@ -76,7 +76,7 @@
   </div>
 
   <div class="modal fade" id="konfirmlogout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="jdlKonfirm2">Konfirmasi Logout</h4>
@@ -218,9 +218,12 @@
             <li class="has_sub">
               <a href="<?= base_url('Dashboard') ?>" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></a>
             </li>
-            <!-- <?php if ($this->session->userdata('level') < 2) { ?>
+            <?php if ($this->session->userdata('level') < 2) { ?>
               <li class="has_sub">
-                <a href="<?= base_url('Karyawan/tampil') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Karyawan </span></a>
+                <a href="<?= base_url('Shift/tampil') ?>" class="waves-effect"><i class="ti-timer"></i> <span> Data Shift </span></a>
+              </li>
+              <li class="has_sub">
+                <a href="<?= base_url('Karyawan/tampil') ?>" class="waves-effect"><i class="fas fa-users"></i> <span> Data Karyawan </span></a>
               </li>
               <li class="has_sub">
                 <a href="<?= base_url('Pengguna/tampil') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Pengguna</span></a>
@@ -238,7 +241,7 @@
               <li class="has_sub">
                 <a href="<?= base_url('History/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
-            <?php } ?> -->
+            <?php } ?>
             <li class="has_sub">
               <a href="#" data-target="#ubah_pass" data-toggle="modal" class="waves-effect"><i class="ti-settings"></i> <span> Setting </span></a>
             </li>

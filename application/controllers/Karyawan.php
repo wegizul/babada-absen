@@ -11,6 +11,7 @@ class Karyawan extends CI_Controller
 		}
 		$this->load->library('upload');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Company', 'company');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -21,7 +22,9 @@ class Karyawan extends CI_Controller
 			'judul' => "Data Karyawan",
 			'subjudul' => "Karyawan",
 		];
-		$d = [];
+		$d = [
+			'company' => $this->company->get_company(),
+		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
 		$this->load->view('karyawan', $d);
@@ -53,7 +56,7 @@ class Karyawan extends CI_Controller
 			$row[] = $karyawan->kry_nama;
 			$row[] = $karyawan->kry_jk == 1 ? "Laki-laki" : "Perempuan";
 			$row[] = $karyawan->kry_notelp;
-			$row[] = $karyawan->kry_alamat;
+			$row[] = $karyawan->cpy_nama;
 			$row[] = $status;
 			$row[] = "<a href='#' onClick='ubah_karyawan(" . $karyawan->kry_id . ")' class='btn btn-default btn-sm' title='Ubah data karyawan'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_karyawan(" . $karyawan->kry_id . ")' class='btn btn-danger btn-sm' title='Hapus data karyawan'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
