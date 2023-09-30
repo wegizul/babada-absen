@@ -15,16 +15,17 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Lokasi Patroli</b></h3>
+				<h3 class="m-t-0 header-title"><b>Data Company</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
+							<th>No</th>
 							<th>QR Code</th>
-							<th>Nama Lokasi</th>
-							<th>Latitude</th>
-							<th>Longitude</th>
+							<th>Kode</th>
+							<th>Perusahaan</th>
+							<th>Alamat</th>
+							<th>Maps</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -49,23 +50,38 @@
 			<form role="form col-lg-6" name="Tambah" id="frm_tambah">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="lok_id" name="lok_id" value="">
-						<div class="col-lg-12">
+						<input type="hidden" id="cpy_id" name="cpy_id" value="">
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Nama Lokasi</label>
-								<input type="text" class="form-control" name="lok_nama" id="lok_nama" required>
+								<label>Nama Company</label>
+								<input type="text" class="form-control" name="cpy_nama" id="cpy_nama" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jenis</label>
+								<select class="form-control" name="cpy_jenis" id="cpy_jenis">
+									<option value="1">Holding</option>
+									<option value="2">Sub Holding</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Latitude</label>
-								<input type="text" class="form-control" name="lat" id="lat" required>
+								<input type="text" class="form-control" name="cpy_lat" id="cpy_lat" required>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Longitude</label>
-								<input type="text" class="form-control" name="lang" id="lang" required>
+								<input type="text" class="form-control" name="cpy_lang" id="cpy_lang" required>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label>Alamat</label>
+								<input type="text" class="form-control" name="cpy_alamat" id="cpy_alamat" required>
 							</div>
 						</div>
 					</div>
@@ -138,7 +154,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_lokasi/",
+				"url": "ajax_list_company/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -156,7 +172,7 @@
 
 	function tambah() {
 		reset_form();
-		$("#lok_id").val(0);
+		$("#cpy_id").val(0);
 		$("frm_tambah").trigger("reset");
 		$('#modal_tambah').modal({
 			show: true,
@@ -197,9 +213,9 @@
 		});
 	});
 
-	function hapus_lokasi(id) {
+	function hapus_company(id) {
 		event.preventDefault();
-		$("#lok_id").val(id);
+		$("#cpy_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -209,12 +225,12 @@
 		});
 	}
 
-	function ubah_lokasi(id) {
+	function ubah_company(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
 			url: "cari",
-			data: "lok_id=" + id,
+			data: "cpy_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
@@ -233,13 +249,13 @@
 	}
 
 	function reset_form() {
-		$("#lok_id").val(0);
+		$("#cpy_id").val(0);
 		$("#frm_tambah")[0].reset();
 		$("#preview").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#lok_id").val();
+		var id = $("#cpy_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);
