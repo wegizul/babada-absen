@@ -220,7 +220,22 @@
             </li>
             <?php if ($this->session->userdata('level') < 2) { ?>
               <li class="has_sub">
-                <a href="<?= base_url('Shift/tampil') ?>" class="waves-effect"><i class="ti-timer"></i> <span> Data Shift </span></a>
+                <a href="#menuEcommerce" data-bs-toggle="collapse" class="menu-link">
+                  <span class="menu-icon"><i class="fas fa-server"></i></span>
+                  <span class="menu-text"> Master Data </span>
+                  <span class="menu-arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                  <li class="menu-item">
+                    <a href="<?= base_url('Divisi/tampil') ?>" class="waves-effect"><span> Data Divisi </span></a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?= base_url('Jabatan/tampil') ?>" class="waves-effect"><span> Data Jabatan </span></a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="<?= base_url('Shift/tampil') ?>" class="waves-effect"><span> Data Shift </span></a>
+                  </li>
+                </ul>
               </li>
               <li class="has_sub">
                 <a href="<?= base_url('Company/tampil') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Perusahaan </span></a>
