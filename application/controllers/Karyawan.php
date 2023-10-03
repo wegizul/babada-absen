@@ -12,6 +12,8 @@ class Karyawan extends CI_Controller
 		$this->load->library('upload');
 		$this->load->model('Model_Karyawan', 'karyawan');
 		$this->load->model('Model_Company', 'company');
+		$this->load->model('Model_Divisi', 'divisi');
+		$this->load->model('Model_Jabatan', 'jabatan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -24,6 +26,8 @@ class Karyawan extends CI_Controller
 		];
 		$d = [
 			'company' => $this->company->get_company(),
+			'divisi' => $this->divisi->get_divisi(),
+			'jabatan' => $this->jabatan->get_jabatan(),
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
@@ -84,6 +88,7 @@ class Karyawan extends CI_Controller
 	{
 		$id = $this->input->post('kry_id');
 		$data = $this->input->post();
+		$data['kry_kode'] = date('dHis');
 
 		$nmfile = "foto_" . $data['kry_nama'];
 

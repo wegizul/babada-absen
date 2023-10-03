@@ -15,6 +15,7 @@ class Pengguna extends CI_Controller
 		$this->load->library('upload');
 		$this->load->model('Model_Login', 'pengguna');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Company', 'company');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -27,6 +28,7 @@ class Pengguna extends CI_Controller
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),
+			'company' => $this->company->get_company(),
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
@@ -47,16 +49,19 @@ class Pengguna extends CI_Controller
 					$level = "Admin";
 					break;
 				case 2:
+					$level = "DIC";
+					break;
+				case 3:
 					$level = "Karyawan";
 					break;
 			}
 			$row = array();
 			$row[] = $no;
-			$row[] = $pengguna->nama;
-			$row[] = $pengguna->username;
+			$row[] = $pengguna->kry_nama;
+			$row[] = $pengguna->usr_username;
 			$row[] = $level;
-			$row[] = $pengguna->status == 0 ? "<span class='badge badge-danger'>nonaktif</span>" : "<span class='badge badge-success'>aktif</span>";
-			$row[] = "<a href='#' onClick='ubah_pengguna(" . $pengguna->usr_id . ")' class='btn btn-default' title='Ubah data Pengguna'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_pengguna(" . $pengguna->usr_id . ")' class='btn btn-danger' title='Hapus data Pengguna'><i class='fa fa-trash'></i></a>";
+			$row[] = $pengguna->usr_status == 0 ? "<span class='badge badge-danger'>nonaktif</span>" : "<span class='badge badge-success'>aktif</span>";
+			$row[] = "<a href='#' onClick='ubah_pengguna(" . $pengguna->usr_id . ")' class='btn btn-default btn-sm' title='Ubah data Pengguna'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_pengguna(" . $pengguna->usr_id . ")' class='btn btn-danger btn-sm' title='Hapus data Pengguna'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
 		}
 

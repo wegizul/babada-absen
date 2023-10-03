@@ -20,10 +20,11 @@
 				<table id="tabel-pengguna" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
+							<th>No</th>
 							<th>Nama</th>
 							<th>Username</th>
 							<th>Level</th>
+							<th>Status</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -48,11 +49,11 @@
 			<form role="form col-lg-6" name="Pengguna" id="frm_pengguna">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="log_id" name="id_user" value="">
-						<div class="col-lg-6">
+						<input type="hidden" id="usr_id" name="usr_id" value="">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Nama Pengguna</label>
-								<select class="form-control" name="id_karyawan" id="log_nama" required>
+								<select class="form-control" name="usr_kry_id" id="usr_kry_id" required>
 									<option value="">== Pilih ==</option>
 									<?php foreach ($karyawan as $p) { ?>
 										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
@@ -60,24 +61,44 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Username</label>
-								<input type="text" class="form-control" name="username" id="log_user" required>
+								<input type="text" class="form-control" name="usr_username" id="usr_username" required>
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Password</label>
-								<input type="password" class="form-control" name="password" id="log_pass" placeholder="Password" required>
+								<input type="password" class="form-control" name="usr_password" id="usr_password" placeholder="Password" required>
 							</div>
 						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Level</label>
-								<select class="form-control" name="level" id="log_level" required>
+								<select class="form-control" name="usr_role" id="usr_role" required>
 									<option value="">== Pilih ==</option>
 									<option value="3">Karyawan</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Perusahaan</label>
+								<select class="form-control" name="usr_cpy_id" id="usr_cpy_id" required>
+									<option value="">== Pilih ==</option>
+									<?php foreach ($company as $c) { ?>
+										<option value="<?= $c->cpy_id ?>"><?= $c->cpy_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Karyawan Shift ?</label>
+								<select class="form-control" name="usr_shift" id="usr_shift">
+									<option value="0">Tidak</option>
+									<option value="1">Ya</option>
 								</select>
 							</div>
 						</div>
@@ -169,7 +190,7 @@
 
 	function log_tambah() {
 		reset_form();
-		$("#log_id").val(0);
+		$("#usr_id").val(0);
 		$("frm_pengguna").trigger("reset");
 		$('#modal_pengguna').modal({
 			show: true,
@@ -208,12 +229,11 @@
 				alert('Error get data from ajax');
 			}
 		});
-
 	});
 
 	function hapus_pengguna(id) {
 		event.preventDefault();
-		$("#log_id").val(id);
+		$("#usr_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -228,13 +248,13 @@
 		$.ajax({
 			type: "POST",
 			url: "cari",
-			data: "id_user=" + id,
+			data: "usr_id=" + id,
 			dataType: "json",
 			success: function(data) {
-				$("#log_id").val(data.id_user);
-				$("#log_nama").val(data.id_personil);
-				$("#log_user").val(data.username);
-				$("#log_level").val(data.level);
+				$("#usr_id").val(data.usr_id);
+				$("#usr_nama").val(data.usr_nama);
+				$("#usr_username").val(data.usr_username);
+				$("#usr_role").val(data.usr_role);
 				$(".inputan").attr("disabled", false);
 				$("#modal_pengguna").modal({
 					show: true,
@@ -247,7 +267,7 @@
 	}
 
 	function reset_form() {
-		$("#log_id").val(0);
+		$("#usr_id").val(0);
 		$("#frm_pengguna")[0].reset();
 	}
 
@@ -267,7 +287,7 @@
 	});
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#log_id").val();
+		var id = $("#usr_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);

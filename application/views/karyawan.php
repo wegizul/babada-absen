@@ -81,8 +81,26 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
+								<label>Foto</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
+								<div id="preview"></div>
+								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="kry_foto" id="kry_foto">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Divisi</label>
+								<select class="form-control" name="kry_dvi_id" id="kry_dvi_id" required>
+									<option value="">Pilih Divisi</option>
+									<?php foreach ($divisi as $dvi) { ?>
+										<option value="<?= $dvi->dvi_id ?>"><?= $dvi->dvi_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
 								<label>Perusahaan</label>
-								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id">
+								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id" required>
 									<option value="">Pilih Perusahaan</option>
 									<?php foreach ($company as $com) { ?>
 										<option value="<?= $com->cpy_id ?>"><?= $com->cpy_nama ?></option>
@@ -90,11 +108,15 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Foto</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
-								<div id="preview"></div>
-								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="kry_foto" id="kry_foto">
+								<label>Jabatan</label>
+								<select class="form-control" name="kry_jab_id" id="kry_jab_id" required>
+									<option value="">Pilih Jabatan</option>
+									<?php foreach ($jabatan as $jab) { ?>
+										<option value="<?= $jab->jab_id ?>"><?= $jab->jab_nama ?></option>
+									<?php } ?>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-12">
