@@ -20,7 +20,7 @@
 				<table id="tabel-pengguna" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>No</th>
+							<th width="5%">No</th>
 							<th>Nama</th>
 							<th>Username</th>
 							<th>Level</th>

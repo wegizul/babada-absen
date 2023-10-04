@@ -56,13 +56,14 @@ $bulan = [
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
+							<th width="5%">No</th>
 							<th>Nama Karyawan</th>
 							<th>Bulan</th>
 							<th>Hadir</th>
 							<th>Terlambat</th>
 							<th>Sakit</th>
 							<th>Izin</th>
+							<th>Denda</th>
 						</tr>
 					</thead>
 					<tbody>

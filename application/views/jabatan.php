@@ -20,7 +20,7 @@
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>No.</th>
+							<th width="5%">No</th>
 							<th>Nama Jabatan</th>
 							<th>Level Jabatan</th>
 							<th>Aksi</th>

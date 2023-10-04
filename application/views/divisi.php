@@ -20,7 +20,7 @@
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
+							<th width="5%">No</th>
 							<th>Nama Divisi</th>
 							<th>Aksi</th>
 						</tr>

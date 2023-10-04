@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller
 
 	public function index()
 	{
-		$jam_masuk = "05:00:00";
+		$jam_masuk = "00:00:00";
 		$jam_pulang = "17:00:00";
 		$jam_sekarang = date('H:i:s');
 		$user = $this->session->userdata('id_karyawan');
@@ -65,7 +65,7 @@ class Dashboard extends CI_Controller
 		$ambil = $this->dashboard->ambil_lokasi($kode_lokasi);
 		$waktu_in = date('H:i:s');
 
-		$batas_masuk = "08:10:00";
+		$batas_masuk = "08:00:00";
 		$status = 0;
 		if (strtotime($waktu_in) < strtotime($batas_masuk)) {
 			$status = 1;

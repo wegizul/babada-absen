@@ -20,8 +20,8 @@
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
-							<th>Nama</th>
+							<th width="5%">No</th>
+							<th>Nama Shift</th>
 							<th>Jam Masuk</th>
 							<th>Jam Pulang</th>
 							<th>Aksi</th>

@@ -1,10 +1,10 @@
 <?php
 class Model_Rekap extends CI_Model
 {
-	var $table = 'karyawan';
-	var $column_order = array('kry_id', 'kry_foto', 'kry_nama', 'kry_telp'); //set column field database for datatable orderable
-	var $column_search = array('kry_id', 'kry_foto', 'kry_nama', 'kry_telp'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('kry_nama' => 'asc'); // default order  	private $db_sts;
+	var $table = 'ba_karyawan';
+	var $column_order = array('kry_id', 'kry_nama', 'abs_tanggal', 'abs_status'); //set column field database for datatable orderable
+	var $column_search = array('kry_id', 'kry_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('kry_nama' => 'asc', 'abs_tanggal' => 'desc'); // default order  	private $db_sts;
 
 	public function __construct()
 	{
@@ -15,12 +15,12 @@ class Model_Rekap extends CI_Model
 	private function _get_datatables_query($kry, $bln)
 	{
 		$this->db->from($this->table);
-		$this->db->join('history', 'his_id_karyawan = kry_id', 'left');
+		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
-			$this->db->where('his_id_karyawan', $kry);
+			$this->db->where('abs_kry_id', $kry);
 		}
 		if ($bln != 'null') {
-			$this->db->where('MONTH(his_tanggal)', $bln);
+			$this->db->where('MONTH(abs_tanggal)', $bln);
 		}
 		$this->db->group_by('kry_id');
 		$i = 0;
@@ -79,52 +79,55 @@ class Model_Rekap extends CI_Model
 
 	public function get_hadir($kry, $bln)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id_karyawan', $kry);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
 		}
-		$this->db->where('MONTH(his_tanggal)', $bln);
-		$this->db->where('his_status < 3');
+		$this->db->where('MONTH(abs_tanggal)', $bln);
+		$this->db->where('abs_status < 3');
 		$query = $this->db->get();
 
 		return $query->num_rows();
 	}
+
 	public function get_terlambat($kry, $bln)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id_karyawan', $kry);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
 		}
-		$this->db->where('MONTH(his_tanggal)', $bln);
-		$this->db->where('his_status', 2);
+		$this->db->where('MONTH(abs_tanggal)', $bln);
+		$this->db->where('abs_status', 2);
 		$query = $this->db->get();
 
 		return $query->num_rows();
 	}
+
 	public function get_sakit($kry, $bln)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id_karyawan', $kry);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
 		}
-		$this->db->where('MONTH(his_tanggal)', $bln);
-		$this->db->where('his_status', 3);
+		$this->db->where('MONTH(abs_tanggal)', $bln);
+		$this->db->where('abs_status', 3);
 		$query = $this->db->get();
 
 		return $query->num_rows();
 	}
+
 	public function get_izin($kry, $bln)
 	{
-		$this->db->from("history");
-		$this->db->where('his_id_karyawan', $kry);
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
 		}
-		$this->db->where('MONTH(his_tanggal)', $bln);
-		$this->db->where('his_status', 4);
+		$this->db->where('MONTH(abs_tanggal)', $bln);
+		$this->db->where('abs_status', 4);
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -132,12 +135,12 @@ class Model_Rekap extends CI_Model
 
 	public function get_bulan($bln)
 	{
-		$this->db->select("MONTH(his_tanggal) as bulan");
-		$this->db->from("history");
+		$this->db->select("MONTH(abs_tanggal) as bulan");
+		$this->db->from("ba_absensi");
 		if ($bln == 'null') {
 			$bln = date('n');
 		}
-		$this->db->where('MONTH(his_tanggal)', $bln);
+		$this->db->where('MONTH(abs_tanggal)', $bln);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -145,13 +148,13 @@ class Model_Rekap extends CI_Model
 
 	public function ambil_rekap($kry, $bln)
 	{
-		$this->db->from("karyawan");
-		$this->db->join('history', 'his_id_karyawan = kry_id', 'left');
+		$this->db->from("ba_karyawan");
+		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
-			$this->db->where('his_id_karyawan', $kry);
+			$this->db->where('abs_kry_id', $kry);
 		}
 		if ($bln != 'null') {
-			$this->db->where('MONTH(his_tanggal)', $bln);
+			$this->db->where('MONTH(abs_tanggal)', $bln);
 		}
 		$this->db->group_by('kry_id');
 		$query = $this->db->get();

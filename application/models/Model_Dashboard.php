@@ -94,6 +94,9 @@ class Model_Dashboard extends CI_Model
 	public function ambil_karyawan($id)
 	{
 		$this->db->from("ba_karyawan");
+		$this->db->join('ba_company', 'cpy_id = kry_cpy_id', 'left');
+		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
+		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
 		$this->db->where("kry_id", $id);
 		$query = $this->db->get();
 

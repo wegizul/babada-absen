@@ -42,7 +42,7 @@ if ($this->session->userdata('level') < 3) { ?>
 						<table class="table table-striped table-bordered" width="100%">
 							<thead>
 								<tr>
-									<th>No</th>
+									<th width="5%">No</th>
 									<th>Tanggal</th>
 									<th>Nama Karyawan</th>
 									<th>Jam Masuk</th>
@@ -70,24 +70,16 @@ if ($this->session->userdata('level') < 3) { ?>
 											case 4:
 												$status = "<span class='badge badge-info'>Izin</span>";
 												break;
-										}
-										$lokasi = "";
-										if ($dt->his_lok_kode == "" && $dt->his_status > 2) {
-											$lokasi = "";
-										} else if ($dt->his_lok_kode == "") {
-											$lokasi = "Di Lapangan";
-										} else {
-											$lokasi = $dt->lok_nama;
 										} ?>
 										<tr>
 											<td><?= $no++ ?></td>
-											<td><?= $dt->his_tanggal ?></td>
+											<td><?= $dt->abs_tanggal ?></td>
 											<td><?= $dt->kry_nama ?></td>
-											<td><?= $dt->his_waktu_in ?></td>
-											<td><?= $dt->his_waktu_out ?></td>
-											<td><?= $lokasi ?></td>
+											<td><?= $dt->abs_jam_masuk ?></td>
+											<td><?= $dt->abs_jam_pulang ?></td>
+											<td><?= $dt->cpy_nama ?></td>
 											<td><?= $status ?></td>
-											<td><?= $dt->his_ket ?></td>
+											<td><?= $dt->abs_ket ?></td>
 										</tr>
 									<?php }
 								} else { ?>
@@ -116,21 +108,6 @@ if ($this->session->userdata('level') < 3) { ?>
 								<img src="<?= base_url('aset/assets/images/qr-scan.png') ?>" width="100px" style="margin-bottom: 20px">
 								<div class="form-group">
 									<a href="<?= base_url('Dashboard/scan') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
-								</div>
-							</div>
-							<div class="col-lg-3">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-12">
-					<div class="card-box">
-						<div class="row">
-							<div class="col-lg-3">
-							</div>
-							<div class="col-lg-6 text-center">
-								<div class="form-group">
-									<a href="javascript:absen_lapangan()" class="btn btn-success form-control"><i class="fa-solid fa-map-pin"></i> Absen Bekerja di Lapangan</a>
 								</div>
 							</div>
 							<div class="col-lg-3">
@@ -246,7 +223,23 @@ if ($this->session->userdata('level') < 3) { ?>
 										</tr>
 										<tr>
 											<th>Ho. Handphone</th>
-											<td><?= $karyawan->kry_telp ?></td>
+											<td><?= $karyawan->kry_notelp ?></td>
+										</tr>
+										<tr>
+											<th>Alamat</th>
+											<td><?= $karyawan->kry_alamat ?></td>
+										</tr>
+										<tr>
+											<th>Company</th>
+											<td><?= $karyawan->cpy_nama ?></td>
+										</tr>
+										<tr>
+											<th>Divisi</th>
+											<td><?= $karyawan->dvi_nama ?></td>
+										</tr>
+										<tr>
+											<th>Jabatan</th>
+											<td><?= $karyawan->jab_nama ?></td>
 										</tr>
 									</table>
 								</div>
@@ -262,46 +255,6 @@ if ($this->session->userdata('level') < 3) { ?>
 	</div>
 <?php } ?>
 
-<div class="modal fade" id="modal_lapangan" role="dialog">
-	<div class="modal-dialog modal-md">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Absen Lapangan</h3>
-			</div>
-			<form role="form col-lg-6" name="Lapangan" id="frm_lapangan">
-				<div class="modal-body form">
-					<div class="row">
-						<input type="hidden" name="his_id_karyawan" value="<?= $id_karyawan ?>">
-						<input type="hidden" name="his_tanggal" value="<?= date('Y-m-d') ?>">
-						<input type="hidden" name="his_waktu_in" value="<?= date('H:i:s') ?>">
-						<input type="hidden" name="his_status" value="1">
-						<input type="hidden" name="his_posisi" value="Bekerja di Lapangan">
-						<input type="hidden" id="his_lat" name="his_lat" value="">
-						<input type="hidden" id="his_long" name="his_long" value="">
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label>Sesuaikan Titik Lokasi</label>
-								<a class="btn btn-default" id="sesuaikan_titik" href="#" onClick="titik()"><i class="fa fa-map-pin"></i> Klik untuk Sesuaikan Titik</a>
-								<label class="text-success" id="titik_akurat" style="display:none;">(Titik lokasi sudah sesuai)</label>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label>Keterangan</label>
-								<input type="text" class="form-control" name="his_ket" id="his_ket">
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" id="simpan" class="btn btn-success"><i class="fas fa-check-circle"></i> Simpan</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()"><i class="fas fa-times-circle"></i> Batal</button>
-				</div>
-			</form>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
 <div class="modal fade" id="modal_tambah" role="dialog">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
@@ -311,12 +264,12 @@ if ($this->session->userdata('level') < 3) { ?>
 			<form role="form col-lg-6" name="Tambah" id="frm_tambah">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" name="his_id_karyawan" value="<?= $id_karyawan ?>">
-						<input type="hidden" name="his_tanggal" value="<?= date('Y-m-d') ?>">
+						<input type="hidden" name="abs_kry_id" value="<?= $id_karyawan ?>">
+						<input type="hidden" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Status</label>
-								<select class="form-control" name="his_status" id="his_status">
+								<select class="form-control" name="abs_status" id="abs_status">
 									<option value="3">Sakit</option>
 									<option value="4">Izin</option>
 								</select>
@@ -325,7 +278,7 @@ if ($this->session->userdata('level') < 3) { ?>
 						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Keterangan</label>
-								<input type="text" class="form-control" name="his_ket" id="his_ket" required>
+								<input type="text" class="form-control" name="abs_ket" id="abs_ket" required>
 							</div>
 						</div>
 					</div>
@@ -387,16 +340,6 @@ if ($this->session->userdata('level') < 3) { ?>
 
 	}
 
-	function absen_lapangan() {
-		reset_form();
-		$("frm_lapangan").trigger("reset");
-		$('#modal_lapangan').modal({
-			show: true,
-			keyboard: false,
-			backdrop: 'static'
-		});
-	}
-
 	function absen_sakit() {
 		reset_form();
 		$("frm_tambah").trigger("reset");
@@ -409,47 +352,7 @@ if ($this->session->userdata('level') < 3) { ?>
 
 	function reset_form() {
 		$("#frm_tambah")[0].reset();
-		$("#frm_lapangan")[0].reset();
 	}
-
-	$("#frm_lapangan").submit(function(e) {
-		e.preventDefault();
-		$("#simpan").html("Menyimpan...");
-		$(".btn").attr("disabled", true);
-		$.ajax({
-			type: "POST",
-			url: "simpan",
-			data: new FormData(this),
-			processData: false,
-			contentType: false,
-			success: function(d) {
-				var res = JSON.parse(d);
-				var msg = "";
-				if (res.status == 1) {
-					Swal.fire(
-						'Sukses',
-						res.desc,
-						'success'
-					).then((result) => {
-						if (!result.isConfirmed) {
-							reset_form();
-							$("#modal_lapangan").modal("hide");
-							window.location.href = "<?= base_url('Dashboard/tampil') ?>";
-						} else {}
-					})
-				} else {
-					toastr.error(res.desc);
-				}
-				$("#simpan").html("Simpan");
-				$(".btn").attr("disabled", false);
-			},
-			error: function(jqXHR, namaStatus, errorThrown) {
-				$("#simpan").html("Simpan");
-				$(".btn").attr("disabled", false);
-				alert('Error get data from ajax');
-			}
-		});
-	});
 
 	$("#frm_tambah").submit(function(e) {
 		e.preventDefault();
@@ -489,36 +392,6 @@ if ($this->session->userdata('level') < 3) { ?>
 			}
 		});
 	});
-
-	function titik() {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			tampilLokasi(position);
-			console.log(position);
-		}, function(e) {
-			alert('Geolocation Tidak Mendukung Pada Perangkat Anda');
-		}, {
-			enableHighAccuracy: true
-		});
-		$('#sesuaikan_titik').hide();
-		$('#titik_akurat').show();
-	}
-
-	$(document).ready(function() {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			tampilLokasi(position);
-		}, function(e) {
-			alert('Geolocation Tidak Mendukung Pada Browser Anda');
-		}, {
-			enableHighAccuracy: true
-		});
-	});
-
-	function tampilLokasi(posisi) {
-		var latitude = posisi.coords.latitude;
-		var longitude = posisi.coords.longitude;
-		$('#his_lat').val(latitude);
-		$('#his_long').val(longitude);
-	}
 
 	$(document).ready(function() {
 		drawTable();

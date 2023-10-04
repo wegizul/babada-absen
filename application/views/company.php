@@ -20,7 +20,7 @@
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>No</th>
+							<th width="5%">No</th>
 							<th>QR Code</th>
 							<th>Kode</th>
 							<th>Perusahaan</th>
@@ -45,7 +45,7 @@
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Tambah Data Lokasi</h3>
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Company</h3>
 			</div>
 			<form role="form col-lg-6" name="Tambah" id="frm_tambah">
 				<div class="modal-body form">

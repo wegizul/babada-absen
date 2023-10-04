@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class History extends CI_Controller
+class Absensi extends CI_Controller
 {
 
 	function __construct()
@@ -11,16 +11,16 @@ class History extends CI_Controller
 			redirect(base_url("login"));
 		}
 		$this->load->library('upload');
-		$this->load->model('Model_History', 'history');
+		$this->load->model('Model_Absensi', 'absensi');
 		$this->load->model('Model_Karyawan', 'karyawan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function tampil()
 	{
-		$this->session->set_userdata("judul", "Data History");
+		$this->session->set_userdata("judul", "Data Absensi");
 		$ba = [
-			'judul' => "Data History",
+			'judul' => "Data Absensi",
 			'subjudul' => "History Absensi",
 		];
 		$d = [
@@ -28,19 +28,19 @@ class History extends CI_Controller
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
-		$this->load->view('history', $d);
+		$this->load->view('absensi', $d);
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_history($karyawan, $bln)
+	public function ajax_list_absensi($karyawan, $bln)
 	{
-		$list = $this->history->get_datatables($karyawan, $bln);
+		$list = $this->absensi->get_datatables($karyawan, $bln);
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $history) {
+		foreach ($list as $absensi) {
 			$no++;
 			$status = "";
-			switch ($history->his_status) {
+			switch ($absensi->abs_status) {
 				case 1:
 					$status = "<span class='badge badge-success'>Hadir</span>";
 					break;
@@ -54,32 +54,25 @@ class History extends CI_Controller
 					$status = "<span class='badge badge-info'>Izin</span>";
 					break;
 			}
-			$lokasi = "";
-			if ($history->his_lok_kode == "" && $history->his_status > 2) {
-				$lokasi = "";
-			} else if ($history->his_lok_kode == "") {
-				$lokasi = "Di Lapangan";
-			} else {
-				$lokasi = $history->lok_nama;
-			}
+
 			$row = array();
 			$row[] = $no;
-			$row[] = $history->his_tanggal;
-			$row[] = $history->kry_nama;
-			$row[] = $history->his_waktu_in;
-			$row[] = $history->his_waktu_out;
-			$row[] = $lokasi;
+			$row[] = $absensi->abs_tanggal;
+			$row[] = $absensi->kry_nama;
+			$row[] = $absensi->abs_jam_masuk;
+			$row[] = $absensi->abs_jam_pulang;
+			$row[] = $absensi->cpy_nama;
 			$row[] = $status;
-			$row[] = $history->his_ket;
+			$row[] = $absensi->abs_ket;
 			$data[] = $row;
 		}
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->history->count_all($karyawan, $bln),
-			"recordsFiltered" => $this->history->count_filtered($karyawan, $bln),
+			"recordsTotal" => $this->absensi->count_all($karyawan, $bln),
+			"recordsFiltered" => $this->absensi->count_filtered($karyawan, $bln),
 			"data" => $data,
-			"query" => $this->history->getlastquery(),
+			"query" => $this->absensi->getlastquery(),
 		);
 		//output to json format
 		echo json_encode($output);
@@ -87,31 +80,31 @@ class History extends CI_Controller
 
 	public function cari()
 	{
-		$id = $this->input->post('his_id');
-		$data = $this->history->cari_history($id);
+		$id = $this->input->post('abs_id');
+		$data = $this->absensi->cari_absensi($id);
 		echo json_encode($data);
 	}
 
 	public function simpan()
 	{
-		$id = $this->input->post('his_id');
+		$id = $this->input->post('abs_id');
 		$data = $this->input->post();
-		$waktu_absen = $this->input->post('his_waktu_in');
+		$waktu_absen = $this->input->post('abs_jam_masuk');
 
-		$cek_history = $this->history->cek_history($data['his_id_karyawan'], $data['his_tanggal']);
+		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
 
 		$absen_pulang = [
-			'his_waktu_out' => $waktu_absen,
+			'abs_jam_pulang' => $waktu_absen,
 		];
 		$where = [
-			'his_id_karyawan' => $data['his_id_karyawan'],
-			'his_tanggal' => $data['his_tanggal'],
+			'abs_kry_id' => $data['abs_kry_id'],
+			'abs_tanggal' => $data['abs_tanggal'],
 		];
 
-		if (!$cek_history) {
-			$insert = $this->history->simpan("history", $data);
+		if (!$cek_absensi) {
+			$insert = $this->absensi->simpan("ba_absensi", $data);
 		} else {
-			$insert = $this->history->update("history", $where, $absen_pulang);
+			$insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
 		}
 
 		$error = $this->db->error();
@@ -133,7 +126,7 @@ class History extends CI_Controller
 
 	public function hapus($id)
 	{
-		$delete = $this->history->delete('history', 'his_id', $id);
+		$delete = $this->absensi->delete('ba_absensi', 'abs_id', $id);
 		if ($delete) {
 			$resp['status'] = 1;
 			$resp['desc'] = "<i class='fa fa-check-circle text-success'></i>&nbsp;&nbsp;&nbsp; Berhasil menghapus data";

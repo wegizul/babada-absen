@@ -53,7 +53,7 @@ $bulan = [
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th>Nomor</th>
+							<th width="5%">No</th>
 							<th>Tanggal</th>
 							<th>Nama Karyawan</th>
 							<th>Jam Masuk</th>
@@ -137,7 +137,7 @@ $bulan = [
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_history/" + karyawan + '/' + bulan,
+				"url": "ajax_list_absensi/" + karyawan + '/' + bulan,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
