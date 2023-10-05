@@ -102,7 +102,7 @@ class Model_Rekap extends CI_Model
 		$this->db->where('abs_status', 2);
 		$query = $this->db->get();
 
-		return $query->num_rows();
+		return $query->row();
 	}
 
 	public function get_sakit($kry, $bln)

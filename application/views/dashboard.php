@@ -57,7 +57,7 @@ if ($this->session->userdata('level') < 3) { ?>
 								if ($data) {
 									foreach ($data as $dt) {
 										$status = "";
-										switch ($dt->his_status) {
+										switch ($dt->abs_status) {
 											case 1:
 												$status = "<span class='badge badge-success'>Hadir</span>";
 												break;

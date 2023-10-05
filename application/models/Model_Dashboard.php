@@ -16,7 +16,7 @@ class Model_Dashboard extends CI_Model
 	{
 		$this->db->from($this->table);
 		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
-		$this->db->join('ba_company', 'cpy_id = abs_cpy_id', 'left');
+		$this->db->join('ba_company', 'cpy_kode = abs_cpy_kode', 'left');
 		$this->db->where('abs_tanggal', date('Y-m-d'));
 		$i = 0;
 
@@ -76,7 +76,7 @@ class Model_Dashboard extends CI_Model
 	{
 		$this->db->from($this->table);
 		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
-		$this->db->join('ba_company', 'cpy_id = abs_cpy_id', 'left');
+		$this->db->join('ba_company', 'cpy_kode = abs_cpy_kode', 'left');
 		$this->db->where('abs_tanggal', date('Y-m-d'));
 		$query = $this->db->get();
 

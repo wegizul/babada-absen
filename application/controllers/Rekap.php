@@ -44,7 +44,7 @@ class Rekap extends CI_Controller
 			$terlambat = $this->rekap->get_terlambat($rekap->kry_id, $bln);
 			$sakit = $this->rekap->get_sakit($rekap->kry_id, $bln);
 			$izin = $this->rekap->get_izin($rekap->kry_id, $bln);
-			$denda = $terlambat * 1000;
+			$denda = floor($terlambat->abs_terlambat / 60) * 1000;
 
 			$bulan = date('n');
 			$ambil_bulan = $this->rekap->get_bulan($bln);
@@ -55,10 +55,10 @@ class Rekap extends CI_Controller
 			$row[] = $rekap->kry_nama;
 			$row[] = $this->rekap->bulan($bulan);
 			$row[] = $hadir;
-			$row[] = $terlambat . ' Menit';
+			$row[] = number_format(floor($terlambat->abs_terlambat / 60), 0) . ' Menit';
 			$row[] = $sakit;
 			$row[] = $izin;
-			$row[] = 'Rp. ' . $denda;
+			$row[] = 'Rp. ' . number_format($denda, 0);
 			$data[] = $row;
 		}
 

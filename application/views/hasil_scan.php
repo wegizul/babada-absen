@@ -94,7 +94,7 @@
                         'success'
                     ).then((result) => {
                         if (!result.isConfirmed) {
-                            window.location.href = "<?= base_url('Dashboard/tampil') ?>";
+                            window.location.href = "<?= base_url('Dashboard') ?>";
                         } else {}
                     });
                 } else {
