@@ -9,9 +9,9 @@
           <!-- <input type="hidden" id="lat" value="">
           <input type="hidden" id="long" value=""> -->
           <form method="POST">
-            <input type="hidden" id="id_karyawan" name="his_id_karyawan" value="<?= $this->session->userdata('id_karyawan') ?>">
-            <input type="hidden" id="waktu_in" name="his_waktu_in" value="<?= date('H:i:s') ?>">
-            <input type="hidden" id="tanggal" name="his_tanggal" value="<?= date('Y-m-d') ?>">
+            <input type="hidden" id="id_karyawan" name="abs_kry_id" value="<?= $this->session->userdata('id_karyawan') ?>">
+            <input type="hidden" id="waktu_in" name="abs_jam_masuk" value="<?= date('H:i:s') ?>">
+            <input type="hidden" id="tanggal" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
           </form>
           <canvas style="width: 80%;"></canvas>
           <hr>
@@ -80,11 +80,11 @@
 
       $.ajax({
         type: "POST",
-        url: "<?= base_url('History/simpan/') ?>",
+        url: "<?= base_url('Absensi/simpan/') ?>",
         data: {
-          his_id_karyawan: id_karyawan,
-          his_waktu_in: waktu_in,
-          his_tanggal: tanggal
+          abs_kry_id: id_karyawan,
+          abs_jam_masuk: waktu_in,
+          abs_tanggal: tanggal
         },
         dataType: "json",
         success: function(data) {

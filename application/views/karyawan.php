@@ -54,6 +54,18 @@
 						<input type="hidden" id="kry_id" name="kry_id" value="">
 						<div class="col-lg-4">
 							<div class="form-group">
+								<label>Kode karyawan</label>
+								<input type="number" min="0" class="form-control" name="kry_kode" id="kry_kode" required>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Nomor KTP</label>
+								<input type="number" min="0" class="form-control" name="kry_no_ktp" id="kry_no_ktp" required>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
 								<label>Nama karyawan</label>
 								<input type="text" class="form-control" name="kry_nama" id="kry_nama" required>
 							</div>
@@ -75,15 +87,66 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
+								<label>Alamat</label>
+								<input type="text" class="form-control" name="kry_alamat" id="kry_alamat" required>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Tempat Lahir</label>
+								<input type="text" class="form-control" name="kry_tpt_lahir" id="kry_tpt_lahir">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Tanggal Lahir</label>
+								<input type="date" class="form-control" name="kry_tgl_lahir" id="kry_tgl_lahir">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Golongan Darah</label>
+								<select class="form-control" name="kry_gol_darah" id="kry_gol_darah">
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="AB">AB</option>
+									<option value="O">O</option>
+									<option value="Tidak Tahu">Tidak Tahu</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Riwayat Penyakit</label>
+								<input type="text" class="form-control" name="kry_penyakit" id="kry_penyakit">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Status Pernikahan</label>
+								<select class="form-control" name="kry_status_nikah" id="kry_status_nikah">
+									<option value="Belum Menikah">Belum Menikah</option>
+									<option value="Menikah">Menikah</option>
+									<option value="Janda">Janda</option>
+									<option value="Duda">Duda</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
 								<label>Tanggal Masuk</label>
 								<input type="date" class="form-control" name="kry_tgl_masuk" id="kry_tgl_masuk">
 							</div>
 						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label>Foto</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
-								<div id="preview"></div>
-								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="kry_foto" id="kry_foto">
+								<label>Perusahaan</label>
+								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id" required>
+									<option value="">Pilih Perusahaan</option>
+									<?php foreach ($company as $com) { ?>
+										<option value="<?= $com->cpy_id ?>"><?= $com->cpy_nama ?></option>
+									<?php } ?>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-4">
@@ -97,18 +160,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label>Perusahaan</label>
-								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id" required>
-									<option value="">Pilih Perusahaan</option>
-									<?php foreach ($company as $com) { ?>
-										<option value="<?= $com->cpy_id ?>"><?= $com->cpy_nama ?></option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-6">
+						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Jabatan</label>
 								<select class="form-control" name="kry_jab_id" id="kry_jab_id" required>
@@ -119,10 +171,17 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-12">
+						<div class="col-lg-4">
 							<div class="form-group">
-								<label>Alamat</label>
-								<input type="text" class="form-control" name="kry_alamat" id="kry_alamat">
+								<label>Foto</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
+								<div id="preview"></div>
+								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="kry_foto" id="kry_foto">
+							</div>
+						</div>
+						<div class="col-lg-8">
+							<div class="form-group">
+								<label>Link Map Rumah</label>
+								<input type="text" class="form-control" name="kry_map_rumah" id="kry_map_rumah">
 							</div>
 						</div>
 					</div>

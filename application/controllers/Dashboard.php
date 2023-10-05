@@ -70,6 +70,7 @@ class Dashboard extends CI_Controller
 		if (strtotime($waktu_in) < strtotime($batas_masuk)) {
 			$status = 1;
 		} else {
+			$terlambat = strtotime($waktu_in) - strtotime($batas_masuk);
 			$status = 2;
 		}
 
@@ -84,6 +85,7 @@ class Dashboard extends CI_Controller
 			'waktu_in' => $waktu_in,
 			'status' => $status,
 			'hasil' => $ambil,
+			'terlambat' => $terlambat,
 			'lat' => $lat,
 			'long' => $long
 		];

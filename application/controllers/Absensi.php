@@ -89,6 +89,9 @@ class Absensi extends CI_Controller
 	{
 		$id = $this->input->post('abs_id');
 		$data = $this->input->post();
+		$data['abs_terlambat'] = $this->input->post('abs_terlambat');
+		$data['abs_denda'] = $data['abs_terlambat'] * 1000;
+
 		$waktu_absen = $this->input->post('abs_jam_masuk');
 
 		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);

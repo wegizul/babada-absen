@@ -88,7 +88,6 @@ class Karyawan extends CI_Controller
 	{
 		$id = $this->input->post('kry_id');
 		$data = $this->input->post();
-		$data['kry_kode'] = date('dHis');
 
 		$nmfile = "foto_" . $data['kry_nama'];
 

@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <div class="card-box">
                 <?php foreach ($hasil as $h) {
-                    if (($lat < ($h->lat + (0.00008)) && $lat > ($h->lat - (0.00008))) && ($long < ($h->lang + (0.00008)) && $long > ($h->lang - (0.00008)))) {
+                    if (($lat < ($h->cpy_lat + (0.00008)) && $lat > ($h->cpy_lat - (0.00008))) && ($long < ($h->cpy_lang + (0.00008)) && $long > ($h->cpy_lang - (0.00008)))) {
                 ?>
                         <table class="table table-striped table-bordered">
                             <tr>
@@ -12,7 +12,7 @@
                             </tr>
                             <tr>
                                 <th>Lokasi Absen</th>
-                                <td><?= $h->lok_nama ?></td>
+                                <td><?= $h->cpy_nama ?></td>
                             </tr>
                             <tr>
                                 <th>Tanggal Absen</th>
@@ -28,17 +28,17 @@
                             </tr>
                         </table>
                         <div class="row">
-                            <form method="post" action="<?= base_url('History/simpan') ?>" id="frm_tambah">
-                                <input type="hidden" name="his_id_karyawan" value="<?= $karyawan ?>">
-                                <input type="hidden" name="his_lok_kode" value="<?= $lokasi ?>">
-                                <input type="hidden" name="his_waktu_in" value="<?= $waktu_in ?>">
-                                <input type="hidden" name="his_tanggal" value="<?= date('Y-m-d') ?>">
-                                <input type="hidden" name="his_status" value="<?= $status ?>">
-                                <input type="hidden" name="his_posisi" value="Bekerja di Kantor">
+                            <form method="post" action="<?= base_url('Absensi/simpan') ?>" id="frm_tambah">
+                                <input type="hidden" name="abs_kry_id" value="<?= $karyawan ?>">
+                                <input type="hidden" name="abs_cpy_kode" value="<?= $lokasi ?>">
+                                <input type="hidden" name="abs_jam_masuk" value="<?= $waktu_in ?>">
+                                <input type="hidden" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
+                                <input type="hidden" name="abs_status" value="<?= $status ?>">
+                                <input type="hidden" name="abs_terlambat" value="<?= $terlambat ?>">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Tambahkan Keterangan</label><small><i> (Optional)</i></small>
-                                        <input type="text" class="form-control" name="his_ket">
+                                        <input type="text" class="form-control" name="abs_ket">
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -80,7 +80,7 @@
         $(".btn").attr("disabled", true);
         $.ajax({
             type: "POST",
-            url: "<?= base_url('History/simpan/') ?>",
+            url: "<?= base_url('Absensi/simpan/') ?>",
             data: new FormData(this),
             processData: false,
             contentType: false,
