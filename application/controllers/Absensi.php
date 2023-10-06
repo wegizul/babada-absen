@@ -88,9 +88,10 @@ class Absensi extends CI_Controller
 	public function simpan()
 	{
 		$id = $this->input->post('abs_id');
+		$jml_terlambat = $this->input->post('abs_terlambat');
 		$data = $this->input->post();
-		$data['abs_terlambat'] = $this->input->post('abs_terlambat');
-		$data['abs_denda'] = $data['abs_terlambat'] * 1000;
+		$data['abs_terlambat'] = floor($jml_terlambat / 60);
+		$data['abs_denda'] = floor($data['abs_terlambat'] / 60) * 1000;
 
 		$waktu_absen = $this->input->post('abs_jam_masuk');
 
