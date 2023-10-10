@@ -45,15 +45,19 @@ class Karyawan extends CI_Controller
 			$status = "";
 			switch ($karyawan->kry_status) {
 				case 0:
-					$status = "Tidak Aktif";
+					$status = "<span class='badge badge-secondary'>Tidak Aktif</span>";
 					break;
 				case 1:
-					$status = "Aktif";
+					$status = "<span class='badge badge-success'>Aktif</span>";
 					break;
 				case 2:
-					$status = "Cuti";
+					$status = "<span class='badge badge-warning'>Cuti</span>";
+					break;
+				case 3:
+					$status = "<span class='badge badge-danger'>Resign</span>";
 					break;
 			}
+
 			$row = array();
 			$row[] = $no;
 			$row[] = '<img width="100" src="' . base_url("aset/foto/karyawan/{$karyawan->kry_foto}") . '" alt="">';
@@ -62,7 +66,7 @@ class Karyawan extends CI_Controller
 			$row[] = $karyawan->kry_notelp;
 			$row[] = $karyawan->cpy_nama;
 			$row[] = $status;
-			$row[] = "<a href='#' onClick='ubah_karyawan(" . $karyawan->kry_id . ")' class='btn btn-default btn-sm' title='Ubah data karyawan'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_karyawan(" . $karyawan->kry_id . ")' class='btn btn-danger btn-sm' title='Hapus data karyawan'><i class='fa fa-trash'></i></a>";
+			$row[] = "<a href='#' onClick='resign_karyawan(" . $karyawan->kry_id . ")' class='btn btn-warning btn-sm' title='Resign'><i class='fa fa-user-slash'></i></a> <a href='#' onClick='ubah_karyawan(" . $karyawan->kry_id . ")' class='btn btn-default btn-sm' title='Ubah data karyawan'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_karyawan(" . $karyawan->kry_id . ")' class='btn btn-danger btn-sm' title='Hapus data karyawan'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
 		}
 

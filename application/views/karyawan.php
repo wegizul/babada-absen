@@ -195,6 +195,33 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade" id="modal_resign" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title"><i class="fas fa-user-slash"></i> Form Resign</h3>
+			</div>
+			<form role="form" name="Resign" id="frm_resign">
+				<div class="modal-body form">
+					<div class="row">
+						<input type="hidden" id="kry_id" name="kry_id" value="">
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label>Kode karyawan</label>
+								<input type="number" min="0" class="form-control" name="kry_kode" id="kry_kode" required>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="simpan" class="btn btn-default">Simpan</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()">Batal</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
 
@@ -352,6 +379,49 @@
 			}
 		});
 	}
+
+	function resign_karyawan() {
+		reset_form();
+		$("#kry_id").val(0);
+		$("frm_resign").trigger("reset");
+		$('#modal_resign').modal({
+			show: true,
+			keyboard: false,
+			backdrop: 'static'
+		});
+	}
+
+	$("#frm_resign").submit(function(e) {
+		e.preventDefault();
+		$("#simpan_resign").html("Menyimpan...");
+		$(".btn").attr("disabled", true);
+		$.ajax({
+			type: "POST",
+			url: "simpan_resign",
+			data: new FormData(this),
+			processData: false,
+			contentType: false,
+			success: function(d) {
+				var res = JSON.parse(d);
+				var msg = "";
+				if (res.status == 1) {
+					toastr.success(res.desc);
+					drawTable();
+					reset_form();
+					$("#modal_resign").modal("hide");
+				} else {
+					toastr.error(res.desc);
+				}
+				$("#simpan_resign").html("Simpan");
+				$(".btn").attr("disabled", false);
+			},
+			error: function(jqXHR, namaStatus, errorThrown) {
+				$("#simpan_resign").html("Simpan");
+				$(".btn").attr("disabled", false);
+				alert('Error get data from ajax');
+			}
+		});
+	});
 
 	function reset_form() {
 		$("#kry_id").val(0);

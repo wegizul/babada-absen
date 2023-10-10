@@ -91,7 +91,7 @@ class Absensi extends CI_Controller
 		$jml_terlambat = $this->input->post('abs_terlambat');
 		$data = $this->input->post();
 		$data['abs_terlambat'] = floor($jml_terlambat / 60);
-		$data['abs_denda'] = floor($data['abs_terlambat'] / 60) * 1000;
+		$data['abs_denda'] = floor($data['abs_terlambat'] * 1000);
 
 		$waktu_absen = $this->input->post('abs_jam_masuk');
 

@@ -43,6 +43,7 @@ class Login extends CI_Controller
 					$sess_data['nama'] = $qad->kry_nama;
 					$sess_data['id_karyawan'] = $qad->kry_id;
 					$sess_data['level'] = $qad->usr_role;
+					$sess_data['shift'] = $qad->usr_shift;
 					$this->session->set_userdata($sess_data);
 				}
 				$res['status'] = 1;

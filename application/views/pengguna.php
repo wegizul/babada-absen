@@ -54,7 +54,7 @@
 							<div class="form-group">
 								<label>Nama Pengguna</label>
 								<select class="form-control" name="usr_kry_id" id="usr_kry_id" required>
-									<option value="">== Pilih ==</option>
+									<option value="">Pilih Karyawan</option>
 									<?php foreach ($karyawan as $p) { ?>
 										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
 									<?php } ?>
@@ -77,7 +77,7 @@
 							<div class="form-group">
 								<label>Level</label>
 								<select class="form-control" name="usr_role" id="usr_role" required>
-									<option value="">== Pilih ==</option>
+									<option value="">Pilih Level</option>
 									<option value="3">Karyawan</option>
 								</select>
 							</div>
@@ -86,7 +86,7 @@
 							<div class="form-group">
 								<label>Perusahaan</label>
 								<select class="form-control" name="usr_cpy_id" id="usr_cpy_id" required>
-									<option value="">== Pilih ==</option>
+									<option value="">Pilih Perusahaan</option>
 									<?php foreach ($company as $c) { ?>
 										<option value="<?= $c->cpy_id ?>"><?= $c->cpy_nama ?></option>
 									<?php } ?>
@@ -251,10 +251,10 @@
 			data: "usr_id=" + id,
 			dataType: "json",
 			success: function(data) {
-				$("#usr_id").val(data.usr_id);
-				$("#usr_nama").val(data.usr_nama);
-				$("#usr_username").val(data.usr_username);
-				$("#usr_role").val(data.usr_role);
+				var obj = Object.entries(data);
+				obj.map((dt) => {
+					$("#" + dt[0]).val(dt[1]);
+				});
 				$(".inputan").attr("disabled", false);
 				$("#modal_pengguna").modal({
 					show: true,
