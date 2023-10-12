@@ -35,7 +35,7 @@ class Dashboard extends CI_Controller
 			'id_karyawan' => $this->session->userdata('id_karyawan'),
 			'hadir' => $this->dashboard->get_hadir(),
 			'terlambat' => $this->dashboard->get_terlambat(),
-			'tidak_hadir' => $this->dashboard->get_tidak_hadir(),
+			'cuti' => $this->dashboard->get_cuti(),
 			'cek' => $cek,
 			'cek_pulang' => $cek_pulang,
 			'cek_sakit_izin' => $cek_sakit_izin,

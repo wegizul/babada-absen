@@ -30,8 +30,8 @@ if ($this->session->userdata('level') < 3) { ?>
 			<div class="col-lg-4 col-sm-4">
 				<div class="widget-panel widget-style-2 bg-white">
 					<i class="fas fa-user-times text-custom"></i>
-					<h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup"><?= number_format($tidak_hadir, 0, ",", "."); ?></span></h2>
-					<div class="text-muted m-t-5">Jumlah Tidak Hadir</div>
+					<h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup"><?= number_format($cuti, 0, ",", "."); ?></span></h2>
+					<div class="text-muted m-t-5">Jumlah Karyawan Cuti</div>
 				</div>
 			</div>
 			<div class="col-sm-12">

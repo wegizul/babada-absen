@@ -199,7 +199,7 @@
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="fas fa-user-slash"></i> Form Resign</h3>
+				<h3 class="modal-title"><i class="fas fa-user-slash fa-xs"></i> Form Resign</h3>
 			</div>
 			<form role="form" name="Resign" id="frm_resign">
 				<div class="modal-body form">
@@ -207,8 +207,17 @@
 						<input type="hidden" id="kry_id" name="kry_id" value="">
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Kode karyawan</label>
-								<input type="number" min="0" class="form-control" name="kry_kode" id="kry_kode" required>
+								<label>Apakah Karyawan ini Resign ?</label>
+								<select class="form-control" name="kry_status" id="kry_status" required>
+									<option value="2">Iya</option>
+									<option value="0">Tidak</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+								<label>Keterangan Resign</label>
+								<textarea rows="5" class="form-control" name="kry_resign" id="kry_resign" required></textarea>
 							</div>
 						</div>
 					</div>
