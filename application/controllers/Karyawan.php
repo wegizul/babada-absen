@@ -146,4 +146,32 @@ class Karyawan extends CI_Controller
 		}
 		echo json_encode($resp);
 	}
+
+	public function simpan_resign()
+	{
+		$id = $this->input->post('kry_id');
+		$data = $this->input->post();
+
+		if ($id == 0) {
+			$insert = $this->karyawan->simpan("ba_karyawan", $data);
+		} else {
+			$insert = $this->karyawan->update("ba_karyawan", array('kry_id' => $id), $data);
+		}
+
+		$error = $this->db->error();
+		if (!empty($error)) {
+			$err = $error['message'];
+		} else {
+			$err = "";
+		}
+		if ($insert) {
+			$resp['status'] = 1;
+			$resp['desc'] = "Status Resign Karyawan berhasil disimpan";
+		} else {
+			$resp['status'] = 0;
+			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
+			$resp['error'] = $err;
+		}
+		echo json_encode($resp);
+	}
 }

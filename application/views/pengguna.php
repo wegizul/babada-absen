@@ -163,7 +163,7 @@
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
 			buttons: [
-				'csv', 'excel', 'pdf', 'print', 'pageLength'
+				'pageLength'
 			],
 			"responsive": true,
 			"sort": true,
@@ -181,7 +181,7 @@
 				"orderable": false, //set not orderable
 			}, ],
 			"initComplete": function(settings, json) {
-				$("#process").html("<i class='glyphicon glyphicon-search'></i> Process")
+				$("#process").html("<i class='fas fa-refresh'></i> Process")
 				$(".btn").attr("disabled", false);
 				$("#isidata").fadeIn();
 			}
@@ -270,21 +270,6 @@
 		$("#usr_id").val(0);
 		$("#frm_pengguna")[0].reset();
 	}
-
-	$("#showPass").click(function() {
-		var st = $(this).attr("st");
-		if (st == 0) {
-			$("#log_passnya").attr("type", "text");
-			$("#matanya").removeClass("fa-eye");
-			$("#matanya").addClass("fa-eye-slash");
-			$(this).attr("st", 1);
-		} else {
-			$("#log_passnya").attr("type", "password");
-			$("#matanya").removeClass("fa-eye-slash");
-			$("#matanya").addClass("fa-eye");
-			$(this).attr("st", 0);
-		}
-	});
 
 	$("#yaKonfirm").click(function() {
 		var id = $("#usr_id").val();

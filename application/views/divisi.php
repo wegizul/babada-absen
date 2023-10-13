@@ -21,6 +21,7 @@
 					<thead>
 						<tr>
 							<th width="5%">No</th>
+							<th>Kode Divisi</th>
 							<th>Nama Divisi</th>
 							<th>Aksi</th>
 						</tr>
@@ -47,7 +48,13 @@
 				<div class="modal-body form">
 					<div class="row">
 						<input type="hidden" id="dvi_id" name="dvi_id" value="">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Kode Divisi</label>
+								<input type="text" class="form-control" name="dvi_kode" id="dvi_kode" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Nama Divisi</label>
 								<input type="text" class="form-control" name="dvi_nama" id="dvi_nama" required>
@@ -114,7 +121,7 @@
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
 			buttons: [
-				'csv', 'excel', 'pdf', 'print', 'pageLength'
+				'pageLength'
 			],
 			"responsive": true,
 			"sort": true,
@@ -132,7 +139,7 @@
 				"orderable": false, //set not orderable
 			}, ],
 			"initComplete": function(settings, json) {
-				$("#process").html("<i class='glyphicon glyphicon-search'></i> Process")
+				$("#process").html("<i class='fas fa-refresh'></i> Process")
 				$(".btn").attr("disabled", false);
 				$("#isidata").fadeIn();
 			}

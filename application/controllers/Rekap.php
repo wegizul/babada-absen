@@ -13,6 +13,7 @@ class Rekap extends CI_Controller
 		$this->load->library('upload');
 		$this->load->model('Model_Rekap', 'rekap');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Company', 'company');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -25,6 +26,7 @@ class Rekap extends CI_Controller
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),
+			'company' => $this->company->get_company(),
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
@@ -32,18 +34,18 @@ class Rekap extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_rekap($karyawan, $bln)
+	public function ajax_list_rekap($karyawan, $bln, $cpy)
 	{
-		$list = $this->rekap->get_datatables($karyawan, $bln);
+		$list = $this->rekap->get_datatables($karyawan, $bln, $cpy);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $rekap) {
 			$no++;
 
-			$hadir = $this->rekap->get_hadir($rekap->kry_id, $bln);
-			$terlambat = $this->rekap->get_terlambat($rekap->kry_id, $bln);
-			$sakit = $this->rekap->get_sakit($rekap->kry_id, $bln);
-			$izin = $this->rekap->get_izin($rekap->kry_id, $bln);
+			$hadir = $this->rekap->get_hadir($rekap->kry_id, $bln, $cpy);
+			$terlambat = $this->rekap->get_terlambat($rekap->kry_id, $bln, $cpy);
+			$sakit = $this->rekap->get_sakit($rekap->kry_id, $bln, $cpy);
+			$izin = $this->rekap->get_izin($rekap->kry_id, $bln, $cpy);
 
 			$total_terlambat = 0;
 			$denda = 0;
@@ -70,8 +72,8 @@ class Rekap extends CI_Controller
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->rekap->count_all($karyawan, $bln),
-			"recordsFiltered" => $this->rekap->count_filtered($karyawan, $bln),
+			"recordsTotal" => $this->rekap->count_all(),
+			"recordsFiltered" => $this->rekap->count_filtered($karyawan, $bln, $cpy),
 			"data" => $data,
 			"query" => $this->rekap->getlastquery(),
 		);
@@ -86,15 +88,15 @@ class Rekap extends CI_Controller
 		echo json_encode($data);
 	}
 
-	public function cetak($kry, $bln)
+	public function cetak($kry, $bln, $cpy)
 	{
-		$ambil_rekap = $this->rekap->ambil_rekap($kry, $bln);
+		$ambil_rekap = $this->rekap->ambil_rekap($kry, $bln, $cpy);
 		$ambil_bulan = $this->rekap->get_bulan($bln);
 		foreach ($ambil_rekap as $rekap) {
-			$hadir[$rekap->kry_id] = $this->rekap->get_hadir($rekap->kry_id, $bln);
-			$terlambat[$rekap->kry_id] = $this->rekap->get_terlambat($rekap->kry_id, $bln);
-			$sakit[$rekap->kry_id] = $this->rekap->get_sakit($rekap->kry_id, $bln);
-			$izin[$rekap->kry_id] = $this->rekap->get_izin($rekap->kry_id, $bln);
+			$hadir[$rekap->kry_id] = $this->rekap->get_hadir($rekap->kry_id, $bln, $cpy);
+			$terlambat[$rekap->kry_id] = $this->rekap->get_terlambat($rekap->kry_id, $bln, $cpy);
+			$sakit[$rekap->kry_id] = $this->rekap->get_sakit($rekap->kry_id, $bln, $cpy);
+			$izin[$rekap->kry_id] = $this->rekap->get_izin($rekap->kry_id, $bln, $cpy);
 		}
 		$data = [
 			'tampil' => $ambil_rekap,

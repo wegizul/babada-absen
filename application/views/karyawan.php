@@ -203,27 +203,33 @@
 			</div>
 			<form role="form" name="Resign" id="frm_resign">
 				<div class="modal-body form">
+					<input type="hidden" id="kry_id2" name="kry_id" value="">
 					<div class="row">
-						<input type="hidden" id="kry_id" name="kry_id" value="">
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label>Apakah Karyawan ini Resign ?</label>
 								<select class="form-control" name="kry_status" id="kry_status" required>
-									<option value="2">Iya</option>
-									<option value="0">Tidak</option>
+									<option value="1">Tidak</option>
+									<option value="3">Iya</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label>Keterangan Resign</label>
-								<textarea rows="5" class="form-control" name="kry_resign" id="kry_resign" required></textarea>
+								<input type="text" class="form-control" name="kry_resign" id="kry_resign">
 							</div>
 						</div>
+						<!-- <div class="col-lg-12">
+							<div class="form-group">
+								<label>Keterangan Resign</label>
+								<textarea rows="5" class="form-control" name="kry_resign" id="kry_resign" required></textarea>
+							</div>
+						</div> -->
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" id="simpan" class="btn btn-default">Simpan</button>
+					<button type="submit" id="simpan_resign" class="btn btn-default">Simpan</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()">Batal</button>
 				</div>
 			</form>
@@ -281,7 +287,7 @@
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
 			buttons: [
-				'csv', 'excel', 'pdf', 'print', 'pageLength'
+				'pageLength'
 			],
 			"responsive": true,
 			"sort": true,
@@ -299,7 +305,7 @@
 				"orderable": false, //set not orderable
 			}, ],
 			"initComplete": function(settings, json) {
-				$("#process").html("<i class='glyphicon glyphicon-search'></i> Process")
+				$("#process").html("<i class='fas fa-refresh'></i> Process")
 				$(".btn").attr("disabled", false);
 				$("#isidata").fadeIn();
 			}
@@ -389,14 +395,38 @@
 		});
 	}
 
-	function resign_karyawan() {
-		reset_form();
-		$("#kry_id").val(0);
-		$("frm_resign").trigger("reset");
-		$('#modal_resign').modal({
-			show: true,
-			keyboard: false,
-			backdrop: 'static'
+	// function resign_karyawan() {
+	// 	reset_form();
+	// 	$("#kry_id").val(0);
+	// 	$("frm_resign").trigger("reset");
+	// 	$('#modal_resign').modal({
+	// 		show: true,
+	// 		keyboard: false,
+	// 		backdrop: 'static'
+	// 	});
+	// }
+
+	function resign_karyawan(id) {
+		$.ajax({
+			type: "POST",
+			url: "cari",
+			data: "kry_id=" + id,
+			dataType: "json",
+			success: function(data) {
+				if (data) {
+					var obj = Object.entries(data);
+					$("#kry_id2").val(data.kry_id);
+					$("#kry_status").val(data.kry_status);
+					$("#kry_resign").val(data.kry_resign);
+				}
+				$(".inputan").attr("disabled", false);
+				$("#modal_resign").modal({
+					show: true,
+					keyboard: false,
+					backdrop: 'static'
+				});
+				return false;
+			}
 		});
 	}
 

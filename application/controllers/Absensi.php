@@ -13,6 +13,7 @@ class Absensi extends CI_Controller
 		$this->load->library('upload');
 		$this->load->model('Model_Absensi', 'absensi');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Company', 'company');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -25,6 +26,7 @@ class Absensi extends CI_Controller
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),
+			'company' => $this->company->get_company(),
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
@@ -32,9 +34,9 @@ class Absensi extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_absensi($karyawan, $bln)
+	public function ajax_list_absensi($karyawan, $bln, $cpy)
 	{
-		$list = $this->absensi->get_datatables($karyawan, $bln);
+		$list = $this->absensi->get_datatables($karyawan, $bln, $cpy);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $absensi) {
@@ -69,8 +71,8 @@ class Absensi extends CI_Controller
 
 		$output = array(
 			"draw" => $_POST['draw'],
-			"recordsTotal" => $this->absensi->count_all($karyawan, $bln),
-			"recordsFiltered" => $this->absensi->count_filtered($karyawan, $bln),
+			"recordsTotal" => $this->absensi->count_all(),
+			"recordsFiltered" => $this->absensi->count_filtered($karyawan, $bln, $cpy),
 			"data" => $data,
 			"query" => $this->absensi->getlastquery(),
 		);

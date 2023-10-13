@@ -37,6 +37,7 @@ class Divisi extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $no;
+			$row[] = $divisi->dvi_kode;
 			$row[] = $divisi->dvi_nama;
 			$row[] = "<a href='#' onClick='ubah_divisi(" . $divisi->dvi_id . ")' class='btn btn-default btn-sm' title='Ubah data divisi'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_divisi(" . $divisi->dvi_id . ")' class='btn btn-danger btn-sm' title='Hapus data divisi'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;

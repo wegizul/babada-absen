@@ -51,19 +51,10 @@
 				<div class="modal-body form">
 					<div class="row">
 						<input type="hidden" id="cpy_id" name="cpy_id" value="">
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 							<div class="form-group">
 								<label>Nama Company</label>
 								<input type="text" class="form-control" name="cpy_nama" id="cpy_nama" required>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<label>Jenis</label>
-								<select class="form-control" name="cpy_jenis" id="cpy_jenis">
-									<option value="1">Holding</option>
-									<option value="2">Sub Holding</option>
-								</select>
 							</div>
 						</div>
 						<div class="col-lg-6">
@@ -82,6 +73,27 @@
 							<div class="form-group">
 								<label>Alamat</label>
 								<input type="text" class="form-control" name="cpy_alamat" id="cpy_alamat" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jenis</label>
+								<select class="form-control" name="cpy_jenis" id="cpy_jenis" onChange="induk(this.value)">
+									<option value="1">Holding</option>
+									<option value="2">Sub Holding</option>
+									<option value="3">Unit</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6 induk" style="display: none;">
+							<div class="form-group">
+								<label>Perusahaan Induk</label>
+								<select class="form-control" name="cpy_induk" id="cpy_induk">
+									<option value="">Pilih Perusahaan Induk</option>
+									<?php foreach ($company as $cp) { ?>
+										<option value="<?= $cp->cpy_kode ?>"><?= $cp->cpy_nama ?></option>
+									<?php } ?>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -145,7 +157,7 @@
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
 			buttons: [
-				'csv', 'excel', 'pdf', 'print', 'pageLength'
+				'pageLength'
 			],
 			"responsive": true,
 			"sort": true,
@@ -163,7 +175,7 @@
 				"orderable": false, //set not orderable
 			}, ],
 			"initComplete": function(settings, json) {
-				$("#process").html("<i class='glyphicon glyphicon-search'></i> Process")
+				$("#process").html("<i class='fas fa-refresh'></i> Process")
 				$(".btn").attr("disabled", false);
 				$("#isidata").fadeIn();
 			}
@@ -251,7 +263,6 @@
 	function reset_form() {
 		$("#cpy_id").val(0);
 		$("#frm_tambah")[0].reset();
-		$("#preview").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
@@ -289,6 +300,14 @@
 		"autoAplog": true,
 		opens: 'left'
 	});
+
+	function induk(id) {
+		if (id == 3) {
+			$('.induk').show();
+		} else {
+			$('.induk').hide();
+		}
+	}
 
 	$(document).ready(function() {
 		drawTable();

@@ -24,7 +24,7 @@ $bulan = [
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
 				<select class="form-control" id="karyawan" onChange="filter(this.value)">
-					<option value="">-- Filter Karyawan --</option>
+					<option value="">Filter Karyawan</option>
 					<?php foreach ($karyawan as $p) { ?>
 						<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
 					<?php } ?>
@@ -34,9 +34,19 @@ $bulan = [
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
 				<select class="form-control" id="bulan" onChange="filter_bln(this.value)">
-					<option value="">-- Filter Bulan --</option>
+					<option value="">Filter Bulan</option>
 					<?php foreach ($bulan as $key => $b) { ?>
 						<option value="<?= $key ?>"><?= $b ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2 col-xs-12">
+			<div class="form-group">
+				<select class="form-control" id="company" onChange="filter_cpy(this.value)">
+					<option value="">Filter Company</option>
+					<?php foreach ($company as $q) { ?>
+						<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
 					<?php } ?>
 				</select>
 			</div>
@@ -118,8 +128,10 @@ $bulan = [
 	function drawTable() {
 		var karyawan = $('#karyawan').val();
 		var bulan = $('#bulan').val();
+		var company = $('#company').val();
 		if (!karyawan) karyawan = null;
 		if (!bulan) bulan = null;
+		if (!company) company = null;
 		$('#tabel-data').DataTable({
 			"destroy": true,
 			dom: 'Bfrtip',
@@ -128,7 +140,7 @@ $bulan = [
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
 			buttons: [
-				'csv', 'excel', 'pdf', 'print', 'pageLength'
+				'pageLength'
 			],
 			"responsive": true,
 			"sort": true,
@@ -137,7 +149,7 @@ $bulan = [
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_absensi/" + karyawan + '/' + bulan,
+				"url": "ajax_list_absensi/" + karyawan + '/' + bulan + '/' + company,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -146,7 +158,7 @@ $bulan = [
 				"orderable": false, //set not orderable
 			}, ],
 			"initComplete": function(settings, json) {
-				$("#process").html("<i class='glyphicon glyphicon-search'></i> Process")
+				$("#process").html("<i class='fas fa-refresh'></i> Process")
 				$(".btn").attr("disabled", false);
 				$("#isidata").fadeIn();
 			}
@@ -158,6 +170,10 @@ $bulan = [
 	}
 
 	function filter_bln(filter) {
+		drawTable();
+	}
+
+	function filter_cpy(ftr) {
 		drawTable();
 	}
 

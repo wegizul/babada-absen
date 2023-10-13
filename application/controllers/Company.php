@@ -22,7 +22,9 @@ class Company extends CI_Controller
 			'judul' => "Data Perusahaan",
 			'subjudul' => "Data Perusahaan",
 		];
-		$d = [];
+		$d = [
+			'company' => $this->company->get_company(),
+		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
 		$this->load->view('company', $d);

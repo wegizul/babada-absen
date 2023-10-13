@@ -12,7 +12,7 @@ class Model_Rekap extends CI_Model
 		$this->load->database();
 	}
 
-	private function _get_datatables_query($kry, $bln)
+	private function _get_datatables_query($kry, $bln, $cpy)
 	{
 		$this->db->from($this->table);
 		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
@@ -21,6 +21,9 @@ class Model_Rekap extends CI_Model
 		}
 		if ($bln != 'null') {
 			$this->db->where('MONTH(abs_tanggal)', $bln);
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->group_by('kry_id');
 		$i = 0;
@@ -54,18 +57,18 @@ class Model_Rekap extends CI_Model
 		}
 	}
 
-	function get_datatables($kry, $bln)
+	function get_datatables($kry, $bln, $cpy)
 	{
-		$this->_get_datatables_query($kry, $bln);
+		$this->_get_datatables_query($kry, $bln, $cpy);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
 
-	function count_filtered($kry, $bln)
+	function count_filtered($kry, $bln, $cpy)
 	{
-		$this->_get_datatables_query($kry, $bln);
+		$this->_get_datatables_query($kry, $bln, $cpy);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
@@ -77,12 +80,15 @@ class Model_Rekap extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function get_hadir($kry, $bln)
+	public function get_hadir($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->where('MONTH(abs_tanggal)', $bln);
 		$this->db->where('abs_status < 3');
@@ -91,12 +97,15 @@ class Model_Rekap extends CI_Model
 		return $query->num_rows();
 	}
 
-	public function get_terlambat($kry, $bln)
+	public function get_terlambat($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->where('MONTH(abs_tanggal)', $bln);
 		$this->db->where('abs_status', 2);
@@ -105,12 +114,15 @@ class Model_Rekap extends CI_Model
 		return $query->row();
 	}
 
-	public function get_sakit($kry, $bln)
+	public function get_sakit($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->where('MONTH(abs_tanggal)', $bln);
 		$this->db->where('abs_status', 3);
@@ -119,12 +131,15 @@ class Model_Rekap extends CI_Model
 		return $query->num_rows();
 	}
 
-	public function get_izin($kry, $bln)
+	public function get_izin($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where('abs_kry_id', $kry);
 		if ($bln == 'null') {
 			$bln = date('n');
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->where('MONTH(abs_tanggal)', $bln);
 		$this->db->where('abs_status', 4);
@@ -146,7 +161,7 @@ class Model_Rekap extends CI_Model
 		return $query->row();
 	}
 
-	public function ambil_rekap($kry, $bln)
+	public function ambil_rekap($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_karyawan");
 		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
@@ -155,6 +170,9 @@ class Model_Rekap extends CI_Model
 		}
 		if ($bln != 'null') {
 			$this->db->where('MONTH(abs_tanggal)', $bln);
+		}
+		if ($cpy != 'null') {
+			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		$this->db->group_by('kry_id');
 		$query = $this->db->get();
