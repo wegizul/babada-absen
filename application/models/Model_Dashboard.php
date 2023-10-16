@@ -94,7 +94,7 @@ class Model_Dashboard extends CI_Model
 	public function ambil_karyawan($id)
 	{
 		$this->db->from("ba_karyawan");
-		$this->db->join('ba_company', 'cpy_id = kry_cpy_id', 'left');
+		$this->db->join('ba_company', 'cpy_kode = kry_cpy_kode', 'left');
 		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
 		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
 		$this->db->where("kry_id", $id);
@@ -123,11 +123,21 @@ class Model_Dashboard extends CI_Model
 		return $query->num_rows();
 	}
 
+	public function get_sakit($bulan)
+	{
+		$this->db->from("ba_absensi");
+		$this->db->where("MONTH(abs_tanggal)", $bulan);
+		$this->db->where("abs_status", 3);
+		$query = $this->db->get();
+
+		return $query->num_rows();
+	}
+
 	public function get_cuti()
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status", 3);
+		$this->db->where("abs_status", 4);
 		$query = $this->db->get();
 
 		return $query->num_rows();

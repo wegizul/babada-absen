@@ -74,6 +74,7 @@ $bulan = [
 							<th>Sakit</th>
 							<th>Izin</th>
 							<th>Denda</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -166,6 +167,61 @@ $bulan = [
 			}
 		});
 	}
+
+	function ubah_data(id) {
+		event.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: "cari",
+			data: "kry_id=" + id,
+			dataType: "json",
+			success: function(data) {
+				var obj = Object.entries(data);
+				obj.map((dt) => {
+					$("#" + dt[0]).val(dt[1]);
+				});
+				$(".inputan").attr("disabled", false);
+				$("#modal_tambah").modal({
+					show: true,
+					keyboard: false,
+					backdrop: 'static'
+				});
+				return false;
+			}
+		});
+	}
+
+	$("#frm_tambah").submit(function(e) {
+		e.preventDefault();
+		$("#simpan").html("Menyimpan...");
+		$(".btn").attr("disabled", true);
+		$.ajax({
+			type: "POST",
+			url: "simpan",
+			data: new FormData(this),
+			processData: false,
+			contentType: false,
+			success: function(d) {
+				var res = JSON.parse(d);
+				var msg = "";
+				if (res.status == 1) {
+					toastr.success(res.desc);
+					drawTable();
+					reset_form();
+					$("#modal_tambah").modal("hide");
+				} else {
+					toastr.error(res.desc);
+				}
+				$("#simpan").html("Simpan");
+				$(".btn").attr("disabled", false);
+			},
+			error: function(jqXHR, namaStatus, errorThrown) {
+				$("#simpan").html("Simpan");
+				$(".btn").attr("disabled", false);
+				alert('Error get data from ajax');
+			}
+		});
+	});
 
 	function filter(fil) {
 		drawTable();

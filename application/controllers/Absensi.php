@@ -94,21 +94,40 @@ class Absensi extends CI_Controller
 		$data = $this->input->post();
 		$data['abs_terlambat'] = floor($jml_terlambat / 60);
 		$data['abs_denda'] = floor($data['abs_terlambat'] * 1000);
-
+		
 		$waktu_absen = $this->input->post('abs_jam_masuk');
-
+		
 		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
-
+		
 		$absen_pulang = [
 			'abs_jam_pulang' => $waktu_absen,
 		];
+
 		$where = [
 			'abs_kry_id' => $data['abs_kry_id'],
 			'abs_tanggal' => $data['abs_tanggal'],
 		];
 
+		$str = $data['abs_tanggal'];
+		$explode = explode("-", $str);
+
+		$data2 = [
+			'rkp_bulan' => $explode[1],
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_cpy_kode' => $data['abs_cpy_kode'],
+			'rkp_terlambat' => floor($jml_terlambat / 60),
+			'rkp_denda' => floor(($jml_terlambat / 60) * 1000),
+			'rkp_sakit' => $data['']
+		];
+
+		$where2 = [
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_bulan' => $explode[1],
+		];
+
 		if (!$cek_absensi) {
 			$insert = $this->absensi->simpan("ba_absensi", $data);
+			$this->absensi->update("ba_rekap", $where2, $data2);
 		} else {
 			$insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
 		}

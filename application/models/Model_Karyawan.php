@@ -15,7 +15,7 @@ class Model_Karyawan extends CI_Model
 	private function _get_datatables_query()
 	{
 		$this->db->from($this->table);
-		$this->db->join('ba_company', 'cpy_id = kry_cpy_id', 'left');
+		$this->db->join('ba_company', 'cpy_kode = kry_cpy_kode', 'left');
 		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
 		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
 		$i = 0;

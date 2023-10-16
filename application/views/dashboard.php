@@ -115,17 +115,28 @@ if ($this->session->userdata('level') < 3) { ?>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-12">
+				<div class="col-sm-6">
 					<div class="card-box">
 						<div class="row">
-							<div class="col-lg-3">
-							</div>
-							<div class="col-lg-6 text-center">
+							<div class="col-lg-12 text-center">
 								<div class="form-group">
-									<a href="javascript:absen_sakit()" class="btn btn-success form-control"><i class="fa fa-exclamation-circle"></i> Absen Sakit/Izin</a>
+									<a href="javascript:absen_sakit()">
+										<img src="<?= base_url('aset/assets/images/absen_sakit.png') ?>" width="200px">
+									</a>
 								</div>
 							</div>
-							<div class="col-lg-3">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="card-box">
+						<div class="row">
+							<div class="col-lg-12 text-center">
+								<div class="form-group">
+									<a href="javascript:ajukan_cuti()">
+										<img src="<?= base_url('aset/assets/images/absen_cuti.png') ?>" width="200px">
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -271,11 +282,16 @@ if ($this->session->userdata('level') < 3) { ?>
 								<label>Status</label>
 								<select class="form-control" name="abs_status" id="abs_status">
 									<option value="3">Sakit</option>
-									<option value="4">Izin</option>
 								</select>
 							</div>
 						</div>
 						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Upload Surat Keterangan</label>
+								<input type="file" accept=".jpg, .png, .jpeg" class="form-control" name="abs_foto" id="abs_foto">
+							</div>
+						</div>
+						<div class="col-lg-12">
 							<div class="form-group">
 								<label>Keterangan</label>
 								<input type="text" class="form-control" name="abs_ket" id="abs_ket" required>
@@ -360,7 +376,7 @@ if ($this->session->userdata('level') < 3) { ?>
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Dashboard/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -376,7 +392,7 @@ if ($this->session->userdata('level') < 3) { ?>
 						if (!result.isConfirmed) {
 							reset_form();
 							$("#modal_tambah").modal("hide");
-							window.location.href = "<?= base_url('Dashboard/tampil') ?>";
+							window.location.href = "<?= base_url('Dashboard') ?>";
 						} else {}
 					})
 				} else {

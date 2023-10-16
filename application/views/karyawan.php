@@ -141,10 +141,10 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Perusahaan</label>
-								<select class="form-control" name="kry_cpy_id" id="kry_cpy_id" required>
+								<select class="form-control" name="kry_cpy_kode" id="kry_cpy_kode" required>
 									<option value="">Pilih Perusahaan</option>
 									<?php foreach ($company as $com) { ?>
-										<option value="<?= $com->cpy_id ?>"><?= $com->cpy_nama ?></option>
+										<option value="<?= $com->cpy_kode ?>"><?= $com->cpy_nama ?></option>
 									<?php } ?>
 								</select>
 							</div>
@@ -220,12 +220,6 @@
 								<input type="text" class="form-control" name="kry_resign" id="kry_resign">
 							</div>
 						</div>
-						<!-- <div class="col-lg-12">
-							<div class="form-group">
-								<label>Keterangan Resign</label>
-								<textarea rows="5" class="form-control" name="kry_resign" id="kry_resign" required></textarea>
-							</div>
-						</div> -->
 					</div>
 				</div>
 				<div class="modal-footer">

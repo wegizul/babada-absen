@@ -67,6 +67,7 @@ class Rekap extends CI_Controller
 			$row[] = $sakit;
 			$row[] = $izin;
 			$row[] = 'Rp. ' . number_format($denda, 0);
+			$row[] = "<a href='#' onClick='ubah_data(" . $rekap->kry_id . ")' class='btn btn-default btn-sm' title='Ubah Data'><i class='fa fa-edit'></i></a>";
 			$data[] = $row;
 		}
 
