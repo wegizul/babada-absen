@@ -53,7 +53,9 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card-box table-responsive">
-                <img src="<?= base_url('aset/assets/images/nanang.png') ?>" width="300px;">
+                <div class="row">
+                    <img src="<?= base_url('aset/assets/images/logo.png') ?>" width="60px;">
+                </div>
                 <hr size="2" width="100%">
                 <div class="card-header">
                     <h3 id="judul">LAPORAN REKAP ABSENSI KARYAWAN</h3>
@@ -64,18 +66,24 @@
                             <th>Nama Karyawan</th>
                             <th>Bulan</th>
                             <th>Hadir</th>
-                            <th>Terlambat</th>
                             <th>Sakit</th>
                             <th>Izin</th>
+                            <th>Alfa</th>
+                            <th>Cuti</th>
+                            <th>Terlambat</th>
+                            <th>Denda</th>
                         </tr>
                         <?php foreach ($tampil as $dt) { ?>
                             <tr>
                                 <td style="text-align: left;"><?= $dt->kry_nama ?></td>
                                 <td><?= $bulan ?></td>
-                                <td><?= $hadir[$dt->kry_id] ?></td>
-                                <td><?= $terlambat[$dt->kry_id] ?></td>
-                                <td><?= $sakit[$dt->kry_id] ?></td>
-                                <td><?= $izin[$dt->kry_id] ?></td>
+                                <td><?= $hadir ? $hadir : 0 ?></td>
+                                <td><?= $sakit ? $sakit : 0 ?></td>
+                                <td><?= $izin ? $izin : 0 ?></td>
+                                <td><?= $alfa ? $alfa : 0 ?></td>
+                                <td><?= $cuti ? $cuti : 0 ?></td>
+                                <td><?= $terlambat ? $terlambat : 0 ?></td>
+                                <td><?= $denda ? $denda : 0 ?></td>
                             </tr>
                         <?php } ?>
                     </table>

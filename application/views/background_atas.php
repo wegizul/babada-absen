@@ -9,7 +9,7 @@
 
   <link rel="shortcut icon" href="<?= base_url("aset"); ?>/assets/images/logo.png">
 
-  <title>Absensi Online | Dashboard</title>
+  <title>Absensi Mobile | Dashboard</title>
 
   <!--Morris Chart CSS -->
   <link rel="stylesheet" href="<?= base_url("aset"); ?>/assets/plugins/morris/morris.css">

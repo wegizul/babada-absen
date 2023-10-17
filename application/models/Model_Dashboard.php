@@ -123,16 +123,6 @@ class Model_Dashboard extends CI_Model
 		return $query->num_rows();
 	}
 
-	public function get_sakit($bulan)
-	{
-		$this->db->from("ba_absensi");
-		$this->db->where("MONTH(abs_tanggal)", $bulan);
-		$this->db->where("abs_status", 3);
-		$query = $this->db->get();
-
-		return $query->num_rows();
-	}
-
 	public function get_cuti()
 	{
 		$this->db->from("ba_absensi");

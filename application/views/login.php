@@ -9,7 +9,7 @@
 
 	<link rel="shortcut icon" href="aset/assets/images/logo.png">
 
-	<title>Absensi Online | Login</title>
+	<title>Absensi Mobile | Login</title>
 
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="<?= base_url("aset"); ?>/plugins/fontawesome-free/css/all.min.css">
@@ -65,7 +65,7 @@
 				<div class="card-box">
 					<div class="panel-heading">
 						<img src="<?= base_url('aset/assets/images/logo.png') ?>" width="100px" id="logoo">
-						<h3 class="text-center"> Login<br> <strong class="text-custom" style="color: #0d5595;">Absensi Online</strong> </h3>
+						<h3 class="text-center"> Login<br> <strong class="text-custom" style="color: #0d5595;">Absensi Mobile</strong> </h3>
 					</div>
 					<div class="panel-body">
 						<form class="form-horizontal m-t-20" action="<?= base_url('Login/proses'); ?>" method="post" id="frm_login">

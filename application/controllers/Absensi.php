@@ -14,6 +14,7 @@ class Absensi extends CI_Controller
 		$this->load->model('Model_Absensi', 'absensi');
 		$this->load->model('Model_Karyawan', 'karyawan');
 		$this->load->model('Model_Company', 'company');
+		$this->load->model('Model_Rekap', 'rekap');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -107,17 +108,23 @@ class Absensi extends CI_Controller
 			'abs_kry_id' => $data['abs_kry_id'],
 			'abs_tanggal' => $data['abs_tanggal'],
 		];
-
+		
 		$str = $data['abs_tanggal'];
 		$explode = explode("-", $str);
+
+		$cek_rekap = $this->rekap->cek_rekap($data['abs_kry_id'], $explode[1]);
+
+		$total_terlambat = 0;
+		$total_denda = 0;
+		if ($data['abs_terlambat']) $total_terlambat = $data['abs_terlambat'];
+		if ($data['abs_denda']) $total_denda = $data['abs_denda'];
 
 		$data2 = [
 			'rkp_bulan' => $explode[1],
 			'rkp_kry_id' => $data['abs_kry_id'],
 			'rkp_cpy_kode' => $data['abs_cpy_kode'],
-			'rkp_terlambat' => floor($jml_terlambat / 60),
-			'rkp_denda' => floor(($jml_terlambat / 60) * 1000),
-			'rkp_sakit' => $data['']
+			'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
+			'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
 		];
 
 		$where2 = [
@@ -127,7 +134,11 @@ class Absensi extends CI_Controller
 
 		if (!$cek_absensi) {
 			$insert = $this->absensi->simpan("ba_absensi", $data);
-			$this->absensi->update("ba_rekap", $where2, $data2);
+			if (!$cek_rekap) {
+				$this->absensi->simpan("ba_rekap", $data2);
+			} else {
+				$this->absensi->update("ba_rekap", $where2, $data2);
+			}
 		} else {
 			$insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
 		}

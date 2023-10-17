@@ -13,13 +13,19 @@ class Dashboard extends CI_Controller
 		$this->load->model('Model_Dashboard', 'dashboard');
 		$this->load->model('Model_Absensi', 'absensi');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Rekap', 'rekap');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
 	public function index()
 	{
 		$jam_masuk = "00:00:00";
-		$jam_pulang = "17:00:00";
+		if (date('D') == "Sat") {
+			$jam_pulang = "12:00:00";
+		} else {
+			$jam_pulang = "17:00:00";
+		}
+
 		$jam_sekarang = date('H:i:s');
 		$user = $this->session->userdata('id_karyawan');
 		$cek = $this->dashboard->cek_absen($user, $jam_masuk);
@@ -71,6 +77,7 @@ class Dashboard extends CI_Controller
 		$waktu_in = date('H:i:s');
 
 		$batas_masuk = "08:00:00";
+		$terlambat = 0;
 		$status = 0;
 		if (strtotime($waktu_in) < strtotime($batas_masuk)) {
 			$status = 1;
@@ -120,12 +127,13 @@ class Dashboard extends CI_Controller
 		$str = $data['abs_tanggal'];
 		$explode = explode("-", $str);
 
-		$sakit = $this->dashboard->get_sakit($explode[1]);
+		$cek_rekap = $this->rekap->cek_rekap($data['abs_kry_id'], $explode[1]);
+		
 		$data2 = [
 			'rkp_bulan' => $explode[1],
 			'rkp_kry_id' => $data['abs_kry_id'],
 			'rkp_cpy_kode' => $ambil_kry->kry_cpy_kode,
-			'rkp_sakit' => $sakit + 1,
+			'rkp_sakit' => $cek_rekap->rkp_sakit + 1,
 		];
 
 		$where2 = [
@@ -153,10 +161,10 @@ class Dashboard extends CI_Controller
 
 		if ($id == 0) {
 			$insert = $this->absensi->simpan("ba_absensi", $data);
-			if ($where2) {
-				$this->absensi->update("ba_rekap", $where2, $data2);
-			} else {
+			if (!$cek_rekap) {
 				$this->absensi->simpan("ba_rekap", $data2);
+			} else {
+				$this->absensi->update("ba_rekap", $where2, $data2);
 			}
 		} else {
 			$insert = $this->absensi->update("ba_absensi", array('abs_id' => $id), $data);

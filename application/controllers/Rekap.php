@@ -43,31 +43,22 @@ class Rekap extends CI_Controller
 			$no++;
 
 			$hadir = $this->rekap->get_hadir($rekap->kry_id, $bln, $cpy);
-			$terlambat = $this->rekap->get_terlambat($rekap->kry_id, $bln, $cpy);
-			$sakit = $this->rekap->get_sakit($rekap->kry_id, $bln, $cpy);
-			$izin = $this->rekap->get_izin($rekap->kry_id, $bln, $cpy);
-
-			$total_terlambat = 0;
-			$denda = 0;
-			if ($terlambat) {
-				$total_terlambat = $terlambat->abs_terlambat;
-				$denda = $terlambat->abs_denda;
-			}	
 
 			$bulan = date('n');
-			$ambil_bulan = $this->rekap->get_bulan($bln);
-			if ($ambil_bulan) $bulan = $ambil_bulan->bulan;
+			if ($rekap->rkp_bulan) $bulan = $rekap->rkp_bulan;
 
 			$row = array();
 			$row[] = $no;
 			$row[] = $rekap->kry_nama;
 			$row[] = $this->rekap->bulan($bulan);
 			$row[] = $hadir;
-			$row[] = number_format($total_terlambat, 0) . ' Menit';
-			$row[] = $sakit;
-			$row[] = $izin;
-			$row[] = 'Rp. ' . number_format($denda, 0);
-			$row[] = "<a href='#' onClick='ubah_data(" . $rekap->kry_id . ")' class='btn btn-default btn-sm' title='Ubah Data'><i class='fa fa-edit'></i></a>";
+			$row[] = $rekap->rkp_sakit ? $rekap->rkp_sakit : 0;
+			$row[] = $rekap->rkp_izin ? $rekap->rkp_izin : 0;
+			$row[] = $rekap->rkp_alfa ? $rekap->rkp_alfa : 0;
+			$row[] = $rekap->rkp_cuti ? $rekap->rkp_cuti : 0;
+			$row[] = number_format($rekap->rkp_terlambat, 0) . ' Menit';
+			$row[] = 'Rp. ' . number_format($rekap->rkp_denda, 0);
+			$row[] = "<a href='#' onClick='ubah_data(" . $rekap->rkp_id . ")' class='btn btn-default btn-sm' title='Ubah Data'><i class='fa fa-edit'></i></a>";
 			$data[] = $row;
 		}
 
@@ -84,28 +75,55 @@ class Rekap extends CI_Controller
 
 	public function cari()
 	{
-		$id = $this->input->post('his_id');
+		$id = $this->input->post('rkp_id');
 		$data = $this->rekap->cari_rekap($id);
 		echo json_encode($data);
+	}
+
+	public function simpan()
+	{
+		$id = $this->input->post('rkp_id');
+		$data = $this->input->post();
+
+		$insert = $this->rekap->update("ba_rekap", array('rkp_id' => $id), $data);
+
+		$error = $this->db->error();
+		if (!empty($error)) {
+			$err = $error['message'];
+		} else {
+			$err = "";
+		}
+		if ($insert) {
+			$resp['status'] = 1;
+			$resp['desc'] = "Data Rekap Absensi berhasil disimpan";
+		} else {
+			$resp['status'] = 0;
+			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
+			$resp['error'] = $err;
+		}
+		echo json_encode($resp);
 	}
 
 	public function cetak($kry, $bln, $cpy)
 	{
 		$ambil_rekap = $this->rekap->ambil_rekap($kry, $bln, $cpy);
-		$ambil_bulan = $this->rekap->get_bulan($bln);
 		foreach ($ambil_rekap as $rekap) {
-			$hadir[$rekap->kry_id] = $this->rekap->get_hadir($rekap->kry_id, $bln, $cpy);
-			$terlambat[$rekap->kry_id] = $this->rekap->get_terlambat($rekap->kry_id, $bln, $cpy);
-			$sakit[$rekap->kry_id] = $this->rekap->get_sakit($rekap->kry_id, $bln, $cpy);
-			$izin[$rekap->kry_id] = $this->rekap->get_izin($rekap->kry_id, $bln, $cpy);
+
+			$hadir = $this->rekap->get_hadir($rekap->kry_id, $bln, $cpy);
+
+			$bulan = date('n');
+			if ($rekap->rkp_bulan) $bulan = $rekap->rkp_bulan;
 		}
 		$data = [
 			'tampil' => $ambil_rekap,
-			'bulan' => $this->rekap->bulan($ambil_bulan->bulan),
+			'bulan' => $this->rekap->bulan($bulan),
 			'hadir' => $hadir,
-			'terlambat' => $terlambat,
-			'sakit' => $sakit,
-			'izin' => $izin,
+			'sakit' => $rekap->rkp_sakit,
+			'izin' => $rekap->rkp_izin,
+			'alfa' => $rekap->rkp_alfa,
+			'cuti' => $rekap->rkp_cuti,
+			'terlambat' => $rekap->rkp_terlambat,
+			'denda' => "Rp. " . number_format($rekap->rkp_denda, 0),
 		];
 		$this->load->view('cetak', $data);
 	}

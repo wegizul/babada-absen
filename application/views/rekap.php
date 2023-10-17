@@ -70,9 +70,11 @@ $bulan = [
 							<th>Nama Karyawan</th>
 							<th>Bulan</th>
 							<th>Hadir</th>
-							<th>Terlambat</th>
 							<th>Sakit</th>
 							<th>Izin</th>
+							<th>Alfa</th>
+							<th>Cuti</th>
+							<th>Terlambat</th>
 							<th>Denda</th>
 							<th>Edit</th>
 						</tr>
@@ -84,6 +86,52 @@ $bulan = [
 					</tbody>
 				</table>
 			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Bootstrap modal -->
+<div class="modal fade" id="modal_edit" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Edit Data</h3>
+			</div>
+			<form role="form col-lg-6" name="Edit" id="frm_edit">
+				<div class="modal-body form">
+					<div class="row">
+						<input type="hidden" name="rkp_id" id="rkp_id" value="">
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Jumlah Sakit</label>
+								<input type="number" min="0" class="form-control" name="rkp_sakit" id="rkp_sakit">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Jumlah Izin</label>
+								<input type="number" min="0" class="form-control" name="rkp_izin" id="rkp_izin">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Jumlah Alfa</label>
+								<input type="number" min="0" class="form-control" name="rkp_alfa" id="rkp_alfa">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Jumlah Cuti</label>
+								<input type="number" min="0" class="form-control" name="rkp_cuti" id="rkp_cuti">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="simpan" class="btn btn-default">Simpan</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()">Batal</button>
+				</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -173,7 +221,7 @@ $bulan = [
 		$.ajax({
 			type: "POST",
 			url: "cari",
-			data: "kry_id=" + id,
+			data: "rkp_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
@@ -181,7 +229,7 @@ $bulan = [
 					$("#" + dt[0]).val(dt[1]);
 				});
 				$(".inputan").attr("disabled", false);
-				$("#modal_tambah").modal({
+				$("#modal_edit").modal({
 					show: true,
 					keyboard: false,
 					backdrop: 'static'
@@ -191,7 +239,7 @@ $bulan = [
 		});
 	}
 
-	$("#frm_tambah").submit(function(e) {
+	$("#frm_edit").submit(function(e) {
 		e.preventDefault();
 		$("#simpan").html("Menyimpan...");
 		$(".btn").attr("disabled", true);
@@ -207,8 +255,7 @@ $bulan = [
 				if (res.status == 1) {
 					toastr.success(res.desc);
 					drawTable();
-					reset_form();
-					$("#modal_tambah").modal("hide");
+					$("#modal_edit").modal("hide");
 				} else {
 					toastr.error(res.desc);
 				}

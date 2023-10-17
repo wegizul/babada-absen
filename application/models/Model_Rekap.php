@@ -2,9 +2,9 @@
 class Model_Rekap extends CI_Model
 {
 	var $table = 'ba_karyawan';
-	var $column_order = array('kry_id', 'kry_nama', 'abs_tanggal', 'abs_status'); //set column field database for datatable orderable
+	var $column_order = array('kry_id', 'kry_nama', 'rkp_bulan'); //set column field database for datatable orderable
 	var $column_search = array('kry_id', 'kry_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('kry_nama' => 'asc', 'abs_tanggal' => 'desc'); // default order  	private $db_sts;
+	var $order = array('kry_nama' => 'asc', 'rkp_bulan' => 'desc'); // default order  	private $db_sts;
 
 	public function __construct()
 	{
@@ -15,15 +15,15 @@ class Model_Rekap extends CI_Model
 	private function _get_datatables_query($kry, $bln, $cpy)
 	{
 		$this->db->from($this->table);
-		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
+		$this->db->join('ba_rekap', 'rkp_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
-			$this->db->where('abs_kry_id', $kry);
+			$this->db->where('rkp_kry_id', $kry);
 		}
 		if ($bln != 'null') {
-			$this->db->where('MONTH(abs_tanggal)', $bln);
+			$this->db->where('rkp_bulan', $bln);
 		}
 		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
+			$this->db->where('rkp_cpy_kode', $cpy);
 		}
 		$this->db->group_by('kry_id');
 		$i = 0;
@@ -80,6 +80,15 @@ class Model_Rekap extends CI_Model
 		return $this->db->count_all_results();
 	}
 
+	public function cari_rekap($id)
+	{
+		$this->db->from("ba_rekap");
+		$this->db->where('rkp_id', $id);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
 	public function get_hadir($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_absensi");
@@ -97,87 +106,97 @@ class Model_Rekap extends CI_Model
 		return $query->num_rows();
 	}
 
-	public function get_terlambat($kry, $bln, $cpy)
-	{
-		$this->db->from("ba_absensi");
-		$this->db->where('abs_kry_id', $kry);
-		if ($bln == 'null') {
-			$bln = date('n');
-		}
-		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
-		}
-		$this->db->where('MONTH(abs_tanggal)', $bln);
-		$this->db->where('abs_status', 2);
-		$query = $this->db->get();
+	// public function get_terlambat($kry, $bln, $cpy)
+	// {
+	// 	$this->db->from("ba_absensi");
+	// 	$this->db->where('abs_kry_id', $kry);
+	// 	if ($bln == 'null') {
+	// 		$bln = date('n');
+	// 	}
+	// 	if ($cpy != 'null') {
+	// 		$this->db->where('abs_cpy_kode', $cpy);
+	// 	}
+	// 	$this->db->where('MONTH(abs_tanggal)', $bln);
+	// 	$this->db->where('abs_status', 2);
+	// 	$query = $this->db->get();
 
-		return $query->row();
-	}
+	// 	return $query->row();
+	// }
 
-	public function get_sakit($kry, $bln, $cpy)
-	{
-		$this->db->from("ba_absensi");
-		$this->db->where('abs_kry_id', $kry);
-		if ($bln == 'null') {
-			$bln = date('n');
-		}
-		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
-		}
-		$this->db->where('MONTH(abs_tanggal)', $bln);
-		$this->db->where('abs_status', 3);
-		$query = $this->db->get();
+	// public function get_sakit($kry, $bln, $cpy)
+	// {
+	// 	$this->db->from("ba_absensi");
+	// 	$this->db->where('abs_kry_id', $kry);
+	// 	if ($bln == 'null') {
+	// 		$bln = date('n');
+	// 	}
+	// 	if ($cpy != 'null') {
+	// 		$this->db->where('abs_cpy_kode', $cpy);
+	// 	}
+	// 	$this->db->where('MONTH(abs_tanggal)', $bln);
+	// 	$this->db->where('abs_status', 3);
+	// 	$query = $this->db->get();
 
-		return $query->num_rows();
-	}
+	// 	return $query->num_rows();
+	// }
 
-	public function get_izin($kry, $bln, $cpy)
-	{
-		$this->db->from("ba_absensi");
-		$this->db->where('abs_kry_id', $kry);
-		if ($bln == 'null') {
-			$bln = date('n');
-		}
-		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
-		}
-		$this->db->where('MONTH(abs_tanggal)', $bln);
-		$this->db->where('abs_status', 4);
-		$query = $this->db->get();
+	// public function get_izin($kry, $bln, $cpy)
+	// {
+	// 	$this->db->from("ba_absensi");
+	// 	$this->db->where('abs_kry_id', $kry);
+	// 	if ($bln == 'null') {
+	// 		$bln = date('n');
+	// 	}
+	// 	if ($cpy != 'null') {
+	// 		$this->db->where('abs_cpy_kode', $cpy);
+	// 	}
+	// 	$this->db->where('MONTH(abs_tanggal)', $bln);
+	// 	$this->db->where('abs_status', 4);
+	// 	$query = $this->db->get();
 
-		return $query->num_rows();
-	}
+	// 	return $query->num_rows();
+	// }
 
-	public function get_bulan($bln)
-	{
-		$this->db->select("MONTH(abs_tanggal) as bulan");
-		$this->db->from("ba_absensi");
-		if ($bln == 'null') {
-			$bln = date('n');
-		}
-		$this->db->where('MONTH(abs_tanggal)', $bln);
-		$query = $this->db->get();
+	// public function get_bulan($bln)
+	// {
+	// 	$this->db->select("MONTH(abs_tanggal) as bulan");
+	// 	$this->db->from("ba_absensi");
+	// 	if ($bln == 'null') {
+	// 		$bln = date('n');
+	// 	}
+	// 	$this->db->where('MONTH(abs_tanggal)', $bln);
+	// 	$query = $this->db->get();
 
-		return $query->row();
-	}
+	// 	return $query->row();
+	// }
 
 	public function ambil_rekap($kry, $bln, $cpy)
 	{
 		$this->db->from("ba_karyawan");
-		$this->db->join('ba_absensi', 'abs_kry_id = kry_id', 'left');
+		$this->db->join('ba_rekap', 'rkp_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
-			$this->db->where('abs_kry_id', $kry);
+			$this->db->where('rkp_kry_id', $kry);
 		}
 		if ($bln != 'null') {
-			$this->db->where('MONTH(abs_tanggal)', $bln);
+			$this->db->where('rkp_bulan', $bln);
 		}
 		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
+			$this->db->where('rkp_cpy_kode', $cpy);
 		}
 		$this->db->group_by('kry_id');
 		$query = $this->db->get();
 
 		return $query->result();
+	}
+
+	public function cek_rekap($kry, $bln)
+	{
+		$this->db->from("ba_rekap");
+		$this->db->where('rkp_kry_id', $kry);
+		$this->db->where('rkp_bulan', $bln);
+		$query = $this->db->get();
+
+		return $query->row();
 	}
 
 	public function bulan($bln)
@@ -191,5 +210,17 @@ class Model_Rekap extends CI_Model
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));
 
 		return $query;
+	}
+
+	public function update($tbl, $where, $data)
+	{
+		$this->db->update($tbl, $data, $where);
+		return $this->db->affected_rows();
+	}
+
+	public function simpan($table, $data)
+	{
+		$this->db->insert($table, $data);
+		return $this->db->insert_id();
 	}
 }
