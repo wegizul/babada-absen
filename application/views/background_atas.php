@@ -157,7 +157,7 @@
       <!-- LOGO -->
       <div class="topbar-left">
         <div class="text-center">
-          <a href="<?= base_url() ?>" class="logo"><i class="fa fa-globe icon-c-logo"></i><span>ABSENSI ONLINE</span></a>
+          <a href="<?= base_url() ?>" class="logo"><img src="<?= base_url('aset/assets/images/logo.png') ?>" width="40px" id="logoo"><span style="font-size: medium;">ABSENSI MOBILE</span></a>
         </div>
       </div>
 
