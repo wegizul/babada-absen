@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <div class="card-box">
                 <?php foreach ($hasil as $h) {
-                    if (($lat < ($h->cpy_lat + (0.00008)) && $lat > ($h->cpy_lat - (0.00008))) && ($long < ($h->cpy_lang + (0.00008)) && $long > ($h->cpy_lang - (0.00008)))) {
+                    if (($lat < ($h->cpy_lat + (0.00008)) && $lat > ($h->cpy_lat - (0.00008))) && ($long < ($h->cpy_lang + (0.00008)) && $long > ($h->cpy_lang - (0.00008))) && $all_akses == 1) {
                 ?>
                         <table class="table table-striped table-bordered">
                             <tr>
@@ -52,7 +52,7 @@
                         <div class="text-center">
                             <img src="<?= base_url('aset/assets/images/place.png') ?>" width="150px">
                             <h3 style="color:brown; font-weight:bold;">LOKASI TIDAK DITEMUKAN</h3>
-                            <h6>Pastikan anda berada di lokasi kantor untuk melakukan absensi !!</h6>
+                            <h6>Pastikan anda berada di lokasi kantor/unit kerja untuk melakukan absensi !!</h6>
                             <div class="form-group">
                                 <a href="<?= base_url('Dashboard/scan') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Ulangi Scan</a>
                             </div>

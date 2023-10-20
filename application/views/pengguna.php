@@ -85,10 +85,10 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Perusahaan</label>
-								<select class="form-control" name="usr_cpy_id" id="usr_cpy_id" required>
+								<select class="form-control" name="usr_cpy_kode" id="usr_cpy_kode" required>
 									<option value="">Pilih Perusahaan</option>
 									<?php foreach ($company as $c) { ?>
-										<option value="<?= $c->cpy_id ?>"><?= $c->cpy_nama ?></option>
+										<option value="<?= $c->cpy_kode ?>"><?= $c->cpy_nama ?></option>
 									<?php } ?>
 								</select>
 							</div>
@@ -97,6 +97,15 @@
 							<div class="form-group">
 								<label>Karyawan Shift ?</label>
 								<select class="form-control" name="usr_shift" id="usr_shift">
+									<option value="0">Tidak</option>
+									<option value="1">Ya</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label>Akses Semua Lokasi ?</label>
+								<select class="form-control" name="usr_all_akses" id="usr_all_akses">
 									<option value="0">Tidak</option>
 									<option value="1">Ya</option>
 								</select>

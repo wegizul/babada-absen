@@ -44,6 +44,8 @@ class Login extends CI_Controller
 					$sess_data['id_karyawan'] = $qad->kry_id;
 					$sess_data['level'] = $qad->usr_role;
 					$sess_data['shift'] = $qad->usr_shift;
+					$sess_data['cpy_kode'] = $qad->usr_cpy_kode;
+					$sess_data['all_akses'] = $qad->usr_all_akses;
 					$this->session->set_userdata($sess_data);
 				}
 				$res['status'] = 1;

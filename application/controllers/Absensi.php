@@ -119,21 +119,22 @@ class Absensi extends CI_Controller
 		if ($data['abs_terlambat']) $total_terlambat = $data['abs_terlambat'];
 		if ($data['abs_denda']) $total_denda = $data['abs_denda'];
 
-		$data2 = [
-			'rkp_bulan' => $explode[1],
-			'rkp_kry_id' => $data['abs_kry_id'],
-			'rkp_cpy_kode' => $data['abs_cpy_kode'],
-			'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
-			'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
-		];
-
-		$where2 = [
-			'rkp_kry_id' => $data['abs_kry_id'],
-			'rkp_bulan' => $explode[1],
-		];
-
 		if (!$cek_absensi) {
 			$insert = $this->absensi->simpan("ba_absensi", $data);
+
+			$data2 = [
+				'rkp_bulan' => $explode[1],
+				'rkp_kry_id' => $data['abs_kry_id'],
+				'rkp_cpy_kode' => $data['abs_cpy_kode'],
+				'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
+				'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
+			];
+
+			$where2 = [
+				'rkp_kry_id' => $data['abs_kry_id'],
+				'rkp_bulan' => $explode[1],
+			];
+			
 			if (!$cek_rekap) {
 				$this->absensi->simpan("ba_rekap", $data2);
 			} else {

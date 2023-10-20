@@ -186,7 +186,7 @@ if ($this->session->userdata('level') < 3) { ?>
 							</div>
 							<div class="col-lg-8 text-center">
 								<i class="fas fa-exclamation-circle text-warning fa-3x"></i>
-								<div class="form-group">
+								<div class="form-group mt-5">
 									Anda sudah melakukan absen Sakit/Izin
 								</div>
 							</div>
@@ -376,7 +376,7 @@ if ($this->session->userdata('level') < 3) { ?>
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "Dashboard/simpan",
+			url: "Dashboard/simpan_absen_sakit",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,

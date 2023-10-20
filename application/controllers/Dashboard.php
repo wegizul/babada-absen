@@ -19,15 +19,20 @@ class Dashboard extends CI_Controller
 
 	public function index()
 	{
+		$user = $this->session->userdata('id_karyawan');
+		$kode_company = $this->dashboard->ambil_karyawan($user);
+
 		$jam_masuk = "00:00:00";
-		if (date('D') == "Sat") {
-			$jam_pulang = "12:00:00";
-		} else {
-			$jam_pulang = "17:00:00";
+		$jam_pulang = "17:00:00";
+		if ($this->session->userdata('level') > 1) {
+			if (date('D') == "Sat" && $kode_company->cpy_jenis == 1) {
+				$jam_pulang = "12:00:00";
+			} else {
+				$jam_pulang = "17:00:00";
+			}
 		}
 
 		$jam_sekarang = date('H:i:s');
-		$user = $this->session->userdata('id_karyawan');
 		$cek = $this->dashboard->cek_absen($user, $jam_masuk);
 		$cek_pulang = $this->dashboard->cek_jam_pulang($user, $jam_pulang);
 		$cek_sakit_izin = $this->dashboard->cek_sakit_izin($user);
@@ -39,7 +44,7 @@ class Dashboard extends CI_Controller
 		$d = [
 			'karyawan' => $this->dashboard->ambil_karyawan($user),
 			'data' => $this->dashboard->get_absen_hari_ini(),
-			'id_karyawan' => $this->session->userdata('id_karyawan'),
+			'id_karyawan' => $user,
 			'hadir' => $this->dashboard->get_hadir(),
 			'terlambat' => $this->dashboard->get_terlambat(),
 			'cuti' => $this->dashboard->get_cuti(),
@@ -68,10 +73,6 @@ class Dashboard extends CI_Controller
 
 	public function hasil_scan($lat, $long)
 	{
-		// print_r($lat);
-		// print_r("/");
-		// print_r($long);
-		// die();
 		$kode_lokasi = $this->input->post('kode_lokasi');
 		$ambil = $this->dashboard->ambil_lokasi($kode_lokasi);
 		$waktu_in = date('H:i:s');
@@ -86,6 +87,9 @@ class Dashboard extends CI_Controller
 			$status = 2;
 		}
 
+		$all_akses = 1;
+		if ($this->session->userdata('all_akses') == 0 && $this->session->userdata('cpy_kode') != $kode_lokasi) $all_akses = 0;
+
 		$ba = [
 			'judul' => "Hasil Scan",
 		];
@@ -99,7 +103,8 @@ class Dashboard extends CI_Controller
 			'hasil' => $ambil,
 			'terlambat' => $terlambat,
 			'lat' => $lat,
-			'long' => $long
+			'long' => $long,
+			'all_akses' => $all_akses
 		];
 		$this->load->view('background_atas', $ba);
 		$this->load->view('hasil_scan', $d);
@@ -116,7 +121,7 @@ class Dashboard extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function simpan()
+	public function simpan_absen_sakit()
 	{
 		$id = $this->input->post('abs_id');
 		$data = $this->input->post();

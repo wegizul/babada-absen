@@ -88,7 +88,6 @@
         },
         dataType: "json",
         success: function(data) {
-          console.log(data.status);
           if (data.status == 1) {
             Swal.fire(
               'Sukses',
@@ -96,7 +95,7 @@
               'success'
             ).then((result) => {
               if (!result.isConfirmed) {
-                window.location.href = "<?= base_url('Dashboard/tampil') ?>";
+                window.location.href = "<?= base_url('Dashboard') ?>";
               } else {}
             })
           } else {

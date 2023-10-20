@@ -201,7 +201,7 @@
               </ul> -->
             </div>
             <p class="text-muted m-0"><?php if ($this->session->userdata("level") == 2) {
-                                        echo "Admin";
+                                        echo "Admin HRD";
                                       } else if ($this->session->userdata("level") == 3) {
                                         echo "Karyawan";
                                       } else {
@@ -218,7 +218,7 @@
             <li class="has_sub">
               <a href="<?= base_url('Dashboard') ?>" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span></a>
             </li>
-            <?php if ($this->session->userdata('level') < 2) { ?>
+            <?php if ($this->session->userdata('level') < 3) { ?>
               <li class="has_sub">
                 <a href="#menuEcommerce" data-bs-toggle="collapse" class="menu-link">
                   <span class="menu-icon"><i class="fas fa-server"></i></span>
