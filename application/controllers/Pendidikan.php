@@ -14,23 +14,25 @@ class Pendidikan extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function tampil()
+	public function tampil($id)
 	{
 		$this->session->set_userdata("judul", "Data Pendidikan Karyawan");
 		$ba = [
 			'judul' => "Data Pendidikan Karyawan",
 			'subjudul' => "Pendidikan Karyawan",
 		];
-		$d = [];
+		$d = [
+			'id' => $id,
+		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
-		$this->load->view('pendidikan_karyawan', $d);
+		$this->load->view('karyawan_pendidikan', $d);
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_pendidikan_karyawan()
+	public function ajax_list_pendidikan_karyawan($id)
 	{
-		$list = $this->pendidikan->get_datatables();
+		$list = $this->pendidikan->get_datatables($id);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $pendidikan) {
@@ -50,7 +52,7 @@ class Pendidikan extends CI_Controller
 		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->pendidikan->count_all(),
-			"recordsFiltered" => $this->pendidikan->count_filtered(),
+			"recordsFiltered" => $this->pendidikan->count_filtered($id),
 			"data" => $data,
 			"query" => $this->pendidikan->getlastquery(),
 		);
@@ -69,6 +71,24 @@ class Pendidikan extends CI_Controller
 	{
 		$id = $this->input->post('pdd_id');
 		$data = $this->input->post();
+
+		$nmfile = "ijazah_" . $data['pdd_kry_id'];
+
+		$config['upload_path'] = 'aset/foto/ijazah/';
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$config['file_name'] = $nmfile;
+
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+
+		if ($_FILES['pdd_ijazah']['name']) {
+			if (!$this->upload->do_upload('pdd_ijazah')) {
+				$error = array('error' => $this->upload->display_errors());
+				$resp['errorFoto'] = $error;
+			} else {
+				$data['pdd_ijazah'] = $this->upload->data('file_name');
+			}
+		}
 
 		if ($id == 0) {
 			$insert = $this->pendidikan->simpan("ba_karyawan_pendidikan", $data);

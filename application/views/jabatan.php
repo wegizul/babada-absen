@@ -48,13 +48,13 @@
 				<div class="modal-body form">
 					<div class="row">
 						<input type="hidden" id="jab_id" name="jab_id" value="">
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Nama Jabatan</label>
 								<input type="text" class="form-control" name="jab_nama" id="jab_nama" required>
 							</div>
 						</div>
-						<div class="col-lg-12">
+						<div class="col-lg-6">
 							<div class="form-group">
 								<label>Level</label>
 								<select class="form-control" name="jab_level" id="jab_level" required>

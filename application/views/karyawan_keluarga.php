@@ -1,12 +1,13 @@
+<input type="hidden" name="kga_kry_id" id="kga_kry_id" value="<?= $id ?>">
 <div class="row">
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> &nbsp;&nbsp;&nbsp; Tambah</a>
+			<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> Tambah</a>
 		</div>
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
+			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> Refresh</a>
 		</div>
 	</div>
 </div>
@@ -15,15 +16,15 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Shift</b></h3>
+				<h3 class="m-t-0 header-title"><a href="javascript:window.history.back()" class="btn btn-default btn-xs"><i class="fas fa-share fa-flip-horizontal"></i> Back</a><b> Data Keluarga Karyawan</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th width="5%">No</th>
-							<th>Nama Shift</th>
-							<th>Jam Masuk</th>
-							<th>Jam Pulang</th>
+							<th>Nama</th>
+							<th>Hubungan</th>
+							<th>No. Handphone</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -39,32 +40,41 @@
 </div>
 
 <!-- Bootstrap modal -->
-<div class="modal fade" id="modal_shift" role="dialog">
+<div class="modal fade" id="modal_keluarga" role="dialog">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Shift</h3>
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Data Keluarga</h3>
 			</div>
-			<form role="form col-lg-6" name="Shift" id="frm_shift">
+			<form role="form col-lg-6" name="Keluarga" id="frm_keluarga">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="sft_id" name="sft_id" value="">
+						<input type="hidden" id="kga_id" name="kga_id" value="">
+						<input type="hidden" id="kga_kry_id" name="kga_kry_id" value="<?= $id ?>">
 						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Nama Shift</label>
-								<input type="text" class="form-control" name="sft_nama" id="sft_nama" required>
+								<label>Nama</label>
+								<input type="text" class="form-control" name="kga_nama" id="kga_nama" required>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Jam Masuk</label>
-								<input type="time" class="form-control" name="sft_jam_masuk" id="sft_jam_masuk" required>
+								<label>Hubungan</label>
+								<select class="form-control" name="kga_hubungan" id="kga_hubungan" required>
+									<option value="Ayah">Ayah</option>
+									<option value="Ibu">Ibu</option>
+									<option value="Kakak">Kakak</option>
+									<option value="Adik">Adik</option>
+									<option value="Sepupu">Sepupu</option>
+									<option value="Paman">Paman</option>
+									<option value="Tante">Tante</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Jam Pulang</label>
-								<input type="time" class="form-control" name="sft_jam_pulang" id="sft_jam_pulang" required>
+								<label>No. Handphone</label>
+								<input type="number" min="0" class="form-control" name="kga_notelp" id="kga_notelp" required>
 							</div>
 						</div>
 					</div>
@@ -118,6 +128,7 @@
 <script>
 	var save_method; //for save method string
 	var table;
+	var id = $('#kga_kry_id').val();
 
 	function drawTable() {
 		$('#tabel-data').DataTable({
@@ -127,9 +138,7 @@
 				[10, 25, 50, -1],
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
-			buttons: [
-				'pageLength'
-			],
+			buttons: [],
 			"responsive": true,
 			"sort": true,
 			"processing": true, //Feature control the processing indicator.
@@ -137,7 +146,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_data_shift/",
+				"url": "../ajax_list_keluarga_karyawan/" + id,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -155,22 +164,22 @@
 
 	function tambah() {
 		reset_form();
-		$("#sft_id").val(0);
-		$("frm_shift").trigger("reset");
-		$('#modal_shift').modal({
+		$("#kga_id").val(0);
+		$("frm_keluarga").trigger("reset");
+		$('#modal_keluarga').modal({
 			show: true,
 			keyboard: false,
 			backdrop: 'static'
 		});
 	}
 
-	$("#frm_shift").submit(function(e) {
+	$("#frm_keluarga").submit(function(e) {
 		e.preventDefault();
 		$("#simpan").html("Menyimpan...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "../simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -181,7 +190,7 @@
 					toastr.success(res.desc);
 					drawTable();
 					reset_form();
-					$("#modal_shift").modal("hide");
+					$("#modal_keluarga").modal("hide");
 				} else {
 					toastr.error(res.desc);
 				}
@@ -197,9 +206,9 @@
 
 	});
 
-	function hapus_data_shift(id) {
+	function hapus_keluarga(id) {
 		event.preventDefault();
-		$("#sft_id").val(id);
+		$("#kga_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -209,12 +218,12 @@
 		});
 	}
 
-	function ubah_data_shift(id) {
+	function ubah_keluarga(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
-			data: "sft_id=" + id,
+			url: "../cari",
+			data: "kga_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
@@ -222,7 +231,7 @@
 					$("#" + dt[0]).val(dt[1]);
 				});
 				$(".inputan").attr("disabled", false);
-				$("#modal_shift").modal({
+				$("#modal_keluarga").modal({
 					show: true,
 					keyboard: false,
 					backdrop: 'static'
@@ -233,18 +242,18 @@
 	}
 
 	function reset_form() {
-		$("#sft_id").val(0);
-		$("#frm_shift")[0].reset();
+		$("#kga_id").val(0);
+		$("#frm_keluarga")[0].reset();
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#sft_id").val();
+		var id = $("#kga_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "../hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

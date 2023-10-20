@@ -1,12 +1,13 @@
+<input type="hidden" name="pdd_kry_id" id="pdd_kry_id" value="<?= $id ?>">
 <div class="row">
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> &nbsp;&nbsp;&nbsp; Tambah</a>
+			<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> Tambah</a>
 		</div>
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
+			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> Refresh</a>
 		</div>
 	</div>
 </div>
@@ -15,15 +16,18 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Shift</b></h3>
+				<h3 class="m-t-0 header-title"><a href="javascript:window.history.back()" class="btn btn-default btn-xs"><i class="fas fa-share fa-flip-horizontal"></i> Back</a><b> Data Pendidikan Karyawan</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th width="5%">No</th>
-							<th>Nama Shift</th>
-							<th>Jam Masuk</th>
-							<th>Jam Pulang</th>
+							<th>Pendidikan</th>
+							<th>Keahlian</th>
+							<th>Sekolah / Universitas</th>
+							<th>Jurusan</th>
+							<th>Tahun Masuk</th>
+							<th>Tahun Lulus</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -39,32 +43,67 @@
 </div>
 
 <!-- Bootstrap modal -->
-<div class="modal fade" id="modal_shift" role="dialog">
+<div class="modal fade" id="modal_pendidikan" role="dialog">
 	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Shift</h3>
+				<h3 class="modal-title"><i class="fas fa-user-graduate fa-xs"></i> Form Data Pendidikan</h3>
 			</div>
-			<form role="form col-lg-6" name="Shift" id="frm_shift">
+			<form role="form col-lg-6" name="Pendidikan" id="frm_pendidikan">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="sft_id" name="sft_id" value="">
-						<div class="col-lg-12">
+						<input type="hidden" id="pdd_id" name="pdd_id" value="">
+						<input type="hidden" id="pdd_kry_id" name="pdd_kry_id" value="<?= $id ?>">
+						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Nama Shift</label>
-								<input type="text" class="form-control" name="sft_nama" id="sft_nama" required>
+								<label>Tingkat Pendidikan</label>
+								<select class="form-control" name="pdd_last_education" id="pdd_last_education" required>
+									<option value="SMA/SMK">SMA/SMK</option>
+									<option value="D1">D1</option>
+									<option value="D2">D2</option>
+									<option value="D3">D3</option>
+									<option value="S1">S1</option>
+									<option value="S2">S2</option>
+									<option value="S3">S3</option>
+									<option value="Lainnya">Lainnya</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Jam Masuk</label>
-								<input type="time" class="form-control" name="sft_jam_masuk" id="sft_jam_masuk" required>
+								<label>Keahlian</label>
+								<input type="text" class="form-control" name="pdd_keahlian" id="pdd_keahlian" required>
 							</div>
 						</div>
 						<div class="col-lg-6">
 							<div class="form-group">
-								<label>Jam Pulang</label>
-								<input type="time" class="form-control" name="sft_jam_pulang" id="sft_jam_pulang" required>
+								<label>Nama Sekolah/Universitas</label>
+								<input type="text" class="form-control" name="pdd_school_name" id="pdd_school_name">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jurusan / Bidang Studi</label>
+								<input type="text" class="form-control" name="pdd_jurusan" id="pdd_jurusan">
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Tahun Masuk</label>
+								<input type="number" min="0" class="form-control" name="pdd_thn_masuk" id="pdd_thn_masuk" required>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="form-group">
+								<label>Tahun Lulus</label>
+								<input type="number" min="0" class="form-control" name="pdd_thn_lulus" id="pdd_thn_lulus" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Foto Ijazah</label><small><i> (ukuran foto 1080 x 1080 pixel)</i></small>
+								<div id="preview"></div>
+								<input type="file" accept=".jpg, .jpeg, .png" class="form-control" name="pdd_ijazah" id="pdd_ijazah">
 							</div>
 						</div>
 					</div>
@@ -118,6 +157,7 @@
 <script>
 	var save_method; //for save method string
 	var table;
+	var id = $('#pdd_kry_id').val();
 
 	function drawTable() {
 		$('#tabel-data').DataTable({
@@ -127,9 +167,7 @@
 				[10, 25, 50, -1],
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
-			buttons: [
-				'pageLength'
-			],
+			buttons: [],
 			"responsive": true,
 			"sort": true,
 			"processing": true, //Feature control the processing indicator.
@@ -137,7 +175,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_data_shift/",
+				"url": "../ajax_list_pendidikan_karyawan/" + id,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -155,22 +193,22 @@
 
 	function tambah() {
 		reset_form();
-		$("#sft_id").val(0);
-		$("frm_shift").trigger("reset");
-		$('#modal_shift').modal({
+		$("#pdd_id").val(0);
+		$("frm_pendidikan").trigger("reset");
+		$('#modal_pendidikan').modal({
 			show: true,
 			keyboard: false,
 			backdrop: 'static'
 		});
 	}
 
-	$("#frm_shift").submit(function(e) {
+	$("#frm_pendidikan").submit(function(e) {
 		e.preventDefault();
 		$("#simpan").html("Menyimpan...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "../simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -181,7 +219,7 @@
 					toastr.success(res.desc);
 					drawTable();
 					reset_form();
-					$("#modal_shift").modal("hide");
+					$("#modal_pendidikan").modal("hide");
 				} else {
 					toastr.error(res.desc);
 				}
@@ -197,9 +235,9 @@
 
 	});
 
-	function hapus_data_shift(id) {
+	function hapus_pendidikan(id) {
 		event.preventDefault();
-		$("#sft_id").val(id);
+		$("#pdd_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -209,20 +247,25 @@
 		});
 	}
 
-	function ubah_data_shift(id) {
+	function ubah_pendidikan(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
-			data: "sft_id=" + id,
+			url: "../cari",
+			data: "pdd_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
 				obj.map((dt) => {
-					$("#" + dt[0]).val(dt[1]);
+					if (dt[0] == "pdd_ijazah") {
+						$("#preview").append('<img src="<?= base_url('aset/foto/ijazah/') ?>' + dt[1] + '" width="100px">');
+						$("#pdd_ijazah").val();
+					} else {
+						$("#" + dt[0]).val(dt[1]);
+					}
 				});
 				$(".inputan").attr("disabled", false);
-				$("#modal_shift").modal({
+				$("#modal_pendidikan").modal({
 					show: true,
 					keyboard: false,
 					backdrop: 'static'
@@ -233,18 +276,19 @@
 	}
 
 	function reset_form() {
-		$("#sft_id").val(0);
-		$("#frm_shift")[0].reset();
+		$("#pdd_id").val(0);
+		$("#frm_pendidikan")[0].reset();
+		$("#preview").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#sft_id").val();
+		var id = $("#pdd_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "../hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

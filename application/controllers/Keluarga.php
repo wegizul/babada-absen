@@ -14,23 +14,25 @@ class Keluarga extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function tampil()
+	public function tampil($id)
 	{
 		$this->session->set_userdata("judul", "Data keluarga Karyawan");
 		$ba = [
 			'judul' => "Data Keluarga Karyawan",
 			'subjudul' => "Keluarga Karyawan",
 		];
-		$d = [];
+		$d = [
+			'id' => $id,
+		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
-		$this->load->view('keluarga_karyawan', $d);
+		$this->load->view('karyawan_keluarga', $d);
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_keluarga_karyawan()
+	public function ajax_list_keluarga_karyawan($id)
 	{
-		$list = $this->keluarga->get_datatables();
+		$list = $this->keluarga->get_datatables($id);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $keluarga) {
@@ -47,7 +49,7 @@ class Keluarga extends CI_Controller
 		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->keluarga->count_all(),
-			"recordsFiltered" => $this->keluarga->count_filtered(),
+			"recordsFiltered" => $this->keluarga->count_filtered($id),
 			"data" => $data,
 			"query" => $this->keluarga->getlastquery(),
 		);

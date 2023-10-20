@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 11:08 AM
+-- Generation Time: Oct 20, 2023 at 07:02 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,7 +50,8 @@ INSERT INTO `ba_absensi` (`abs_id`, `abs_kry_id`, `abs_cpy_kode`, `abs_shift_id`
 (16, 3, 'CPY103251', NULL, '2023-10-15', '10:58:34', NULL, 178, 178000, 2, 'wkwkwkwkwk', NULL),
 (18, 3, 'CPY103251', NULL, '2023-10-16', '11:17:57', NULL, 197, 197000, 2, 'hehe', NULL),
 (19, 3, 'CPY103251', NULL, '2023-10-14', NULL, NULL, NULL, NULL, 3, 'coba', 0x73757261745f335f323032332d31302d31372e706e67),
-(20, 3, 'CPY103251', NULL, '2023-10-17', NULL, NULL, NULL, NULL, 3, 'coba2', 0x73757261745f335f323032332d31302d3137312e504e47);
+(20, 3, 'CPY103251', NULL, '2023-10-17', NULL, NULL, NULL, NULL, 3, 'coba2', 0x73757261745f335f323032332d31302d3137312e504e47),
+(21, 3, 'CPY103251', NULL, '2023-10-19', '11:53:42', '12:02:33', 233, 233000, 2, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -75,7 +76,7 @@ CREATE TABLE `ba_company` (
 --
 
 INSERT INTO `ba_company` (`cpy_id`, `cpy_kode`, `cpy_nama`, `cpy_alamat`, `cpy_lat`, `cpy_lang`, `cpy_qr_code`, `cpy_jenis`, `cpy_induk`) VALUES
-(1, 'CPY103251', 'Babada Management', 'Jl. Lintas Timur Km. 14, Kec. Tenayan Raya, Pekanbaru', 0.4658762, 101.5202133, 0x4350593130333235312e706e67, 1, '');
+(1, 'CPY103251', 'Babada Management', 'Jl. Lintas Timur Km. 14, Kec. Tenayan Raya, Pekanbaru', 0.4658781, 101.5203067101, 0x4350593130333235312e706e67, 1, '');
 
 -- --------------------------------------------------------
 
@@ -234,7 +235,7 @@ CREATE TABLE `ba_rekap` (
 --
 
 INSERT INTO `ba_rekap` (`rkp_id`, `rkp_bulan`, `rkp_kry_id`, `rkp_cpy_kode`, `rkp_terlambat`, `rkp_denda`, `rkp_sakit`, `rkp_izin`, `rkp_alfa`, `rkp_cuti`) VALUES
-(7, 10, 3, 'CPY103251', 375, 375000, 2, 0, 0, 0);
+(7, 10, 3, 'CPY103251', 608, 608000, 2, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -247,10 +248,11 @@ CREATE TABLE `ba_user` (
   `usr_username` varchar(100) DEFAULT NULL,
   `usr_password` varchar(255) DEFAULT NULL,
   `usr_kry_id` bigint(20) DEFAULT NULL,
-  `usr_cpy_id` bigint(20) DEFAULT NULL,
+  `usr_cpy_kode` varchar(50) DEFAULT NULL,
   `usr_role` smallint(1) DEFAULT NULL COMMENT '1=admin, 2=karyawan',
   `usr_status` smallint(1) NOT NULL DEFAULT 1 COMMENT '0=nonaktif, 1=aktif',
   `usr_shift` smallint(1) DEFAULT NULL COMMENT '0=nonaktif, 1=aktif',
+  `usr_all_akses` smallint(1) DEFAULT NULL COMMENT '0=no, 1=yes',
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -258,9 +260,9 @@ CREATE TABLE `ba_user` (
 -- Dumping data for table `ba_user`
 --
 
-INSERT INTO `ba_user` (`usr_id`, `usr_username`, `usr_password`, `usr_kry_id`, `usr_cpy_id`, `usr_role`, `usr_status`, `usr_shift`, `date_created`) VALUES
-(1, 'administrator', 'b0fac120d0707b9c8470783a38e20e33', NULL, NULL, 1, 1, NULL, '2023-09-25 12:03:48'),
-(2, 'wegizul', '746a926d7a852eca82a7318ab7f0a223', 3, 1, 3, 1, 0, '2023-10-03 11:11:50');
+INSERT INTO `ba_user` (`usr_id`, `usr_username`, `usr_password`, `usr_kry_id`, `usr_cpy_kode`, `usr_role`, `usr_status`, `usr_shift`, `usr_all_akses`, `date_created`) VALUES
+(1, 'administrator', 'b0fac120d0707b9c8470783a38e20e33', NULL, NULL, 1, 1, NULL, NULL, '2023-09-25 12:03:48'),
+(2, 'wegizul', '746a926d7a852eca82a7318ab7f0a223', 3, 'CPY103251', 3, 1, 0, NULL, '2023-10-03 11:11:50');
 
 --
 -- Indexes for dumped tables
@@ -334,7 +336,7 @@ ALTER TABLE `ba_user`
 -- AUTO_INCREMENT for table `ba_absensi`
 --
 ALTER TABLE `ba_absensi`
-  MODIFY `abs_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `abs_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `ba_company`
