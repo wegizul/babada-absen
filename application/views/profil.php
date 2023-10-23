@@ -6,6 +6,7 @@
             <form role="form" name="Tambah" id="frm_tambah">
                 <div class="modal-body form">
                     <div class="row">
+                        <input type="hidden" name="kry_id" id="kry_id" value="<?= $karyawan->kry_id ?>">
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>NIK</label>
@@ -149,7 +150,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" id="simpan" class="btn btn-default"><i class="fas fa-check-circle"></i> Simpan</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()"><i class="fa-solid fa-circle-xmark"></i> Batal</button>
                 </div>
             </form>
         </div>
@@ -192,3 +192,37 @@
 
 <!-- Toastr -->
 <script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
+
+<script>
+    $("#frm_tambah").submit(function(e) {
+        e.preventDefault();
+        $("#simpan").html("Menyimpan...");
+        $(".btn").attr("disabled", true);
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('Karyawan/simpan') ?>",
+            data: new FormData(this),
+            processData: false,
+            contentType: false,
+            success: function(d) {
+                var res = JSON.parse(d);
+                var msg = "";
+                if (res.status == 1) {
+                    toastr.success(res.desc);
+                    setTimeout(function() {
+                        window.location.href = '<?= base_url('Dashboard') ?>';
+                    }, 2000);
+                } else {
+                    toastr.error(res.desc);
+                }
+                $("#simpan").html("Simpan");
+                $(".btn").attr("disabled", false);
+            },
+            error: function(jqXHR, namaStatus, errorThrown) {
+                $("#simpan").html("Simpan");
+                $(".btn").attr("disabled", false);
+                alert('Error get data from ajax');
+            }
+        });
+    });
+</script>
