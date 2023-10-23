@@ -120,7 +120,6 @@
         </div>
         <form method="post" id="frm_ubahpass">
           <div class="modal-body form">
-            <input type="hidden" name="pgnID" value="<?php $this->session->userdata("id_user"); ?>">
             <div class="form-group">
               <label>Password Lama</label>
               <input type="password" class="form-control infonya" name="log_pass" id="log_pass" value="" required>
@@ -128,7 +127,6 @@
             <div class="form-group">
               <label>Password Baru</label>
               <input type="password" class="form-control infonya" name="log_passBaru" id="log_passBaru" value="" required>
-
             </div>
             <div class="form-group">
               <label>Konfirmasi Password Baru</label>
@@ -190,7 +188,11 @@
       <div class="sidebar-inner slimscrollleft">
         <div class="user-details">
           <div class="pull-left">
-            <img src="<?= base_url('aset/') ?>assets/images/users/avatar-1.png" alt="" class="thumb-md img-circle">
+            <?php if ($foto) { ?>
+              <img src="<?= base_url('aset/foto/karyawan/' . $foto->kry_foto) ?>" alt="" class="thumb-md img-circle">
+            <?php } else { ?>
+              <img src="<?= base_url('aset/') ?>assets/images/users/avatar-1.png" alt="" class="thumb-md img-circle">
+            <?php } ?>
           </div>
           <div class="user-info">
             <div class="dropdown">
@@ -255,6 +257,9 @@
             <?php } else { ?>
               <li class="has_sub">
                 <a href="<?= base_url('Absensi/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
+              </li>
+              <li class="has_sub">
+                <a href="<?= base_url('Karyawan/profil') ?>" class="waves-effect"><i class="fas fa-user-edit"></i> <span> Profil </span></a>
               </li>
             <?php } ?>
             <li class="has_sub">

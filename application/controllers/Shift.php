@@ -11,6 +11,7 @@ class Shift extends CI_Controller
 		}
 		$this->load->library('upload');
 		$this->load->model('Model_Shift', 'data_shift');
+		$this->load->model('Model_Karyawan', 'karyawan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -20,6 +21,7 @@ class Shift extends CI_Controller
 		$ba = [
 			'judul' => "Data Shift Karyawan",
 			'subjudul' => "Shift Karyawan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [];
 		$this->load->helper('url');

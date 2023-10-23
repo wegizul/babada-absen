@@ -54,8 +54,8 @@
 						<input type="hidden" id="kry_id" name="kry_id" value="">
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label>Kode karyawan</label>
-								<input type="number" min="0" class="form-control" name="kry_kode" id="kry_kode" required>
+								<label>NIK</label>
+								<input type="text" class="form-control" name="kry_kode" id="kry_kode" required>
 							</div>
 						</div>
 						<div class="col-lg-4">
@@ -388,17 +388,6 @@
 			}
 		});
 	}
-
-	// function resign_karyawan() {
-	// 	reset_form();
-	// 	$("#kry_id").val(0);
-	// 	$("frm_resign").trigger("reset");
-	// 	$('#modal_resign').modal({
-	// 		show: true,
-	// 		keyboard: false,
-	// 		backdrop: 'static'
-	// 	});
-	// }
 
 	function resign_karyawan(id) {
 		$.ajax({

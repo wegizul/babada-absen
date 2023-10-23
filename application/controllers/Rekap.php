@@ -23,6 +23,7 @@ class Rekap extends CI_Controller
 		$ba = [
 			'judul' => "Rekap Absensi",
 			'subjudul' => "Rekap Absensi",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),

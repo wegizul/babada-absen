@@ -89,6 +89,18 @@ class Model_Karyawan extends CI_Model
 		return $query->row();
 	}
 
+	public function ambil_karyawan($id)
+	{
+		$this->db->from("ba_karyawan");
+		$this->db->join('ba_company', 'cpy_kode = kry_cpy_kode', 'left');
+		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
+		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
+		$this->db->where('kry_id', $id);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));

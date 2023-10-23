@@ -11,6 +11,7 @@ class Pendidikan extends CI_Controller
 		}
 		$this->load->library('upload');
 		$this->load->model('Model_Pendidikan', 'pendidikan');
+		$this->load->model('Model_Karyawan', 'karyawan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -20,6 +21,7 @@ class Pendidikan extends CI_Controller
 		$ba = [
 			'judul' => "Data Pendidikan Karyawan",
 			'subjudul' => "Pendidikan Karyawan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'id' => $id,

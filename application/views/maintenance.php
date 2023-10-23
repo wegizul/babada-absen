@@ -1,20 +1,12 @@
-	<div class="content">
-		<div class="demo-1 loading">
-			<main>
-				<div class="content" style="padding-bottom:0px;">
-					<div class="glitch" style="margin-left:auto;margin-right:auto;margin-bottom:0px;">
-						<div class="glitch__img"></div>
-						<div class="glitch__img"></div>
-						<div class="glitch__img"></div>
-						<div class="glitch__img"></div>
-						<div class="glitch__img"></div>
-					</div>
-				</div>
-			</main>
+<div class="card">
+	<div class="card-body p-4">
+
+		<div class="text-center">
+			<h1 class="mt-4" style="font-weight:bolder;">Page not found</h1>
+			<p class="text-muted mb-0">It's looking like you may have taken a wrong turn. Don't worry...
+				it happens to the best of us. You might want to check your internet connection.
+				Here's a little tip that might help you get back on track.</p>
 		</div>
-		<div class="col-lg-12" style="text-align:center;">
-			<h1><pre>Halaman ini tidak ditemukan / masih dalam tahap pembangunan</pre></h1>
-		</div>
-	</div>
-	<script src="<?=base_url('assets/assets/plugins/glitch/');?>js/imagesloaded.pkgd.min.js"></script>
-	<script src="<?=base_url('assets/assets/plugins/glitch/');?>js/demo.js"></script>
+
+	</div> <!-- end card-body -->
+</div>

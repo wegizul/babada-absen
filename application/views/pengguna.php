@@ -78,6 +78,7 @@
 								<label>Level</label>
 								<select class="form-control" name="usr_role" id="usr_role" required>
 									<option value="">Pilih Level</option>
+									<option value="2">Admin HRD</option>
 									<option value="3">Karyawan</option>
 								</select>
 							</div>

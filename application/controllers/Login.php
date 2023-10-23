@@ -41,7 +41,7 @@ class Login extends CI_Controller
 					$sess_data['username'] = $qad->usr_username;
 					$sess_data['password'] = $qad->usr_password;
 					$sess_data['nama'] = $qad->kry_nama;
-					$sess_data['id_karyawan'] = $qad->kry_id;
+					$sess_data['id_karyawan'] = $qad->usr_kry_id;
 					$sess_data['level'] = $qad->usr_role;
 					$sess_data['shift'] = $qad->usr_shift;
 					$sess_data['cpy_kode'] = $qad->usr_cpy_kode;
@@ -70,11 +70,10 @@ class Login extends CI_Controller
 			$cek = $this->Model_Login->cek_password($this->session->userdata("id_user"), $p);
 			if ($cek->num_rows() > 0) {
 				$data = array(
-					'password' => md5($this->input->post('log_passBaru'))
+					'usr_password' => md5($this->input->post('log_passBaru'))
 				);
-				$up_pass = $this->Model_Login->update('login', array('password' => md5($p)), $data);
+				$up_pass = $this->Model_Login->update('ba_user', array('usr_password' => md5($p)), $data);
 				if ($up_pass >= 0) {
-					$this->session->sess_destroy();
 					$up_data['status'] = TRUE;
 					$up_data['pesan'] = "Password berhasil diubah";
 				}

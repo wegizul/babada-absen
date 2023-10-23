@@ -61,13 +61,14 @@
 							<div class="form-group">
 								<label>Hubungan</label>
 								<select class="form-control" name="kga_hubungan" id="kga_hubungan" required>
+									<option value="Suami/Istri">Suami/Istri</option>
 									<option value="Ayah">Ayah</option>
 									<option value="Ibu">Ibu</option>
 									<option value="Kakak">Kakak</option>
 									<option value="Adik">Adik</option>
 									<option value="Sepupu">Sepupu</option>
 									<option value="Paman">Paman</option>
-									<option value="Tante">Tante</option>
+									<option value="Bibi">Bibi</option>
 								</select>
 							</div>
 						</div>

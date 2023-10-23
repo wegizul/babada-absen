@@ -11,6 +11,7 @@ class Jabatan extends CI_Controller
 		}
 		$this->load->library('upload');
 		$this->load->model('Model_Jabatan', 'jabatan');
+		$this->load->model('Model_Karyawan', 'karyawan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -20,6 +21,7 @@ class Jabatan extends CI_Controller
 		$ba = [
 			'judul' => "Data Jabatan",
 			'subjudul' => "Jabatan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [];
 		$this->load->helper('url');

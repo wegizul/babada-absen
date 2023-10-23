@@ -23,6 +23,7 @@ class Karyawan extends CI_Controller
 		$ba = [
 			'judul' => "Data Karyawan",
 			'subjudul' => "Karyawan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'company' => $this->company->get_company(),
@@ -173,5 +174,27 @@ class Karyawan extends CI_Controller
 			$resp['error'] = $err;
 		}
 		echo json_encode($resp);
+	}
+
+	public function profil()
+	{
+		$this->session->set_userdata("judul", "Profil");
+		$cari_kry = $this->session->userdata('id_karyawan');
+
+		$ba = [
+			'judul' => "Profil",
+			'subjudul' => "Profil",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
+		];
+		$d = [
+			'karyawan' => $this->karyawan->ambil_karyawan($cari_kry),
+			'company' => $this->company->get_company(),
+			'divisi' => $this->divisi->get_divisi(),
+			'jabatan' => $this->jabatan->get_jabatan(),
+		];
+		$this->load->helper('url');
+		$this->load->view('background_atas', $ba);
+		$this->load->view('profil', $d);
+		$this->load->view('background_bawah');
 	}
 }

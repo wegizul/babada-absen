@@ -39,6 +39,7 @@ class Dashboard extends CI_Controller
 		$ba = [
 			'judul' => "Dashboard",
 			'subjudul' => "",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 
 		$d = [

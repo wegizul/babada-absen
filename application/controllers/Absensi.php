@@ -24,6 +24,7 @@ class Absensi extends CI_Controller
 		$ba = [
 			'judul' => "Data Absensi",
 			'subjudul' => "History Absensi",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),

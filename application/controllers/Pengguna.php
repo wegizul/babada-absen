@@ -25,6 +25,7 @@ class Pengguna extends CI_Controller
 		$ba = [
 			'judul' => "Data Pengguna",
 			'subjudul' => "Pengguna",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),

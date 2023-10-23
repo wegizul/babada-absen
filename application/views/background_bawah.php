@@ -58,7 +58,7 @@
     $('#up_simpan').text('Menyimpan...'); //change button text
     $('.btn').attr('disabled', true); //set button enable 
     $.ajax({
-      url: "../Login/ubah_pass",
+      url: "Login/ubah_pass",
       type: "POST",
       data: $('#frm_ubahpass').serialize(),
       dataType: "JSON",
@@ -71,7 +71,7 @@
           $("#up_pesan").html(data.pesan);
           $("#up_infoalert").fadeIn();
           setTimeout(function() {
-            document.location.href = '';
+            document.location.href = '<?= base_url('Login/logout') ?>';
           }, 2000);
         } else {
           $("#up_infoalert").removeClass("alert-success");
@@ -83,10 +83,9 @@
         $('#up_simpan').text('Simpan'); //change button text
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        alert(jqXHR + " - " + textStatus + " - " + errorThrown);
+        // alert(jqXHR + " - " + textStatus + " - " + errorThrown);
         $('#up_simpan').text('Simpan'); //change button text
         $('.btn').attr('disabled', false); //set button enable 
-
       }
     });
   })

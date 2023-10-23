@@ -11,6 +11,7 @@ class Keluarga extends CI_Controller
 		}
 		$this->load->library('upload');
 		$this->load->model('Model_Keluarga', 'keluarga');
+		$this->load->model('Model_Karyawan', 'karyawan');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -20,6 +21,7 @@ class Keluarga extends CI_Controller
 		$ba = [
 			'judul' => "Data Keluarga Karyawan",
 			'subjudul' => "Keluarga Karyawan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
 			'id' => $id,
