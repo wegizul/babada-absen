@@ -1,3 +1,14 @@
+<style>
+	.lihatfoto {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.tutup {
+		margin-left: 95%;
+	}
+</style>
 <div class="row">
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
@@ -231,6 +242,17 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal_foto" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<button type="button" class="btn btn-default tutup" data-dismiss="modal" onclick="reset_form()">X</button>
+			<div class="modal-body form">
+				<div id="preview2"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
 
@@ -445,10 +467,37 @@
 		});
 	});
 
+	function lihat_foto(id) {
+		event.preventDefault();
+		$.ajax({
+			type: "POST",
+			url: "cari",
+			data: "kry_id=" + id,
+			dataType: "json",
+			success: function(data) {
+				var obj = Object.entries(data);
+				obj.map((dt) => {
+					if (dt[0] == "kry_foto") {
+						$("#preview2").append('<img src="<?= base_url('aset/foto/karyawan/') ?>' + dt[1] + '" width="500px" class="lihatfoto">');
+					} else {
+						$("#" + dt[0]).val(dt[1]);
+					}
+				});
+				$("#modal_foto").modal({
+					show: true,
+					keyboard: false,
+					backdrop: 'static'
+				});
+				return false;
+			}
+		});
+	}
+
 	function reset_form() {
 		$("#kry_id").val(0);
 		$("#frm_tambah")[0].reset();
 		$("#preview").html('');
+		$("#preview2").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
