@@ -2,7 +2,7 @@
 class Model_Rekap extends CI_Model
 {
 	var $table = 'ba_karyawan';
-	var $column_order = array('kry_id', 'kry_nama', 'rkp_bulan'); //set column field database for datatable orderable
+	var $column_order = array('kry_id', 'kry_nama', 'rkp_bulan', 'rkp_sakit', 'rkp_sakit', 'rkp_izin', 'rkp_alfa', 'rkp_cuti', 'rkp_terlambat', 'rkp_denda'); //set column field database for datatable orderable
 	var $column_search = array('kry_id', 'kry_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('kry_nama' => 'asc', 'rkp_bulan' => 'desc'); // default order  	private $db_sts;
 

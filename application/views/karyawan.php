@@ -478,7 +478,7 @@
 				var obj = Object.entries(data);
 				obj.map((dt) => {
 					if (dt[0] == "kry_foto") {
-						$("#preview2").append('<img src="<?= base_url('aset/foto/karyawan/') ?>' + dt[1] + '" width="500px" class="lihatfoto">');
+						$("#preview2").append('<img src="<?= base_url('aset/foto/karyawan/') ?>' + dt[1] + '" width="100%" class="lihatfoto">');
 					} else {
 						$("#" + dt[0]).val(dt[1]);
 					}

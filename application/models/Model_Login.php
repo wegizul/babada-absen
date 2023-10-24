@@ -2,9 +2,9 @@
 class Model_Login extends CI_Model
 {
 	var $table = 'ba_user';
-	var $column_order = array('usr_id', 'usr_username', 'kry_nama', 'cpy_nama', 'usr_role'); //set column field database for datatable orderable
-	var $column_search = array('usr_id', 'usr_username', 'kry_nama', 'cpy_nama', 'usr_role'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('usr_username' => 'asc'); // default order  	private $db_sts;
+	var $column_order = array('usr_id', 'kry_nama', 'usr_username', 'usr_role', 'usr_status',); //set column field database for datatable orderable
+	var $column_search = array('usr_id', 'kry_nama', 'usr_username', 'usr_role', 'usr_status'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('kry_nama' => 'asc'); // default order
 
 	public function __construct()
 	{

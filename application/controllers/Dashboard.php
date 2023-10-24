@@ -66,6 +66,7 @@ class Dashboard extends CI_Controller
 		$ba = [
 			'judul' => "Dashboard",
 			'subjudul' => "",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$this->load->view('background_atas', $ba);
 		$this->load->view('scan_qr');
@@ -93,6 +94,7 @@ class Dashboard extends CI_Controller
 
 		$ba = [
 			'judul' => "Hasil Scan",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 
 		$d = [
