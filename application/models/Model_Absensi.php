@@ -2,8 +2,8 @@
 class Model_Absensi extends CI_Model
 {
 	var $table = 'ba_absensi';
-	var $column_order = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable orderable
-	var $column_search = array('abs_id', 'abs_tanggal', 'kry_nama', 'cpy_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_ket'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $column_order = array('abs_id', 'abs_tanggal', 'kry_nama', 'abs_jam_masuk', 'abs_jam_pulang', 'abs_status'); //set column field database for datatable orderable
+	var $column_search = array('abs_id', 'abs_tanggal', 'kry_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
 	var $order = array('abs_tanggal' => 'desc'); // default order
 
 	public function __construct()
