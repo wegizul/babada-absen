@@ -91,24 +91,10 @@ class Absensi extends CI_Controller
 
 	public function simpan()
 	{
-		$id = $this->input->post('abs_id');
 		$jml_terlambat = $this->input->post('abs_terlambat');
 		$data = $this->input->post();
 		$data['abs_terlambat'] = floor($jml_terlambat / 60);
 		$data['abs_denda'] = floor($data['abs_terlambat'] * 1000);
-		
-		$waktu_absen = $this->input->post('abs_jam_masuk');
-		
-		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
-		
-		$absen_pulang = [
-			'abs_jam_pulang' => $waktu_absen,
-		];
-
-		$where = [
-			'abs_kry_id' => $data['abs_kry_id'],
-			'abs_tanggal' => $data['abs_tanggal'],
-		];
 		
 		$str = $data['abs_tanggal'];
 		$explode = explode("-", $str);
@@ -120,29 +106,25 @@ class Absensi extends CI_Controller
 		if ($data['abs_terlambat']) $total_terlambat = $data['abs_terlambat'];
 		if ($data['abs_denda']) $total_denda = $data['abs_denda'];
 
-		if (!$cek_absensi) {
-			$insert = $this->absensi->simpan("ba_absensi", $data);
+		$data2 = [
+			'rkp_bulan' => $explode[1],
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_cpy_kode' => $data['abs_cpy_kode'],
+			'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
+			'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
+		];
 
-			$data2 = [
-				'rkp_bulan' => $explode[1],
-				'rkp_kry_id' => $data['abs_kry_id'],
-				'rkp_cpy_kode' => $data['abs_cpy_kode'],
-				'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
-				'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
-			];
+		$where2 = [
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_bulan' => $explode[1],
+		];
 
-			$where2 = [
-				'rkp_kry_id' => $data['abs_kry_id'],
-				'rkp_bulan' => $explode[1],
-			];
-			
-			if (!$cek_rekap) {
-				$this->absensi->simpan("ba_rekap", $data2);
-			} else {
-				$this->absensi->update("ba_rekap", $where2, $data2);
-			}
+		$this->absensi->simpan("ba_absensi", $data);
+
+		if (!$cek_rekap) {
+			$insert = $this->absensi->simpan("ba_rekap", $data2);
 		} else {
-			$insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
+			$insert = $this->absensi->update("ba_rekap", $where2, $data2);
 		}
 
 		$error = $this->db->error();
@@ -171,6 +153,42 @@ class Absensi extends CI_Controller
 		} else {
 			$resp['status'] = 0;
 			$resp['desc'] = "<i class='fa fa-exclamation-triangle text-warning'></i>&nbsp;&nbsp;&nbsp; Data gagal dihapus";
+		}
+		echo json_encode($resp);
+	}
+
+	public function simpan_absen_pulang()
+	{
+		$data = $this->input->post();
+
+		$waktu_absen = $this->input->post('abs_jam_masuk');
+
+		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
+
+		$absen_pulang = [
+			'abs_jam_pulang' => $waktu_absen,
+		];
+
+		$where = [
+			'abs_kry_id' => $data['abs_kry_id'],
+			'abs_tanggal' => $data['abs_tanggal'],
+		];
+
+		if ($cek_absensi) $insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
+
+		$error = $this->db->error();
+		if (!empty($error)) {
+			$err = $error['message'];
+		} else {
+			$err = "";
+		}
+		if ($insert) {
+			$resp['status'] = 1;
+			$resp['desc'] = "Berhasil melakukan absen";
+		} else {
+			$resp['status'] = 0;
+			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
+			$resp['error'] = $err;
 		}
 		echo json_encode($resp);
 	}

@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <div class="card-box">
                 <?php foreach ($hasil as $h) {
-                    if (($lat < ($h->cpy_lat + (0.00008)) && $lat > ($h->cpy_lat - (0.00008))) && ($long < ($h->cpy_lang + (0.00008)) && $long > ($h->cpy_lang - (0.00008))) && $all_akses == 1) {
+                    if (($lat < ($h->cpy_lat + (0.008)) && $lat > ($h->cpy_lat - (0.008))) && ($long < ($h->cpy_lang + (0.008)) && $long > ($h->cpy_lang - (0.008))) && $all_akses == 1) {
                 ?>
                         <table class="table table-striped table-bordered">
                             <tr>

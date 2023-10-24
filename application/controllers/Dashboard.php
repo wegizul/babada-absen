@@ -28,7 +28,7 @@ class Dashboard extends CI_Controller
 			if (date('D') == "Sat" && $kode_company->cpy_jenis == 1) {
 				$jam_pulang = "12:00:00";
 			} else {
-				$jam_pulang = "17:00:00";
+				$jam_pulang = "15:00:00";
 			}
 		}
 

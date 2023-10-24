@@ -80,7 +80,7 @@
 
       $.ajax({
         type: "POST",
-        url: "<?= base_url('Absensi/simpan/') ?>",
+        url: "<?= base_url('Absensi/simpan_absen_pulang/') ?>",
         data: {
           abs_kry_id: id_karyawan,
           abs_jam_masuk: waktu_in,
