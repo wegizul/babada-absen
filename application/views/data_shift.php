@@ -137,7 +137,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_data_shift/",
+				"url": "Shift/ajax_list_data_shift/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.

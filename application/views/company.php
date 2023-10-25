@@ -166,7 +166,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_company/",
+				"url": "Company/ajax_list_company/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.

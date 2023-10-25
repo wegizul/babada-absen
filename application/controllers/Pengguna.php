@@ -19,7 +19,7 @@ class Pengguna extends CI_Controller
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
-	public function tampil()
+	public function index()
 	{
 		$this->session->set_userdata("judul", "Data Pengguna");
 		$ba = [

@@ -312,7 +312,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_karyawan/",
+				"url": "Karyawan/ajax_list_karyawan/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.

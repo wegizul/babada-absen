@@ -149,7 +149,7 @@ $bulan = [
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_absensi/" + karyawan + '/' + bulan + '/' + company,
+				"url": "Absensi/ajax_list_absensi/" + karyawan + '/' + bulan + '/' + company,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.

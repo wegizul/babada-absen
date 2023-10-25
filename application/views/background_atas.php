@@ -229,34 +229,34 @@
                 </a>
                 <ul class="sub-menu">
                   <li class="menu-item">
-                    <a href="<?= base_url('Divisi/tampil') ?>" class="waves-effect"><span> Data Divisi </span></a>
+                    <a href="<?= base_url('Divisi') ?>" class="waves-effect"><span> Data Divisi </span></a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?= base_url('Jabatan/tampil') ?>" class="waves-effect"><span> Data Jabatan </span></a>
+                    <a href="<?= base_url('Jabatan') ?>" class="waves-effect"><span> Data Jabatan </span></a>
                   </li>
                   <li class="menu-item">
-                    <a href="<?= base_url('Shift/tampil') ?>" class="waves-effect"><span> Data Shift </span></a>
+                    <a href="<?= base_url('Shift') ?>" class="waves-effect"><span> Data Shift </span></a>
                   </li>
                 </ul>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Company/tampil') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Perusahaan </span></a>
+                <a href="<?= base_url('Company') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Perusahaan </span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Karyawan/tampil') ?>" class="waves-effect"><i class="fas fa-users"></i> <span> Data Karyawan </span></a>
+                <a href="<?= base_url('Karyawan') ?>" class="waves-effect"><i class="fas fa-users"></i> <span> Data Karyawan </span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Pengguna/tampil') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Pengguna</span></a>
+                <a href="<?= base_url('Pengguna') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Pengguna</span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Absensi/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
+                <a href="<?= base_url('Absensi') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Rekap/tampil') ?>" class="waves-effect"><i class="fa fa-copy"></i> <span> Rekap Absensi </span></a>
+                <a href="<?= base_url('Rekap') ?>" class="waves-effect"><i class="fa fa-copy"></i> <span> Rekap Absensi </span></a>
               </li>
             <?php } else { ?>
               <li class="has_sub">
-                <a href="<?= base_url('Absensi/tampil') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
+                <a href="<?= base_url('Absensi') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
               <li class="has_sub">
                 <a href="<?= base_url('Karyawan/profil') ?>" class="waves-effect"><i class="fas fa-user-edit"></i> <span> Profil </span></a>

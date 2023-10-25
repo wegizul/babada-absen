@@ -130,7 +130,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "ajax_list_divisi/",
+				"url": "Divisi/ajax_list_divisi/",
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
