@@ -119,7 +119,7 @@ class Absensi extends CI_Controller
 			'rkp_bulan' => $explode[1],
 		];
 
-		$this->absensi->simpan("ba_absensi", $data);
+		$insert = $this->absensi->simpan("ba_absensi", $data);
 
 		if (!$cek_rekap) {
 			$insert = $this->absensi->simpan("ba_rekap", $data2);

@@ -79,7 +79,7 @@ class Dashboard extends CI_Controller
 		$ambil = $this->dashboard->ambil_lokasi($kode_lokasi);
 		$waktu_in = date('H:i:s');
 
-		$batas_masuk = "08:00:00";
+		$batas_masuk = "08:01:00";
 		$terlambat = 0;
 		$status = 0;
 		if (strtotime($waktu_in) < strtotime($batas_masuk)) {
