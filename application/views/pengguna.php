@@ -215,7 +215,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Pengguna/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -257,7 +257,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Pengguna/cari",
 			data: "usr_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -288,7 +288,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "Pengguna/hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

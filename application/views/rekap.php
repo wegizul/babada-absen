@@ -220,7 +220,7 @@ $bulan = [
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Rekap/cari",
 			data: "rkp_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -245,7 +245,7 @@ $bulan = [
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Rekap/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -290,7 +290,7 @@ $bulan = [
 		if (!bln) bln = null;
 		if (!cpy) cpy = null;
 		window.open("<?= base_url('Rekap/cetak/') ?>" + kry + "/" + bln + "/" + cpy, "_blank");
-		window.location.href = "<?= base_url('Rekap/tampil') ?>";
+		window.location.href = "<?= base_url('Rekap') ?>";
 	}
 
 	$(document).ready(function() {

@@ -199,7 +199,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Company/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -241,7 +241,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Company/cari",
 			data: "cpy_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -272,7 +272,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "Company/hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

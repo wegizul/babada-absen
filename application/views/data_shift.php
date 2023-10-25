@@ -170,7 +170,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Shift/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -194,7 +194,6 @@
 				alert('Error get data from ajax');
 			}
 		});
-
 	});
 
 	function hapus_data_shift(id) {
@@ -213,7 +212,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Shift/cari",
 			data: "sft_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -244,7 +243,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "Shift/hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

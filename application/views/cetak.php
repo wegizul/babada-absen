@@ -78,12 +78,12 @@
                                 <td style="text-align: left;"><?= $dt->kry_nama ?></td>
                                 <td><?= $bulan ?></td>
                                 <td><?= $hadir ? $hadir : 0 ?></td>
-                                <td><?= $sakit ? $sakit : 0 ?></td>
-                                <td><?= $izin ? $izin : 0 ?></td>
-                                <td><?= $alfa ? $alfa : 0 ?></td>
-                                <td><?= $cuti ? $cuti : 0 ?></td>
-                                <td><?= $terlambat ? $terlambat : 0 ?></td>
-                                <td><?= $denda ? $denda : 0 ?></td>
+                                <td><?= $dt->rkp_sakit ? $dt->rkp_sakit : 0 ?></td>
+                                <td><?= $dt->rkp_izin ? $dt->rkp_izin : 0 ?></td>
+                                <td><?= $dt->rkp_alfa ? $dt->rkp_alfa : 0 ?></td>
+                                <td><?= $dt->rkp_cuti ? $dt->rkp_cuti : 0 ?></td>
+                                <td><?= $dt->rkp_terlambat ? $dt->rkp_terlambat : 0 ?></td>
+                                <td>Rp. <?= $dt->rkp_denda ? number_format($dt->rkp_denda, 0) : 0 ?></td>
                             </tr>
                         <?php } ?>
                     </table>

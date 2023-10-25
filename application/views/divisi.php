@@ -163,7 +163,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Divisi/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -206,7 +206,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Divisi/cari",
 			data: "dvi_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -237,7 +237,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "Divisi/hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";

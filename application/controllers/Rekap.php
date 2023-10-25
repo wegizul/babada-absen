@@ -119,12 +119,6 @@ class Rekap extends CI_Controller
 			'tampil' => $ambil_rekap,
 			'bulan' => $this->rekap->bulan($bulan),
 			'hadir' => $hadir,
-			'sakit' => $rekap->rkp_sakit,
-			'izin' => $rekap->rkp_izin,
-			'alfa' => $rekap->rkp_alfa,
-			'cuti' => $rekap->rkp_cuti,
-			'terlambat' => $rekap->rkp_terlambat,
-			'denda' => "Rp. " . number_format($rekap->rkp_denda, 0),
 		];
 		$this->load->view('cetak', $data);
 	}

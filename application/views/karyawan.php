@@ -345,7 +345,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan",
+			url: "Karyawan/simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -387,7 +387,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Karyawan/cari",
 			data: "kry_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -414,7 +414,7 @@
 	function resign_karyawan(id) {
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Karyawan/cari",
 			data: "kry_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -441,7 +441,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "simpan_resign",
+			url: "Karyawan/simpan_resign",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -471,7 +471,7 @@
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "cari",
+			url: "Karyawan/cari",
 			data: "kry_id=" + id,
 			dataType: "json",
 			success: function(data) {
@@ -507,7 +507,7 @@
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "hapus/" + id,
+			url: "Karyawan/hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";
