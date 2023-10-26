@@ -122,9 +122,9 @@ class Absensi extends CI_Controller
 		$insert = $this->absensi->simpan("ba_absensi", $data);
 
 		if (!$cek_rekap) {
-			$insert = $this->absensi->simpan("ba_rekap", $data2);
+			$this->absensi->simpan("ba_rekap", $data2);
 		} else {
-			$insert = $this->absensi->update("ba_rekap", $where2, $data2);
+			$this->absensi->update("ba_rekap", $where2, $data2);
 		}
 
 		$error = $this->db->error();
