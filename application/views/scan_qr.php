@@ -1,3 +1,10 @@
+<style>
+  #qrcode {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 <div class="container">
   <div class="row">
     <div class="col-lg">
@@ -8,9 +15,11 @@
         <div class="panel-body text-center">
           <input type="hidden" id="lat" value="">
           <input type="hidden" id="long" value="">
-          <canvas style="width: 80%;"></canvas>
-          <hr>
-          <select></select>
+          <input type="hidden" id="xx" value="<?= $x ?>">
+          <div style="width: 90%" id="qrcode"></div>
+          <!-- <canvas style="width: 80%;"></canvas> -->
+          <!--<hr>-->
+          <!-- <select></select> -->
         </div>
         <div class="panel-footer">
           <center><a class="btn btn-default" href="../"><i class="fa fa-reply"></i> Kembali</a> <a class="btn btn-default" href="#" onClick="titik()"><i class="fa fa-map-pin"></i> Sesuaikan Titik</a></center>
@@ -23,13 +32,11 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <!-- Js Lib -->
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/jquery.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/qrcodelib.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/webcodecamjquery.js"></script>
+<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/jquery.js"></script>-->
+<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/qrcodelib.js"></script>-->
+<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/webcodecamjquery.js"></script>-->
 
-<script type="text/javascript">
-
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/1.2.4/html5-qrcode.min.js"></script>
 
 <script type="text/javascript">
   function titik() {
@@ -59,29 +66,51 @@
     $('#long').val(longitude);
 
   }
-  var arg = {
-    resultFunction: function(result) {
-      var lat = $('#lat').val();
-      var long = $('#long').val();
-      if (!lat) lat = 0;
-      if (!long) long = 0;
 
-      var redirect = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long;
-      $.redirectPost(redirect, {
-        kode_lokasi: result.code,
-      });
-    }
-  };
+  function onScanSuccess(kode) {
+    var lat = $('#lat').val();
+    var long = $('#long').val();
+    var shift = $('#xx').val();
+    if (!lat) lat = 0;
+    if (!long) long = 0;
 
-  var decoder = $("canvas").WebCodeCamJQuery(arg).data().plugin_WebCodeCamJQuery;
-  decoder.buildSelectMenu("select");
-  decoder.play();
-  /*  Without visible select menu
-      decoder.buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
-  */
-  $('select').on('change', function() {
-    decoder.stop().play();
-  });
+    window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
+  }
+
+  var html5QrcodeScanner = new Html5QrcodeScanner(
+    "qrcode", {
+      fps: 10,
+      qrbox: 250
+    });
+  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+  function onScanFailure(error) {
+    console.warn(`QR error = ${error}`);
+  }
+
+  // var arg = {
+  //   resultFunction: function(result) {
+  //     var lat = $('#lat').val();
+  //     var long = $('#long').val();
+  //     if (!lat) lat = 0;
+  //     if (!long) long = 0;
+
+  //     var redirect = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long;
+  //     $.redirectPost(redirect, {
+  //       kode_lokasi: result.code,
+  //     });
+  //   }
+  // };
+
+  //   var decoder = $("canvas").WebCodeCamJQuery(arg).data().plugin_WebCodeCamJQuery;
+  //   decoder.buildSelectMenu("select");
+  //   decoder.play();
+  //   /*  Without visible select menu
+  //       decoder.buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
+  //   */
+  //   $('select').on('change', function() {
+  //      decoder.stop().play();
+  //   });
 
   // jquery extend function
   $.extend({

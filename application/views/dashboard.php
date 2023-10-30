@@ -102,16 +102,33 @@ if ($this->session->userdata('level') < 3) { ?>
 					<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
 					<div class="card-box">
 						<div class="row">
-							<div class="col-lg-3">
-							</div>
-							<div class="col-lg-6 text-center">
-								<img src="<?= base_url('aset/assets/images/qr-scan.png') ?>" width="100px" style="margin-bottom: 20px">
-								<div class="form-group">
-									<a href="<?= base_url('Dashboard/scan') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
+							<?php if ($this->session->userdata('shift') == 1) { ?>
+								<div class="col-lg-3">
 								</div>
-							</div>
-							<div class="col-lg-3">
-							</div>
+								<div class="col-lg-3 text-center">
+									<div class="form-group">
+										<a href="<?= base_url('Dashboard/scan/1') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Pagi</a>
+									</div>
+								</div>
+								<div class="col-lg-3 text-center">
+									<div class="form-group">
+										<a href="<?= base_url('Dashboard/scan/2') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Siang</a>
+									</div>
+								</div>
+								<div class="col-lg-3">
+								</div>
+							<?php } else { ?>
+								<div class="col-lg-3">
+								</div>
+								<div class="col-lg-6 text-center">
+									<img src="<?= base_url('aset/assets/images/qr-scan.png') ?>" width="100px" style="margin-bottom: 20px">
+									<div class="form-group">
+										<a href="<?= base_url('Dashboard/scan/0') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
+									</div>
+								</div>
+								<div class="col-lg-3">
+								</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -223,7 +240,7 @@ if ($this->session->userdata('level') < 3) { ?>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-2 p-2">
-								<img class="img-thumbnail" src="<?= ($karyawan->kry_foto == NULL ? base_url('assets/img/default-profile.png') : base_url("aset/foto/karyawan/{$karyawan->kry_foto}")); ?>" class="card-img" style="width:100%;">
+								<img class="img-thumbnail" src="<?= ($karyawan->kry_foto == NULL ? base_url('aset/assets/images/users/avatar-1.png') : base_url("aset/foto/karyawan/{$karyawan->kry_foto}")); ?>" class="card-img" style="width:100%;">
 							</div>
 							<div class="col-md-10" style="margin-top: 5px;">
 								<div class="table-responsive">
@@ -311,33 +328,14 @@ if ($this->session->userdata('level') < 3) { ?>
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
 
-<!-- DataTable -->
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.bootstrap.js"></script>
-
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.buttons.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/buttons.bootstrap.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/jszip.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/pdfmake.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/vfs_fonts.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/buttons.html5.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/buttons.print.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.fixedHeader.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.keyTable.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.responsive.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/responsive.bootstrap.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.scroller.min.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.colVis.js"></script>
-<script src="<?= base_url("aset"); ?>/assets/plugins/datatables/dataTables.fixedColumns.min.js"></script>
-
-<script src="<?= base_url("aset"); ?>/assets/pages/datatables.init.js"></script>
-
 <!-- date-range-picker -->
 <script src="<?= base_url("aset"); ?>/plugins/moment/moment.min.js"></script>
 <script src="<?= base_url("aset"); ?>/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 <script src="<?= base_url("aset"); ?>/plugins/daterangepicker/daterangepicker.js"></script>
+
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
 <!-- Select 2 -->
 <script src="<?= base_url("aset"); ?>/plugins/select2/select2.js"></script>
 

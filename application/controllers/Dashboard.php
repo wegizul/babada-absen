@@ -14,6 +14,7 @@ class Dashboard extends CI_Controller
 		$this->load->model('Model_Absensi', 'absensi');
 		$this->load->model('Model_Karyawan', 'karyawan');
 		$this->load->model('Model_Rekap', 'rekap');
+		$this->load->model('Model_Shift', 'shift');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -61,32 +62,52 @@ class Dashboard extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function scan()
+	public function scan($x)
 	{
 		$ba = [
 			'judul' => "Dashboard",
 			'subjudul' => "",
 			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
+		$d = [
+			'x' => $x,
+		];
 		$this->load->view('background_atas', $ba);
-		$this->load->view('scan_qr');
+		$this->load->view('scan_qr', $d);
 		$this->load->view('background_bawah');
 	}
 
-	public function hasil_scan($lat, $long)
+	public function hasil_scan($lat, $long, $kode_lokasi, $kode_shift)
 	{
-		$kode_lokasi = $this->input->post('kode_lokasi');
+		// $kode_lokasi = $this->input->post('kode_lokasi');
 		$ambil = $this->dashboard->ambil_lokasi($kode_lokasi);
 		$waktu_in = date('H:i:s');
 
 		$batas_masuk = "08:01:00";
 		$terlambat = 0;
 		$status = 0;
-		if (strtotime($waktu_in) < strtotime($batas_masuk)) {
-			$status = 1;
+		$shift = $this->session->userdata('shift');
+
+		if ($shift == 1) {
+			if (($kode_shift == 1) && (strtotime($waktu_in) < strtotime("06:00:00"))) {
+				$status = 1;
+			} else {
+				$terlambat = strtotime($waktu_in) - strtotime("06:01:00");
+				$status = 2;
+			}
+			if (($kode_shift == 2) && (strtotime($waktu_in) < strtotime("13:00:00"))) {
+				$status = 1;
+			} else {
+				$terlambat = strtotime($waktu_in) - strtotime("13:01:00");
+				$status = 2;
+			}
 		} else {
-			$terlambat = strtotime($waktu_in) - strtotime($batas_masuk);
-			$status = 2;
+			if (strtotime($waktu_in) < strtotime($batas_masuk)) {
+				$status = 1;
+			} else {
+				$terlambat = strtotime($waktu_in) - strtotime($batas_masuk);
+				$status = 2;
+			}
 		}
 
 		$all_akses = 1;
@@ -118,6 +139,7 @@ class Dashboard extends CI_Controller
 	{
 		$ba = [
 			'judul' => "Dashboard",
+			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$this->load->view('background_atas', $ba);
 		$this->load->view('scan_qr_pulang');

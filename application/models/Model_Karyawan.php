@@ -4,7 +4,7 @@ class Model_Karyawan extends CI_Model
 	var $table = 'ba_karyawan';
 	var $column_order = array('kry_id', 'kry_foto', 'kry_nama', 'kry_notelp', 'cpy_nama'); //set column field database for datatable orderable
 	var $column_search = array('kry_id', 'kry_nama', 'kry_notelp', 'kry_kode', 'cpy_nama', 'dvi_nama', 'jab_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('kry_nama' => 'asc'); // default order  	private $db_sts;
+	var $order = array('kry_id' => 'desc'); // default order
 
 	public function __construct()
 	{
@@ -96,6 +96,7 @@ class Model_Karyawan extends CI_Model
 		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
 		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
 		$this->db->where('kry_id', $id);
+		$this->db->where('kry_foto !=', NULL);
 		$query = $this->db->get();
 
 		return $query->row();
