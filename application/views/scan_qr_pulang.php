@@ -1,3 +1,10 @@
+<style>
+  #qrcode {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 <div class="container">
   <div class="row">
     <div class="col-lg">
@@ -13,7 +20,7 @@
             <input type="hidden" id="waktu_in" name="abs_jam_masuk" value="<?= date('H:i:s') ?>">
             <input type="hidden" id="tanggal" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
           </form>
-          <canvas style="width: 80%;"></canvas>
+          <div id="qrcode" style="width: 90%;"></div>
           <hr>
           <select></select>
         </div>
@@ -27,10 +34,7 @@
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- Js Lib -->
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/jquery.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/qrcodelib.js"></script>
-<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/webcodecamjquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/1.2.4/html5-qrcode.min.js"></script>
 
 <!-- Sweet alert -->
 <script src="<?= base_url(); ?>aset/plugins/sweetalert2/sweetalert2.all.min.js"></script>
@@ -67,57 +71,75 @@
     $('#long').val(longitude);
 
   }
-  var arg = {
-    resultFunction: function(result) {
-      var lat = $('#lat').val();
-      var long = $('#long').val();
-      if (!lat) lat = 0;
-      if (!long) long = 0;
 
-      var id_karyawan = $('#id_karyawan').val();
-      var waktu_in = $('#waktu_in').val();
-      var tanggal = $('#tanggal').val();
+  function onScanSuccess(kode) {
+    var lat = $('#lat').val();
+    var long = $('#long').val();
+    var shift = $('#xx').val();
+    if (!lat) lat = 0;
+    if (!long) long = 0;
 
-      $.ajax({
-        type: "POST",
-        url: "<?= base_url('Absensi/simpan_absen_pulang/') ?>",
-        data: {
-          abs_kry_id: id_karyawan,
-          abs_jam_masuk: waktu_in,
-          abs_tanggal: tanggal
-        },
-        dataType: "json",
-        success: function(data) {
-          if (data.status == 1) {
-            Swal.fire(
-              'Sukses',
-              data.desc,
-              'success'
-            ).then((result) => {
-              if (!result.isConfirmed) {
-                window.location.href = "<?= base_url('Dashboard') ?>";
-              } else {}
-            })
-          } else {
-            toastr.error(data.desc);
-          }
-        },
-        error: function(jqXHR, namaStatus, errorThrown) {
-          alert('Error get data from ajax');
+    window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
+  }
+
+  const qrCodeSuccessCallback = (kode) => {
+    var lat = $('#lat').val();
+    var long = $('#long').val();
+    if (!lat) lat = 0;
+    if (!long) long = 0;
+
+    var id_karyawan = $('#id_karyawan').val();
+    var waktu_in = $('#waktu_in').val();
+    var tanggal = $('#tanggal').val();
+
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url('Absensi/simpan_absen_pulang/') ?>",
+      data: {
+        abs_kry_id: id_karyawan,
+        abs_jam_masuk: waktu_in,
+        abs_tanggal: tanggal
+      },
+      dataType: "json",
+      success: function(data) {
+        if (data.status == 1) {
+          Swal.fire(
+            'Sukses',
+            data.desc,
+            'success'
+          ).then((result) => {
+            if (!result.isConfirmed) {
+              window.location.href = "<?= base_url('Dashboard') ?>";
+            } else {}
+          })
+        } else {
+          toastr.error(data.desc);
         }
-      });
+      },
+      error: function(jqXHR, namaStatus, errorThrown) {
+        alert('Error get data from ajax');
+      }
+    });
+  };
+
+  const config = {
+    fps: 10,
+    qrbox: {
+      width: 250,
+      height: 250
     }
   };
 
-  var decoder = $("canvas").WebCodeCamJQuery(arg).data().plugin_WebCodeCamJQuery;
-  decoder.buildSelectMenu("select");
-  decoder.play();
-  /*  Without visible select menu
-      decoder.buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
-  */
-  $('select').on('change', function() {
-    decoder.stop().play();
-  });
+  const html5QrCode = new Html5Qrcode("qrcode");
+  html5QrCode.start({
+    facingMode: "environment"
+  }, config, qrCodeSuccessCallback);
+
+  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+  function onScanFailure(error) {
+    console.warn(`QR error = ${error}`);
+  }
 
   // jquery extend function
   $.extend({

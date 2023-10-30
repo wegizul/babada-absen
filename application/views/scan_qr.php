@@ -77,11 +77,38 @@
     window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
   }
 
-  var html5QrcodeScanner = new Html5QrcodeScanner(
-    "qrcode", {
-      fps: 10,
-      qrbox: 250
-    });
+  const qrCodeSuccessCallback = (kode) => {
+    var lat = $('#lat').val();
+    var long = $('#long').val();
+    var shift = $('#xx').val();
+    if (!lat) lat = 0;
+    if (!long) long = 0;
+
+    window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
+  };
+
+  const config = {
+    fps: 10,
+    qrbox: {
+      width: 250,
+      height: 250
+    }
+  };
+
+  const html5QrCode = new Html5Qrcode("qrcode");
+  html5QrCode.start({
+    facingMode: "environment"
+  }, config, qrCodeSuccessCallback);
+
+  //   let config = {
+  //     fps: 10,
+  //     qrbox: 250,
+  //     rememberLastUsedCamera: true,
+  //   };
+
+  //   var html5QrcodeScanner = new Html5QrcodeScanner(
+  //     "qrcode", config, false);
+
   html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
   function onScanFailure(error) {
