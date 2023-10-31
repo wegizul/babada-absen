@@ -26,7 +26,7 @@ class Dashboard extends CI_Controller
 		$jam_masuk = "00:00:00";
 		$jam_pulang = "17:00:00";
 		if ($this->session->userdata('level') > 1) {
-			if (date('D') == "Sat" && $kode_company->cpy_jenis == 1) {
+			if (date('D') == "Sat" && $kode_company->cpy_jenis < 3) {
 				$jam_pulang = "12:00:00";
 			} else {
 				$jam_pulang = "15:00:00";

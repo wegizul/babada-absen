@@ -57,8 +57,8 @@ class Rekap extends CI_Controller
 			$row[] = $rekap->rkp_izin ? $rekap->rkp_izin : 0;
 			$row[] = $rekap->rkp_alfa ? $rekap->rkp_alfa : 0;
 			$row[] = $rekap->rkp_cuti ? $rekap->rkp_cuti : 0;
-			$row[] = number_format($rekap->rkp_terlambat, 0) . ' Menit';
-			$row[] = 'Rp. ' . number_format($rekap->rkp_denda, 0);
+			$row[] = $rekap->rkp_terlambat ? number_format($rekap->rkp_terlambat, 0) . ' Menit' : 0;
+			$row[] = $rekap->rkp_denda ? 'Rp. ' . number_format($rekap->rkp_denda, 0) : 0;
 			$row[] = "<a href='#' onClick='ubah_data(" . $rekap->rkp_id . ")' class='btn btn-default btn-sm' title='Ubah Data'><i class='fa fa-edit'></i></a>";
 			$data[] = $row;
 		}
