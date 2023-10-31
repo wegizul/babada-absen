@@ -16,10 +16,7 @@
           <input type="hidden" id="lat" value="">
           <input type="hidden" id="long" value="">
           <input type="hidden" id="xx" value="<?= $x ?>">
-          <div style="width: 90%" id="qrcode"></div>
-          <!-- <canvas style="width: 80%;"></canvas> -->
-          <!--<hr>-->
-          <!-- <select></select> -->
+          <div style="width: 50%" id="qrcode"></div>
         </div>
         <div class="panel-footer">
           <center><a class="btn btn-default" href="../"><i class="fa fa-reply"></i> Kembali</a> <a class="btn btn-default" href="#" onClick="titik()"><i class="fa fa-map-pin"></i> Sesuaikan Titik</a></center>
@@ -30,11 +27,6 @@
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Js Lib -->
-<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/jquery.js"></script>-->
-<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/qrcodelib.js"></script>-->
-<!--<script type="text/javascript" src="<?= base_url() ?>aset/scan/js/webcodecamjquery.js"></script>-->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/1.2.4/html5-qrcode.min.js"></script>
 
@@ -67,16 +59,6 @@
 
   }
 
-  function onScanSuccess(kode) {
-    var lat = $('#lat').val();
-    var long = $('#long').val();
-    var shift = $('#xx').val();
-    if (!lat) lat = 0;
-    if (!long) long = 0;
-
-    window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
-  }
-
   const qrCodeSuccessCallback = (kode) => {
     var lat = $('#lat').val();
     var long = $('#long').val();
@@ -99,54 +81,4 @@
   html5QrCode.start({
     facingMode: "environment"
   }, config, qrCodeSuccessCallback);
-
-  //   let config = {
-  //     fps: 10,
-  //     qrbox: 250,
-  //     rememberLastUsedCamera: true,
-  //   };
-
-  //   var html5QrcodeScanner = new Html5QrcodeScanner(
-  //     "qrcode", config, false);
-
-  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-  function onScanFailure(error) {
-    console.warn(`QR error = ${error}`);
-  }
-
-  // var arg = {
-  //   resultFunction: function(result) {
-  //     var lat = $('#lat').val();
-  //     var long = $('#long').val();
-  //     if (!lat) lat = 0;
-  //     if (!long) long = 0;
-
-  //     var redirect = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long;
-  //     $.redirectPost(redirect, {
-  //       kode_lokasi: result.code,
-  //     });
-  //   }
-  // };
-
-  //   var decoder = $("canvas").WebCodeCamJQuery(arg).data().plugin_WebCodeCamJQuery;
-  //   decoder.buildSelectMenu("select");
-  //   decoder.play();
-  //   /*  Without visible select menu
-  //       decoder.buildSelectMenu(document.createElement('select'), 'environment|back').init(arg).play();
-  //   */
-  //   $('select').on('change', function() {
-  //      decoder.stop().play();
-  //   });
-
-  // jquery extend function
-  $.extend({
-    redirectPost: function(location, args) {
-      var form = '';
-      $.each(args, function(key, value) {
-        form += '<input type="hidden" name="' + key + '" value="' + value + '">';
-      });
-      $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo('body').submit();
-    }
-  });
 </script>

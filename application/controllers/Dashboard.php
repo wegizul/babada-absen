@@ -25,18 +25,27 @@ class Dashboard extends CI_Controller
 
 		$jam_masuk = "00:00:00";
 		$jam_pulang = "17:00:00";
-		if ($this->session->userdata('level') > 1) {
-			if (date('D') == "Sat" && $kode_company->cpy_jenis < 3) {
-				$jam_pulang = "12:00:00";
-			} else {
-				$jam_pulang = "15:00:00";
-			}
-		}
 
 		$jam_sekarang = date('H:i:s');
 		$cek = $this->dashboard->cek_absen($user, $jam_masuk);
+
+		if ($this->session->userdata('level') > 1) {
+			if ($cek) {
+				if (date('D') == "Sat" && $kode_company->cpy_jenis < 3) {
+					$jam_pulang = "12:00:00";
+				} else if ($kode_company->cpy_jenis == 3 && $cek->abs_jam_masuk < "12:00:00") {
+					$jam_pulang = "13:00:00";
+				} else if ($kode_company->cpy_jenis == 3 && $cek->abs_jam_masuk > "13:00:00") {
+					$jam_pulang = "22:00:00";
+				} else {
+					$jam_pulang = "15:00:00";
+				}
+			}
+		}
+
 		$cek_pulang = $this->dashboard->cek_jam_pulang($user, $jam_pulang);
 		$cek_sakit_izin = $this->dashboard->cek_sakit_izin($user);
+
 		$ba = [
 			'judul' => "Dashboard",
 			'subjudul' => "",
@@ -79,7 +88,6 @@ class Dashboard extends CI_Controller
 
 	public function hasil_scan($lat, $long, $kode_lokasi, $kode_shift)
 	{
-		// $kode_lokasi = $this->input->post('kode_lokasi');
 		$ambil = $this->dashboard->ambil_lokasi($kode_lokasi);
 		$waktu_in = date('H:i:s');
 
@@ -89,14 +97,13 @@ class Dashboard extends CI_Controller
 		$shift = $this->session->userdata('shift');
 
 		if ($shift == 1) {
-			if (($kode_shift == 1) && (strtotime($waktu_in) < strtotime("06:00:00"))) {
+			if (($kode_shift == 1) && (strtotime($waktu_in) < "06:01:00")) {
 				$status = 1;
-			} else {
+			} else if (($kode_shift == 2) && (strtotime($waktu_in) < "13:01:00")) {
+				$status = 1;
+			} else if (($kode_shift == 1) && (strtotime($waktu_in) > "06:01:00")) {
 				$terlambat = strtotime($waktu_in) - strtotime("06:01:00");
 				$status = 2;
-			}
-			if (($kode_shift == 2) && (strtotime($waktu_in) < strtotime("13:00:00"))) {
-				$status = 1;
 			} else {
 				$terlambat = strtotime($waktu_in) - strtotime("13:01:00");
 				$status = 2;
@@ -128,7 +135,8 @@ class Dashboard extends CI_Controller
 			'terlambat' => $terlambat,
 			'lat' => $lat,
 			'long' => $long,
-			'all_akses' => $all_akses
+			'all_akses' => $all_akses,
+			'kode_shift' => $kode_shift
 		];
 		$this->load->view('background_atas', $ba);
 		$this->load->view('hasil_scan', $d);

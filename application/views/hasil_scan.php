@@ -35,6 +35,7 @@
                                 <input type="hidden" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
                                 <input type="hidden" name="abs_status" value="<?= $status ?>">
                                 <input type="hidden" name="abs_terlambat" value="<?= $terlambat ?>">
+                                <input type="hidden" name="abs_shift_id" value="<?= $kode_shift ?>">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label>Tambahkan Keterangan</label><small><i> (Optional)</i></small>
@@ -54,7 +55,7 @@
                             <h3 style="color:brown; font-weight:bold;">LOKASI TIDAK DITEMUKAN</h3>
                             <h6>Pastikan anda berada di lokasi kantor/unit kerja untuk melakukan absensi !!</h6>
                             <div class="form-group">
-                                <a href="<?= base_url('Dashboard/scan') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Ulangi Scan</a>
+                                <a href="<?= base_url('Dashboard/scan/' . $kode_shift) ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Ulangi Scan</a>
                             </div>
                         </div>
                 <?php }

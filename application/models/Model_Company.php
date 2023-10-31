@@ -96,6 +96,18 @@ class Model_Company extends CI_Model
 		return $query->row();
 	}
 
+	public function ambil_kode($lata, $latb, $longa, $longb)
+	{
+		$this->db->from("ba_company");
+		$this->db->where("cpy_lat <", $lata);
+		$this->db->where("cpy_lat >", $latb);
+		$this->db->where("cpy_lang <", $longa);
+		$this->db->where("cpy_lang >", $longb);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));

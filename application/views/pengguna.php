@@ -53,7 +53,7 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Nama Pengguna</label>
-								<select class="form-control" name="usr_kry_id" id="usr_kry_id" required>
+								<select class="form-control select2" name="usr_kry_id" id="usr_kry_id" style="width:100%;line-height:100px;" required>
 									<option value="">Pilih Karyawan</option>
 									<?php foreach ($karyawan as $p) { ?>
 										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
@@ -86,7 +86,7 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Perusahaan</label>
-								<select class="form-control" name="usr_cpy_kode" id="usr_cpy_kode" required>
+								<select class="form-control select2" name="usr_cpy_kode" id="usr_cpy_kode" required>
 									<option value="">Pilih Perusahaan</option>
 									<?php foreach ($company as $c) { ?>
 										<option value="<?= $c->cpy_kode ?>"><?= $c->cpy_nama ?></option>
@@ -153,11 +153,14 @@
 <script src="<?= base_url("aset"); ?>/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<!-- Select 2 -->
-<script src="<?= base_url("aset"); ?>/plugins/select2/select2.js"></script>
 
 <!-- Toastr -->
 <script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
+
+<!-- Select 2 -->
+<script src="<?= base_url("aset"); ?>/plugins/select2/js/select2.full.js"></script>
+
+<script src="../assets/libs/mohithg-switchery/switchery.min.js"></script>
 
 <!-- Custom Java Script -->
 <script>
@@ -315,6 +318,10 @@
 		singleDatePicker: true,
 		"autoAplog": true,
 		opens: 'left'
+	});
+
+	$('.select2').select2({
+		className: "form-control"
 	});
 
 	$(document).ready(function() {

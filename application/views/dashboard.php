@@ -105,11 +105,13 @@ if ($this->session->userdata('level') < 3) { ?>
 							<?php if ($this->session->userdata('shift') == 1) { ?>
 								<div class="col-lg-3">
 								</div>
-								<div class="col-lg-3 text-center">
-									<div class="form-group">
-										<a href="<?= base_url('Dashboard/scan/1') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Pagi</a>
+								<?php if (date('H:i') < "13:00") { ?>
+									<div class="col-lg-3 text-center">
+										<div class="form-group">
+											<a href="<?= base_url('Dashboard/scan/1') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Pagi</a>
+										</div>
 									</div>
-								</div>
+								<?php } ?>
 								<div class="col-lg-3 text-center">
 									<div class="form-group">
 										<a href="<?= base_url('Dashboard/scan/2') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Siang</a>

@@ -13,16 +13,14 @@
           <h3 class="panel-title">Arahkan Kamera ke QR Code !</h3>
         </div>
         <div class="panel-body text-center">
-          <!-- <input type="hidden" id="lat" value="">
-          <input type="hidden" id="long" value=""> -->
+          <input type="hidden" id="lat" value="">
+          <input type="hidden" id="long" value="">
           <form method="POST">
             <input type="hidden" id="id_karyawan" name="abs_kry_id" value="<?= $this->session->userdata('id_karyawan') ?>">
             <input type="hidden" id="waktu_in" name="abs_jam_masuk" value="<?= date('H:i:s') ?>">
             <input type="hidden" id="tanggal" name="abs_tanggal" value="<?= date('Y-m-d') ?>">
           </form>
-          <div id="qrcode" style="width: 90%;"></div>
-          <hr>
-          <select></select>
+          <div id="qrcode" style="width: 50%;"></div>
         </div>
         <div class="panel-footer">
           <center><a class="btn btn-default" href="../"><i class="fa fa-reply"></i> Kembali</a> <a class="btn btn-default" href="#" onClick="titik()"><i class="fa fa-map-pin"></i> Sesuaikan Titik</a></center>
@@ -38,10 +36,6 @@
 
 <!-- Sweet alert -->
 <script src="<?= base_url(); ?>aset/plugins/sweetalert2/sweetalert2.all.min.js"></script>
-
-<script type="text/javascript">
-
-</script>
 
 <script type="text/javascript">
   function titik() {
@@ -69,17 +63,6 @@
     var longitude = posisi.coords.longitude;
     $('#lat').val(latitude);
     $('#long').val(longitude);
-
-  }
-
-  function onScanSuccess(kode) {
-    var lat = $('#lat').val();
-    var long = $('#long').val();
-    var shift = $('#xx').val();
-    if (!lat) lat = 0;
-    if (!long) long = 0;
-
-    window.location.href = "<?= base_url('Dashboard/hasil_scan/') ?>" + lat + "/" + long + "/" + kode + "/" + shift;
   }
 
   const qrCodeSuccessCallback = (kode) => {
@@ -98,7 +81,9 @@
       data: {
         abs_kry_id: id_karyawan,
         abs_jam_masuk: waktu_in,
-        abs_tanggal: tanggal
+        abs_tanggal: tanggal,
+        lat: lat,
+        long: long
       },
       dataType: "json",
       success: function(data) {
@@ -134,21 +119,4 @@
   html5QrCode.start({
     facingMode: "environment"
   }, config, qrCodeSuccessCallback);
-
-  html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-  function onScanFailure(error) {
-    console.warn(`QR error = ${error}`);
-  }
-
-  // jquery extend function
-  $.extend({
-    redirectPost: function(location, args) {
-      var form = '';
-      $.each(args, function(key, value) {
-        form += '<input type="hidden" name="' + key + '" value="' + value + '">';
-      });
-      $('<form action="' + location + '" method="POST">' + form + '</form>').appendTo('body').submit();
-    }
-  });
 </script>

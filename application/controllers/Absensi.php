@@ -101,8 +101,12 @@ class Absensi extends CI_Controller
 
 		$cek_rekap = $this->rekap->cek_rekap($data['abs_kry_id'], $explode[1]);
 
+		$terlambat = 0;
+		$denda = 0;
 		$total_terlambat = 0;
 		$total_denda = 0;
+		if ($cek_rekap) $terlambat = $cek_rekap->rkp_terlambat;
+		if ($cek_rekap) $denda = $cek_rekap->rkp_denda;
 		if ($data['abs_terlambat']) $total_terlambat = $data['abs_terlambat'];
 		if ($data['abs_denda']) $total_denda = $data['abs_denda'];
 
@@ -110,8 +114,8 @@ class Absensi extends CI_Controller
 			'rkp_bulan' => $explode[1],
 			'rkp_kry_id' => $data['abs_kry_id'],
 			'rkp_cpy_kode' => $data['abs_cpy_kode'],
-			'rkp_terlambat' => $cek_rekap->rkp_terlambat + $total_terlambat,
-			'rkp_denda' => $cek_rekap->rkp_denda + $total_denda,
+			'rkp_terlambat' => $terlambat + $total_terlambat,
+			'rkp_denda' => $denda + $total_denda,
 		];
 
 		$where2 = [
@@ -165,8 +169,19 @@ class Absensi extends CI_Controller
 
 		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
 
+		$lata = $data['lat'] + (0.008);
+		$latb = $data['lat'] - (0.008);
+		$longa = $data['long'] + (0.008);
+		$longb = $data['long'] - (0.008);
+
+		$ambil_cpy = $this->company->ambil_kode($lata, $latb, $longa, $longb);
+
+		$cpy_kode = "Lokasi Tidak Diketahui";
+		if ($ambil_cpy) $cpy_kode = $ambil_cpy->cpy_kode;
+
 		$absen_pulang = [
 			'abs_jam_pulang' => $waktu_absen,
+			'abs_cpy_pulang' => $cpy_kode,
 		];
 
 		$where = [

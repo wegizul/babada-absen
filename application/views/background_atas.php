@@ -47,6 +47,8 @@
   <!--form validation init-->
   <script src="<?= base_url("aset"); ?>/assets/plugins/tinymce/tinymce.min.js"></script>
 
+  <link rel="stylesheet" href="<?= base_url("aset/assets"); ?>/plugins/select2/css/select2.css">
+
   <style>
     #text-nama {
       color: white;
