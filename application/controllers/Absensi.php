@@ -46,16 +46,16 @@ class Absensi extends CI_Controller
 			$status = "";
 			switch ($absensi->abs_status) {
 				case 1:
-					$status = "<span class='badge badge-success'>Hadir</span>";
+					$status = "<span class='badge badge-success' style='font-size: 10px;'>Hadir</span>";
 					break;
 				case 2:
-					$status = "<span class='badge badge-warning'>Terlambat</span>";
+					$status = "<span class='badge badge-warning' style='font-size: 10px;'>Terlambat</span>";
 					break;
 				case 3:
-					$status = "<span class='badge badge-danger'>Sakit</span>";
+					$status = "<span class='badge badge-danger' style='font-size: 10px;'>Sakit</span>";
 					break;
 				case 4:
-					$status = "<span class='badge badge-info'>Izin</span>";
+					$status = "<span class='badge badge-info' style='font-size: 10px;'>Izin</span>";
 					break;
 			}
 
@@ -65,6 +65,7 @@ class Absensi extends CI_Controller
 			$row[] = $absensi->kry_nama;
 			$row[] = $absensi->abs_jam_masuk;
 			$row[] = $absensi->abs_jam_pulang;
+			$row[] = $absensi->cpy_nama;
 			$row[] = $absensi->cpy_nama;
 			$row[] = $status;
 			$row[] = $absensi->abs_ket;

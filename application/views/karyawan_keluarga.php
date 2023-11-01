@@ -16,7 +16,7 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><a href="javascript:window.history.back()" class="btn btn-default btn-xs"><i class="fas fa-share fa-flip-horizontal"></i> Back</a><b> Data Keluarga Karyawan</b></h3>
+				<h3 class="m-t-0 header-title"><a href="javascript:window.history.back()" class="btn btn-default btn-xs"><i class="fas fa-share fa-flip-horizontal"></i> Back</a><b> Data Keluarga Karyausahawan</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>

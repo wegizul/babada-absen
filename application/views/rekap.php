@@ -26,8 +26,8 @@ $bulan = [
 	<?php if ($this->session->userdata('level') != 3) { ?>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
-				<select class="form-control" id="karyawan" onChange="filter(this.value)">
-					<option value="">Filter Karyawan</option>
+				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
+					<option value="">Filter Karyausahawan</option>
 					<?php foreach ($karyawan as $p) { ?>
 						<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
 					<?php } ?>
@@ -46,7 +46,7 @@ $bulan = [
 		</div>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
-				<select class="form-control" id="company" onChange="filter_cpy(this.value)">
+				<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
 					<option value="">Filter Company</option>
 					<?php foreach ($company as $q) { ?>
 						<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
@@ -67,7 +67,7 @@ $bulan = [
 					<thead>
 						<tr>
 							<th width="5%">No</th>
-							<th>Nama Karyawan</th>
+							<th>Nama</th>
 							<th>Bulan</th>
 							<th>Hadir</th>
 							<th>Sakit</th>
@@ -167,7 +167,7 @@ $bulan = [
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Select 2 -->
-<script src="<?= base_url("aset"); ?>/plugins/select2/select2.js"></script>
+<script src="<?= base_url("aset"); ?>/plugins/select2/js/select2.full.js"></script>
 
 <!-- Toastr -->
 <script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
@@ -186,6 +186,7 @@ $bulan = [
 		if (!company) company = null;
 		$('#tabel-data').DataTable({
 			"destroy": true,
+			dom: 'Bfrtip',
 			lengthMenu: [
 				[10, 25, 50, -1],
 				['10 rows', '25 rows', '50 rows', 'Show all']
@@ -292,6 +293,10 @@ $bulan = [
 		window.open("<?= base_url('Rekap/cetak/') ?>" + kry + "/" + bln + "/" + cpy, "_blank");
 		window.location.href = "<?= base_url('Rekap') ?>";
 	}
+
+	$('.select2').select2({
+		className: "form-control"
+	});
 
 	$(document).ready(function() {
 		drawTable();

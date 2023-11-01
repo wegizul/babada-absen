@@ -9,6 +9,26 @@
 			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
 		</div>
 	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="form-group">
+			<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
+				<option value="">Filter Karyausahawan</option>
+				<?php foreach ($karyawan as $p) { ?>
+					<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="form-group">
+			<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
+				<option value="">Filter Company</option>
+				<?php foreach ($company as $q) { ?>
+					<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
 </div>
 
 <div class="row">
@@ -54,7 +74,7 @@
 							<div class="form-group">
 								<label>Nama Pengguna</label>
 								<select class="form-control select2" name="usr_kry_id" id="usr_kry_id" style="width:100%;line-height:100px;" required>
-									<option value="">Pilih Karyawan</option>
+									<option value="">Pilih Karyausahawan</option>
 									<?php foreach ($karyawan as $p) { ?>
 										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
 									<?php } ?>
@@ -79,7 +99,7 @@
 								<select class="form-control" name="usr_role" id="usr_role" required>
 									<option value="">Pilih Level</option>
 									<option value="2">Admin HRD</option>
-									<option value="3">Karyawan</option>
+									<option value="3">Karyausahawan</option>
 								</select>
 							</div>
 						</div>
@@ -96,7 +116,7 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label>Karyawan Shift ?</label>
+								<label>Karyausahawan Shift ?</label>
 								<select class="form-control" name="usr_shift" id="usr_shift">
 									<option value="0">Tidak</option>
 									<option value="1">Ya</option>
@@ -168,6 +188,10 @@
 	var table;
 
 	function drawTable() {
+		var karyawan = $('#karyawan').val();
+		var company = $('#company').val();
+		if (!karyawan) karyawan = null;
+		if (!company) company = null;
 		$('#tabel-pengguna').DataTable({
 			"destroy": true,
 			dom: 'Bfrtip',
@@ -185,7 +209,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "Pengguna/ajax_list_pengguna/",
+				"url": "Pengguna/ajax_list_pengguna/" + karyawan + "/" + company,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -309,6 +333,14 @@
 			}
 		});
 	});
+
+	function filter(fil) {
+		drawTable();
+	}
+
+	function filter_cpy(ftr) {
+		drawTable();
+	}
 
 	$('.tgl').daterangepicker({
 		locale: {

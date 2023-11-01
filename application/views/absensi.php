@@ -23,8 +23,8 @@ $bulan = [
 	<?php if ($this->session->userdata('level') != 3) { ?>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
-				<select class="form-control" id="karyawan" onChange="filter(this.value)">
-					<option value="">Filter Karyawan</option>
+				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
+					<option value="">Filter Karyausahawan</option>
 					<?php foreach ($karyawan as $p) { ?>
 						<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
 					<?php } ?>
@@ -43,7 +43,7 @@ $bulan = [
 		</div>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
-				<select class="form-control" id="company" onChange="filter_cpy(this.value)">
+				<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
 					<option value="">Filter Company</option>
 					<?php foreach ($company as $q) { ?>
 						<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
@@ -60,15 +60,16 @@ $bulan = [
 			<div class="row" id="isidata">
 				<h3 class="m-t-0 header-title"><b>Riwayat Absensi</b></h3>
 				<h3 class="m-t-10 row"></h3>
-				<table id="tabel-data" class="table table-striped table-bordered">
+				<table id="tabel-data" class="table table-striped table-bordered" style="font-size: small;">
 					<thead>
 						<tr>
 							<th width="5%">No</th>
 							<th>Tanggal</th>
-							<th>Nama Karyawan</th>
+							<th>Nama</th>
 							<th>Jam Masuk</th>
 							<th>Jam Pulang</th>
-							<th>Lokasi Absen</th>
+							<th>Lokasi Absen Masuk</th>
+							<th>Lokasi Absen Pulang</th>
 							<th>Status</th>
 							<th>Keterangan</th>
 						</tr>
@@ -115,7 +116,7 @@ $bulan = [
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Select 2 -->
-<script src="<?= base_url("aset"); ?>/plugins/select2/select2.js"></script>
+<script src="<?= base_url("aset"); ?>/plugins/select2/js/select2.full.js"></script>
 
 <!-- Toastr -->
 <script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
@@ -295,6 +296,10 @@ $bulan = [
 		singleDatePicker: true,
 		"autoAplog": true,
 		opens: 'left'
+	});
+
+	$('.select2').select2({
+		className: "form-control"
 	});
 
 	$(document).ready(function() {

@@ -26,6 +26,7 @@ class Karyawan extends CI_Controller
 			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
 		];
 		$d = [
+			'karyawan' => $this->karyawan->get_karyawan(),
 			'company' => $this->company->get_company(),
 			'divisi' => $this->divisi->get_divisi(),
 			'jabatan' => $this->jabatan->get_jabatan(),
@@ -36,9 +37,9 @@ class Karyawan extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_karyawan()
+	public function ajax_list_karyawan($kry, $cpy)
 	{
-		$list = $this->karyawan->get_datatables();
+		$list = $this->karyawan->get_datatables($kry, $cpy);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $karyawan) {
@@ -74,7 +75,7 @@ class Karyawan extends CI_Controller
 		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->karyawan->count_all(),
-			"recordsFiltered" => $this->karyawan->count_filtered(),
+			"recordsFiltered" => $this->karyawan->count_filtered($kry, $cpy),
 			"data" => $data,
 			"query" => $this->karyawan->getlastquery(),
 		);

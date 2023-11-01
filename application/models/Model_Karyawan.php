@@ -12,12 +12,18 @@ class Model_Karyawan extends CI_Model
 		$this->load->database();
 	}
 
-	private function _get_datatables_query()
+	private function _get_datatables_query($karyawan, $cpy)
 	{
 		$this->db->from($this->table);
 		$this->db->join('ba_company', 'cpy_kode = kry_cpy_kode', 'left');
 		$this->db->join('ba_divisi', 'dvi_id = kry_dvi_id', 'left');
 		$this->db->join('ba_jabatan', 'jab_id = kry_jab_id', 'left');
+		if ($karyawan != 'null') {
+			$this->db->where('kry_id', $karyawan);
+		}
+		if ($cpy != 'null') {
+			$this->db->where('kry_cpy_kode', $cpy);
+		}
 		$i = 0;
 
 		foreach ($this->column_search as $item) // loop column 
@@ -49,18 +55,18 @@ class Model_Karyawan extends CI_Model
 		}
 	}
 
-	function get_datatables()
+	function get_datatables($karyawan, $cpy)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($karyawan, $cpy);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
 
-	function count_filtered()
+	function count_filtered($karyawan, $cpy)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($karyawan, $cpy);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

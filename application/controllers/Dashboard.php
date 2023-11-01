@@ -99,14 +99,16 @@ class Dashboard extends CI_Controller
 		if ($shift == 1) {
 			if (($kode_shift == 1) && (strtotime($waktu_in) < "06:01:00")) {
 				$status = 1;
-			} else if (($kode_shift == 2) && (strtotime($waktu_in) < "13:01:00")) {
-				$status = 1;
 			} else if (($kode_shift == 1) && (strtotime($waktu_in) > "06:01:00")) {
 				$terlambat = strtotime($waktu_in) - strtotime("06:01:00");
 				$status = 2;
-			} else {
+			} else if (($kode_shift == 2) && (strtotime($waktu_in) < "13:01:00") && (strtotime($waktu_in) > "08:01:00")) {
+				$status = 1;
+			} else if (($kode_shift == 2) && (strtotime($waktu_in) > "13:01:00")) {
 				$terlambat = strtotime($waktu_in) - strtotime("13:01:00");
 				$status = 2;
+			} else {
+				$status = 1; 
 			}
 		} else {
 			if (strtotime($waktu_in) < strtotime($batas_masuk)) {

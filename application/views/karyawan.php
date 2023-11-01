@@ -20,6 +20,26 @@
 			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
 		</div>
 	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="form-group">
+			<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
+				<option value="">Filter Karyausahawan</option>
+				<?php foreach ($karyawan as $p) { ?>
+					<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="form-group">
+			<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
+				<option value="">Filter Company</option>
+				<?php foreach ($company as $q) { ?>
+					<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
+				<?php } ?>
+			</select>
+		</div>
+	</div>
 </div>
 
 <div class="row">
@@ -284,7 +304,7 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Select 2 -->
-<script src="<?= base_url("aset"); ?>/plugins/select2/select2.js"></script>
+<script src="<?= base_url("aset"); ?>/plugins/select2/js/select2.full.js"></script>
 
 <!-- Toastr -->
 <script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
@@ -295,6 +315,10 @@
 	var table;
 
 	function drawTable() {
+		var karyawan = $('#karyawan').val();
+		var company = $('#company').val();
+		if (!karyawan) karyawan = null;
+		if (!company) company = null;
 		$('#tabel-data').DataTable({
 			"destroy": true,
 			dom: 'Bfrtip',
@@ -312,7 +336,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "Karyawan/ajax_list_karyawan/",
+				"url": "Karyawan/ajax_list_karyawan/" + karyawan + "/" + company,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -526,6 +550,14 @@
 		});
 	});
 
+	function filter(fil) {
+		drawTable();
+	}
+
+	function filter_cpy(ftr) {
+		drawTable();
+	}
+
 	$('.tgl').daterangepicker({
 		locale: {
 			format: 'DD/MM/YYYY'
@@ -534,6 +566,10 @@
 		singleDatePicker: true,
 		"autoAplog": true,
 		opens: 'left'
+	});
+
+	$('.select2').select2({
+		className: "form-control"
 	});
 
 	$(document).ready(function() {

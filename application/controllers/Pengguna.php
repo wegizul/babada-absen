@@ -37,9 +37,9 @@ class Pengguna extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_pengguna()
+	public function ajax_list_pengguna($karyawan, $cpy)
 	{
-		$list = $this->pengguna->get_datatables();
+		$list = $this->pengguna->get_datatables($karyawan, $cpy);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $pengguna) {
@@ -69,7 +69,7 @@ class Pengguna extends CI_Controller
 		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->pengguna->count_all(),
-			"recordsFiltered" => $this->pengguna->count_filtered(),
+			"recordsFiltered" => $this->pengguna->count_filtered($karyawan, $cpy),
 			"data" => $data,
 			"query" => $this->pengguna->getlastquery(),
 		);
