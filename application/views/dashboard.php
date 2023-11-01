@@ -31,7 +31,7 @@ if ($this->session->userdata('level') < 3) { ?>
 				<div class="widget-panel widget-style-2 bg-white">
 					<i class="fas fa-user-times text-custom"></i>
 					<h2 class="m-0 text-dark counter font-600"><span data-plugin="counterup"><?= number_format($cuti, 0, ",", "."); ?></span></h2>
-					<div class="text-muted m-t-5">Jumlah Karyawan Cuti</div>
+					<div class="text-muted m-t-5">Jumlah Cuti</div>
 				</div>
 			</div>
 			<div class="col-sm-12">
@@ -44,7 +44,7 @@ if ($this->session->userdata('level') < 3) { ?>
 								<tr>
 									<th width="5%">No</th>
 									<th>Tanggal</th>
-									<th>Nama Karyawan</th>
+									<th>Nama Karyausahawan</th>
 									<th>Jam Masuk</th>
 									<th>Jam Pulang</th>
 									<th>Lokasi Absen</th>

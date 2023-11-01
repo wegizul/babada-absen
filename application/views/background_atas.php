@@ -245,7 +245,7 @@
                 <a href="<?= base_url('Company') ?>" class="waves-effect"><i class="ti-map-alt"></i> <span> Perusahaan </span></a>
               </li>
               <li class="has_sub">
-                <a href="<?= base_url('Karyawan') ?>" class="waves-effect"><i class="fas fa-users"></i> <span> Data Karyawan </span></a>
+                <a href="<?= base_url('Karyawan') ?>" class="waves-effect"><i class="fas fa-users"></i> <span> Data Karyausahawan </span></a>
               </li>
               <li class="has_sub">
                 <a href="<?= base_url('Pengguna') ?>" class="waves-effect"><i class="ti-user"></i> <span> Data Pengguna</span></a>

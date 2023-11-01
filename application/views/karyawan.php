@@ -26,7 +26,7 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Karyawan</b></h3>
+				<h3 class="m-t-0 header-title"><b>Data Karyausahawan</b></h3>
 				<h3 class="m-t-10 row"></h3>
 				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
@@ -57,7 +57,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Karyawan</h3>
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Karyausahawan</h3>
 			</div>
 			<form role="form" name="Tambah" id="frm_tambah">
 				<div class="modal-body form">
@@ -77,7 +77,7 @@
 						</div>
 						<div class="col-lg-4">
 							<div class="form-group">
-								<label>Nama karyawan</label>
+								<label>Nama Lengkap</label>
 								<input type="text" class="form-control" name="kry_nama" id="kry_nama" required>
 							</div>
 						</div>
