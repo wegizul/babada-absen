@@ -159,7 +159,7 @@ class Model_Dashboard extends CI_Model
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_kry_id", $id);
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_jam_pulang >=", $jam_pulang);
+		$this->db->where("abs_jam_pulang != ''");
 		$this->db->where("abs_status <", 3);
 		$query = $this->db->get();
 

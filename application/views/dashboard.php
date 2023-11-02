@@ -98,7 +98,7 @@ if ($this->session->userdata('level') < 3) { ?>
 	<div class="container">
 		<div class="row">
 			<?php if (!$cek && !$cek_sakit_izin) { ?>
-				<?php if ($jam_sekarang > "16:00:00") { ?>
+				<?php if ((strtotime($jam_sekarang) > strtotime($jam_pulang)) && !$cek_pulang) { ?>
 					<div class="col-sm-12">
 						<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
 						<div class="card-box">
@@ -112,6 +112,24 @@ if ($this->session->userdata('level') < 3) { ?>
 									</div>
 								</div>
 								<div class="col-lg-3">
+								</div>
+							</div>
+						</div>
+					</div>
+				<?php } else if ($cek_pulang) { ?>
+					<div class="col-sm-12">
+						<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
+						<div class="card-box">
+							<div class="row">
+								<div class="col-lg-2">
+								</div>
+								<div class="col-lg-8 text-center">
+									<img src="<?= base_url('aset/assets/images/done.png') ?>" width="100px" style="margin-bottom: 20px">
+									<div class="form-group">
+										Terimakasih atas kerja kerasnya hari ini. <br>Selamat istirahat agar besok kembali dengan semangat baru
+									</div>
+								</div>
+								<div class="col-lg-2">
 								</div>
 							</div>
 						</div>

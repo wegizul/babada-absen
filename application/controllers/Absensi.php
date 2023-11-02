@@ -191,13 +191,24 @@ class Absensi extends CI_Controller
 			'abs_cpy_pulang' => $cpy_kode,
 		];
 
+		$simpan_absen_pulang = [
+			'abs_kry_id' => $data['abs_kry_id'],
+			'abs_tanggal' => $data['abs_tanggal'],
+			'abs_jam_pulang' => $waktu_absen,
+			'abs_cpy_pulang' => $cpy_kode,
+		];
+
 		$where = [
 			'abs_kry_id' => $data['abs_kry_id'],
 			'abs_tanggal' => $data['abs_tanggal'],
 		];
 
-		if ($cek_absensi) $insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
-
+		if ($cek_absensi) {
+			$insert = $this->absensi->update("ba_absensi", $where, $absen_pulang);
+		} else {
+			$insert = $this->absensi->simpan("ba_absensi", $simpan_absen_pulang);
+		}
+		
 		$error = $this->db->error();
 		if (!empty($error)) {
 			$err = $error['message'];
