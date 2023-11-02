@@ -44,12 +44,18 @@ class Absensi extends CI_Controller
 		foreach ($list as $absensi) {
 			$no++;
 			$status = "";
+			$ket_shift = "";
+			if ($absensi->abs_shift_id == 1) {
+				$ket_shift = "<i style='font-size: 10px;'>Shift Pagi</i>";
+			} else if ($absensi->abs_shift_id == 2) {
+				$ket_shift = "<i style='font-size: 10px;'>Shift Siang</i>";
+			}
 			switch ($absensi->abs_status) {
 				case 1:
-					$status = "<span class='badge badge-success' style='font-size: 10px;'>Hadir</span>";
+					$status = "<span class='badge badge-success' style='font-size: 10px;'>Hadir</span><br>$ket_shift";
 					break;
 				case 2:
-					$status = "<span class='badge badge-warning' style='font-size: 10px;'>Terlambat</span>";
+					$status = "<span class='badge badge-warning' style='font-size: 10px;'>Terlambat</span><br>$ket_shift";
 					break;
 				case 3:
 					$status = "<span class='badge badge-danger' style='font-size: 10px;'>Sakit</span>";
@@ -66,7 +72,7 @@ class Absensi extends CI_Controller
 			$row[] = $absensi->abs_jam_masuk;
 			$row[] = $absensi->abs_jam_pulang;
 			$row[] = $absensi->cpy_nama;
-			$row[] = $absensi->cpy_nama;
+			$row[] = $absensi->abs_cpy_pulang;
 			$row[] = $status;
 			$row[] = $absensi->abs_ket;
 			$data[] = $row;
