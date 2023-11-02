@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller
 		$user = $this->session->userdata('id_karyawan');
 		$kode_company = $this->dashboard->ambil_karyawan($user);
 
-		$jam_masuk = "00:00:00";
+		$jam_masuk = "03:00:00";
 		$jam_pulang = "17:00:00";
 
 		$jam_sekarang = date('H:i:s');
@@ -31,17 +31,21 @@ class Dashboard extends CI_Controller
 
 		if ($this->session->userdata('level') > 1) {
 			if ($cek) {
-				if ($kode_company->cpy_jenis < 2) {
+				if ($kode_company->cpy_jenis < 3) {
 					if (date('D') == "Sat") {
 						$jam_pulang = "12:00:00";
 					} else {
 						$jam_pulang = "15:00:00";
 					}
 				} else {
-					if ($cek->abs_jam_masuk < "12:00:00") {
-						$jam_pulang = "13:00:00";
+					if ($this->session->userdata('shift') == 1) {
+						if ($cek->abs_jam_masuk < "12:00:00") {
+							$jam_pulang = "13:00:00";
+						} else {
+							$jam_pulang = "22:00:00";
+						}
 					} else {
-						$jam_pulang = "22:00:00";
+						$jam_pulang = "17:00:00";
 					}
 				}
 			}
@@ -102,14 +106,14 @@ class Dashboard extends CI_Controller
 
 		if ($shift == 1) {
 			if ($kode_shift == 1) {
-				if (strtotime($waktu_in) < "06:01:00") {
+				if ($waktu_in < "06:01:00") {
 					$status = 1;
 				} else {
 					$terlambat = strtotime($waktu_in) - strtotime("06:01:00");
 					$status = 2;
 				}
 			} else {
-				if (strtotime($waktu_in) > "08:01:00" && strtotime($waktu_in) < "13:01:00") {
+				if ($waktu_in > "08:01:00" && $waktu_in < "13:01:00") {
 					$status = 1;
 				} else {
 					$terlambat = strtotime($waktu_in) - strtotime("13:01:00");

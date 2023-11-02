@@ -98,68 +98,88 @@ if ($this->session->userdata('level') < 3) { ?>
 	<div class="container">
 		<div class="row">
 			<?php if (!$cek && !$cek_sakit_izin) { ?>
-				<div class="col-sm-12">
-					<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
-					<div class="card-box">
-						<div class="row">
-							<?php if ($this->session->userdata('shift') == 1) { ?>
-								<div class="col-lg-3">
-								</div>
-								<?php if (date('H:i') < "13:00") { ?>
-									<div class="col-lg-3 text-center">
-										<div class="form-group">
-											<a href="<?= base_url('Dashboard/scan/1') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Pagi</a>
-										</div>
-									</div>
-								<?php } ?>
-								<div class="col-lg-3 text-center">
-									<div class="form-group">
-										<a href="<?= base_url('Dashboard/scan/2') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Siang</a>
-									</div>
-								</div>
-								<div class="col-lg-3">
-								</div>
-							<?php } else { ?>
+				<?php if ($jam_sekarang > "16:00:00") { ?>
+					<div class="col-sm-12">
+						<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
+						<div class="card-box">
+							<div class="row">
 								<div class="col-lg-3">
 								</div>
 								<div class="col-lg-6 text-center">
 									<img src="<?= base_url('aset/assets/images/qr-scan.png') ?>" width="100px" style="margin-bottom: 20px">
 									<div class="form-group">
-										<a href="<?= base_url('Dashboard/scan/0') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
+										<a href="<?= base_url('Dashboard/scan_pulang') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
 									</div>
 								</div>
 								<div class="col-lg-3">
 								</div>
-							<?php } ?>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="card-box">
-						<div class="row">
-							<div class="col-lg-12 text-center">
-								<div class="form-group">
-									<a href="javascript:absen_sakit()">
-										<img src="<?= base_url('aset/assets/images/absen_sakit.png') ?>" width="200px">
-									</a>
+				<?php } else { ?>
+					<div class="col-sm-12">
+						<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
+						<div class="card-box">
+							<div class="row">
+								<?php if ($this->session->userdata('shift') == 1) { ?>
+									<div class="col-lg-3">
+									</div>
+									<?php if (date('H:i') < "13:00") { ?>
+										<div class="col-lg-3 text-center">
+											<div class="form-group">
+												<a href="<?= base_url('Dashboard/scan/1') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Pagi</a>
+											</div>
+										</div>
+									<?php } ?>
+									<div class="col-lg-3 text-center">
+										<div class="form-group">
+											<a href="<?= base_url('Dashboard/scan/2') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Shift Siang</a>
+										</div>
+									</div>
+									<div class="col-lg-3">
+									</div>
+								<?php } else { ?>
+									<div class="col-lg-3">
+									</div>
+									<div class="col-lg-6 text-center">
+										<img src="<?= base_url('aset/assets/images/qr-scan.png') ?>" width="100px" style="margin-bottom: 20px">
+										<div class="form-group">
+											<a href="<?= base_url('Dashboard/scan/0') ?>" class="btn btn-success form-control"><i class="fa fa-camera"></i> Scan QR Code Absensi</a>
+										</div>
+									</div>
+									<div class="col-lg-3">
+									</div>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card-box">
+							<div class="row">
+								<div class="col-lg-12 text-center">
+									<div class="form-group">
+										<a href="javascript:absen_sakit()">
+											<img src="<?= base_url('aset/assets/images/absen_sakit.png') ?>" width="200px">
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-sm-6">
-					<div class="card-box">
-						<div class="row">
-							<div class="col-lg-12 text-center">
-								<div class="form-group">
-									<a href="javascript:ajukan_cuti()">
-										<img src="<?= base_url('aset/assets/images/absen_cuti.png') ?>" width="200px">
-									</a>
+					<div class="col-sm-6">
+						<div class="card-box">
+							<div class="row">
+								<div class="col-lg-12 text-center">
+									<div class="form-group">
+										<a href="javascript:ajukan_cuti()">
+											<img src="<?= base_url('aset/assets/images/absen_cuti.png') ?>" width="200px">
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				<?php } ?>
 			<?php } else if ((strtotime($jam_sekarang) > strtotime($jam_pulang)) && !$cek_pulang) { ?>
 				<div class="col-sm-12">
 					<h4><b><?= $dayList[$day] ?></b>, <?= date('d/m/Y') ?></h4>
