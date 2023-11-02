@@ -58,10 +58,13 @@ class Absensi extends CI_Controller
 					$status = "<span class='badge badge-warning' style='font-size: 10px;'>Terlambat</span><br>$ket_shift";
 					break;
 				case 3:
-					$status = "<span class='badge badge-danger' style='font-size: 10px;'>Sakit</span>";
+					$status = "<span class='badge badge-danger' style='font-size: 10px;'>Tidak Absen Masuk</span>";
 					break;
 				case 4:
-					$status = "<span class='badge badge-info' style='font-size: 10px;'>Izin</span>";
+					$status = "<span class='badge badge-danger' style='font-size: 10px;'>Pulang Cepat<br>$ket_shift</span>";
+					break;
+				case 5:
+					$status = "<span class='badge badge-info' style='font-size: 10px;'>Sakit</span>";
 					break;
 			}
 
@@ -75,6 +78,7 @@ class Absensi extends CI_Controller
 			$row[] = $absensi->abs_cpy_pulang;
 			$row[] = $status;
 			$row[] = $absensi->abs_ket;
+			$row[] = "<a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
 			$data[] = $row;
 		}
 
@@ -196,6 +200,7 @@ class Absensi extends CI_Controller
 			'abs_tanggal' => $data['abs_tanggal'],
 			'abs_jam_pulang' => $waktu_absen,
 			'abs_cpy_pulang' => $cpy_kode,
+			'abs_status' => 3,
 		];
 
 		$where = [

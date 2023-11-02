@@ -338,7 +338,7 @@ if ($this->session->userdata('level') < 3) { ?>
 							<div class="form-group">
 								<label>Status</label>
 								<select class="form-control" name="abs_status" id="abs_status">
-									<option value="3">Sakit</option>
+									<option value="5">Sakit</option>
 								</select>
 							</div>
 						</div>

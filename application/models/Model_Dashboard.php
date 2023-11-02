@@ -107,7 +107,7 @@ class Model_Dashboard extends CI_Model
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status != 3");
+		$this->db->where("abs_status < 5");
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -127,7 +127,7 @@ class Model_Dashboard extends CI_Model
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status", 4);
+		$this->db->where("abs_status", 6);
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -148,19 +148,19 @@ class Model_Dashboard extends CI_Model
 		$this->db->where("abs_kry_id", $id);
 		$this->db->where("abs_tanggal", date('Y-m-d'));
 		$this->db->where("abs_jam_masuk >", $jam_masuk);
-		$this->db->where("abs_status <", 3);
+		$this->db->where("abs_status <", 4);
 		$query = $this->db->get();
 
 		return $query->row();
 	}
 
-	public function cek_jam_pulang($id, $jam_pulang)
+	public function cek_jam_pulang($id)
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_kry_id", $id);
 		$this->db->where("abs_tanggal", date('Y-m-d'));
 		$this->db->where("abs_jam_pulang != ''");
-		$this->db->where("abs_status <", 3);
+		$this->db->where("abs_status <", 4);
 		$query = $this->db->get();
 
 		return $query->row();
@@ -171,7 +171,7 @@ class Model_Dashboard extends CI_Model
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_kry_id", $id);
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status >", 2);
+		$this->db->where("abs_status =", 5);
 		$query = $this->db->get();
 
 		return $query->row();

@@ -51,7 +51,7 @@ class Dashboard extends CI_Controller
 			}
 		}
 
-		$cek_pulang = $this->dashboard->cek_jam_pulang($user, $jam_pulang);
+		$cek_pulang = $this->dashboard->cek_jam_pulang($user);
 		$cek_sakit_izin = $this->dashboard->cek_sakit_izin($user);
 
 		$ba = [

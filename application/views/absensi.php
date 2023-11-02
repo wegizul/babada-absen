@@ -72,6 +72,7 @@ $bulan = [
 							<th>Lokasi Absen Pulang</th>
 							<th>Status</th>
 							<th>Keterangan</th>
+							<th>Hapus</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -84,6 +85,7 @@ $bulan = [
 		</div>
 	</div>
 </div>
+<input type="hidden" name="abs_id" id="abs_id" value="">
 
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
@@ -221,9 +223,9 @@ $bulan = [
 		});
 	});
 
-	function hapus_history(id) {
+	function hapus_absensi(id) {
 		event.preventDefault();
-		$("#his_id").val(id);
+		$("#abs_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -263,7 +265,7 @@ $bulan = [
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#his_id").val();
+		var id = $("#abs_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);
