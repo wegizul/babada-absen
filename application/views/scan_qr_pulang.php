@@ -13,8 +13,8 @@
           <h3 class="panel-title">Arahkan Kamera ke QR Code !</h3>
         </div>
         <div class="panel-body text-center">
-          <input type="hidden" id="lat" value="">
-          <input type="hidden" id="long" value="">
+          <!-- <input type="hidden" id="lat" value="">
+          <input type="hidden" id="long" value=""> -->
           <form method="POST">
             <input type="hidden" id="id_karyawan" name="abs_kry_id" value="<?= $this->session->userdata('id_karyawan') ?>">
             <input type="hidden" id="waktu_in" name="abs_jam_masuk" value="<?= date('H:i:s') ?>">
@@ -66,10 +66,10 @@
   }
 
   const qrCodeSuccessCallback = (kode) => {
-    var lat = $('#lat').val();
-    var long = $('#long').val();
-    if (!lat) lat = 0;
-    if (!long) long = 0;
+    // var lat = $('#lat').val();
+    // var long = $('#long').val();
+    // if (!lat) lat = 0;
+    // if (!long) long = 0;
 
     var id_karyawan = $('#id_karyawan').val();
     var waktu_in = $('#waktu_in').val();
@@ -82,8 +82,9 @@
         abs_kry_id: id_karyawan,
         abs_jam_masuk: waktu_in,
         abs_tanggal: tanggal,
-        lat: lat,
-        long: long
+        abs_cpy_pulang: kode,
+        // lat: lat,
+        // long: long
       },
       dataType: "json",
       success: function(data) {

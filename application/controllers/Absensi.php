@@ -195,26 +195,26 @@ class Absensi extends CI_Controller
 
 		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
 
-		$lata = $data['lat'] + (0.018);
-		$latb = $data['lat'] - (0.018);
-		$longa = $data['long'] + (0.018);
-		$longb = $data['long'] - (0.018);
+		// $lata = $data['lat'] + (0.018);
+		// $latb = $data['lat'] - (0.018);
+		// $longa = $data['long'] + (0.018);
+		// $longb = $data['long'] - (0.018);
 
-		$ambil_cpy = $this->company->ambil_kode($lata, $latb, $longa, $longb);
-
-		$cpy_kode = "0";
-		if ($ambil_cpy) $cpy_kode = $ambil_cpy->cpy_kode;
+		// $ambil_cpy = $this->company->ambil_kode($lata, $latb, $longa, $longb);
+		
+		// $cpy_kode = "0";
+		// if ($ambil_cpy) $cpy_kode = $ambil_cpy->cpy_kode;
 
 		$absen_pulang = [
 			'abs_jam_pulang' => $waktu_absen,
-			'abs_cpy_pulang' => $cpy_kode,
+			'abs_cpy_pulang' => $data['abs_cpy_kode'],
 		];
 
 		$simpan_absen_pulang = [
 			'abs_kry_id' => $data['abs_kry_id'],
 			'abs_tanggal' => $data['abs_tanggal'],
 			'abs_jam_pulang' => $waktu_absen,
-			'abs_cpy_pulang' => $cpy_kode,
+			'abs_cpy_pulang' => $data['abs_cpy_kode'],
 			'abs_status' => 3,
 		];
 
