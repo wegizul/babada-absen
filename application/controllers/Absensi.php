@@ -21,14 +21,20 @@ class Absensi extends CI_Controller
 	public function index()
 	{
 		$this->session->set_userdata("judul", "Data Absensi");
+		$user = $this->session->userdata('id_karyawan');
+		$total_denda = 0;
+		$hitung_denda = $this->absensi->total_denda($user, date('m'));
+		if ($hitung_denda->total) $total_denda = number_format($hitung_denda->total, 0);
+		
 		$ba = [
 			'judul' => "Data Absensi",
 			'subjudul' => "History Absensi",
-			'foto' => $this->karyawan->ambil_karyawan($this->session->userdata('id_karyawan')),
+			'foto' => $this->karyawan->ambil_karyawan($user),
 		];
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),
 			'company' => $this->company->get_company(),
+			'total_denda' => $total_denda
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);
@@ -68,17 +74,26 @@ class Absensi extends CI_Controller
 					break;
 			}
 
+			$lok_masuk = '';
+			$lok_pulang = '';
+			$ambil_masuk = $this->company->ambil_company($absensi->abs_cpy_kode);
+			$ambil_pulang = $this->company->ambil_company($absensi->abs_cpy_pulang);
+			if ($ambil_masuk) $lok_masuk = $ambil_masuk->cpy_nama;
+			if ($ambil_pulang) $lok_pulang = $ambil_pulang->cpy_nama;
+
 			$row = array();
 			$row[] = $no;
 			$row[] = $absensi->abs_tanggal;
 			$row[] = $absensi->kry_nama;
 			$row[] = $absensi->abs_jam_masuk;
 			$row[] = $absensi->abs_jam_pulang;
-			$row[] = $absensi->cpy_nama;
-			$row[] = $absensi->abs_cpy_pulang;
+			$row[] = $lok_masuk;
+			$row[] = $lok_pulang;
 			$row[] = $status;
 			$row[] = $absensi->abs_ket;
-			$row[] = "<a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
+			if ($this->session->userdata('level') < 3) {
+				$row[] = "<a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
+			}
 			$data[] = $row;
 		}
 

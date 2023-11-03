@@ -15,11 +15,13 @@ $bulan = [
 ]
 ?>
 <div class="row">
-	<div class="col-md-2 col-xs-12">
-		<div class="form-group">
-			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
+	<?php if ($this->session->userdata('level') > 2) { ?>
+		<div class="col-md-4 col-xs-12">
+			<div class="form-group">
+				<div class="card-box">Total Denda Terlambat : <b>Rp <?= $total_denda ?></b></div>
+			</div>
 		</div>
-	</div>
+	<?php } ?>
 	<?php if ($this->session->userdata('level') != 3) { ?>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
@@ -66,13 +68,15 @@ $bulan = [
 							<th width="5%">No</th>
 							<th>Tanggal</th>
 							<th>Nama</th>
-							<th>Jam Masuk</th>
-							<th>Jam Pulang</th>
-							<th>Lokasi Absen Masuk</th>
-							<th>Lokasi Absen Pulang</th>
+							<th>Masuk</th>
+							<th>Pulang</th>
+							<th>Lokasi Masuk</th>
+							<th>Lokasi Pulang</th>
 							<th>Status</th>
 							<th>Keterangan</th>
-							<th>Hapus</th>
+							<?php if ($this->session->userdata('level') < 3) { ?>
+								<th><i class="fa fa-trash-alt"></i></th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>

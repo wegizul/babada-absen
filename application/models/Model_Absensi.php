@@ -112,6 +112,17 @@ class Model_Absensi extends CI_Model
 		return $query->row();
 	}
 
+	public function total_denda($kry, $bln)
+	{
+		$this->db->select("SUM(abs_denda) as total");
+		$this->db->from("ba_absensi");
+		$this->db->where('abs_kry_id', $kry);
+		$this->db->where('MONTH(abs_tanggal)', $bln);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));

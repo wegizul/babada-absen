@@ -108,6 +108,15 @@ class Model_Company extends CI_Model
 		return $query->row();
 	}
 
+	public function ambil_company($kode)
+	{
+		$this->db->from("ba_company");
+		$this->db->where('cpy_kode', $kode);
+		$query = $this->db->get();
+
+		return $query->row();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));
