@@ -74,8 +74,8 @@ class Absensi extends CI_Controller
 					break;
 			}
 
-			$lok_masuk = '';
-			$lok_pulang = '';
+			$lok_masuk = 'Lokasi Tidak Diketahui';
+			$lok_pulang = 'Lokasi Tidak Diketahui';
 			$ambil_masuk = $this->company->ambil_company($absensi->abs_cpy_kode);
 			$ambil_pulang = $this->company->ambil_company($absensi->abs_cpy_pulang);
 			if ($ambil_masuk) $lok_masuk = $ambil_masuk->cpy_nama;
@@ -195,14 +195,14 @@ class Absensi extends CI_Controller
 
 		$cek_absensi = $this->absensi->cek_absensi($data['abs_kry_id'], $data['abs_tanggal']);
 
-		$lata = $data['lat'] + (0.008);
-		$latb = $data['lat'] - (0.008);
-		$longa = $data['long'] + (0.008);
-		$longb = $data['long'] - (0.008);
+		$lata = $data['lat'] + (0.018);
+		$latb = $data['lat'] - (0.018);
+		$longa = $data['long'] + (0.018);
+		$longb = $data['long'] - (0.018);
 
 		$ambil_cpy = $this->company->ambil_kode($lata, $latb, $longa, $longb);
 
-		$cpy_kode = "Lokasi Tidak Diketahui";
+		$cpy_kode = "0";
 		if ($ambil_cpy) $cpy_kode = $ambil_cpy->cpy_kode;
 
 		$absen_pulang = [

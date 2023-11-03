@@ -260,9 +260,9 @@
               <li class="has_sub">
                 <a href="<?= base_url('Absensi') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
               </li>
-              <li class="has_sub">
+              <!-- <li class="has_sub">
                 <a href="<?= base_url('Karyawan/profil') ?>" class="waves-effect"><i class="fas fa-user-edit"></i> <span> Profil </span></a>
-              </li>
+              </li> -->
             <?php } ?>
             <li class="has_sub">
               <a href="#" data-target="#ubah_pass" data-toggle="modal" class="waves-effect"><i class="ti-settings"></i> <span> Setting </span></a>
