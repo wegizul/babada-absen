@@ -207,14 +207,14 @@ class Absensi extends CI_Controller
 
 		$absen_pulang = [
 			'abs_jam_pulang' => $waktu_absen,
-			'abs_cpy_pulang' => $data['abs_cpy_kode'],
+			'abs_cpy_pulang' => $data['abs_cpy_pulang'],
 		];
 
 		$simpan_absen_pulang = [
 			'abs_kry_id' => $data['abs_kry_id'],
 			'abs_tanggal' => $data['abs_tanggal'],
 			'abs_jam_pulang' => $waktu_absen,
-			'abs_cpy_pulang' => $data['abs_cpy_kode'],
+			'abs_cpy_pulang' => $data['abs_cpy_pulang'],
 			'abs_status' => 3,
 		];
 
