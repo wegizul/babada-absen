@@ -90,7 +90,7 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label>Password</label>
-								<input type="password" class="form-control" name="usr_password" id="usr_password1" placeholder="Password">
+								<input type="password" class="form-control" name="usr_password" id="usr_password1" placeholder="Password" required>
 							</div>
 						</div>
 						<div class="col-lg-4">
