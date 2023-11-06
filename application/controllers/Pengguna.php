@@ -92,17 +92,13 @@ class Pengguna extends CI_Controller
 
 		if (!empty($pass)) {
 			$data['usr_password'] = md5($pass);
+		} else {
+			$data['usr_password'] = md5("12345");
 		}
 
 		if ($id == 0) {
-			if (empty($pass)) {
-				$data['usr_password'] = md5("12345");
-			}
 			$insert = $this->pengguna->simpan("ba_user", $data);
 		} else {
-			if (empty($pass)) {
-				$data['usr_password'] = md5("12345");
-			}
 			$insert = $this->pengguna->update("ba_user", array('usr_id' => $id), $data);
 		}
 

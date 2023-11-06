@@ -32,10 +32,18 @@ class Dashboard extends CI_Controller
 		if ($this->session->userdata('level') > 1) {
 			if ($cek) {
 				if ($kode_company->cpy_jenis < 3) {
-					if (date('D') == "Sat") {
-						$jam_pulang = "12:00:00";
+					if ($this->session->userdata('shift') == 1) {
+						if ($cek->abs_jam_masuk < "12:00:00") {
+							$jam_pulang = "13:00:00";
+						} else {
+							$jam_pulang = "22:00:00";
+						}
 					} else {
-						$jam_pulang = "15:00:00";
+						if (date('D') == "Sat") {
+							$jam_pulang = "12:00:00";
+						} else {
+							$jam_pulang = "15:00:00";
+						}
 					}
 				} else {
 					if ($this->session->userdata('shift') == 1) {
@@ -45,7 +53,7 @@ class Dashboard extends CI_Controller
 							$jam_pulang = "22:00:00";
 						}
 					} else {
-						$jam_pulang = "17:00:00";
+						$jam_pulang = "15:00:00";
 					}
 				}
 			}
