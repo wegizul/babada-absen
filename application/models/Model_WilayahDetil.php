@@ -12,10 +12,11 @@ class Model_WilayahDetil extends CI_Model
 		$this->load->database();
 	}
 
-	private function _get_datatables_query()
+	private function _get_datatables_query($id)
 	{
 		$this->db->from($this->table);
 		$this->db->join("ba_wilayah_am", "wam_id = wad_wam_id", "left");
+		$this->db->where("wad_wam_id", $id);
 		$i = 0;
 
 		foreach ($this->column_search as $item) // loop column 
@@ -47,18 +48,18 @@ class Model_WilayahDetil extends CI_Model
 		}
 	}
 
-	function get_datatables()
+	function get_datatables($id)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($id);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
 
-	function count_filtered()
+	function count_filtered($id)
 	{
-		$this->_get_datatables_query();
+		$this->_get_datatables_query($id);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}
