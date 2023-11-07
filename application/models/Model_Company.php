@@ -4,7 +4,7 @@ class Model_Company extends CI_Model
 	var $table = 'ba_company';
 	var $column_order = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable orderable
 	var $column_search = array('cpy_id', 'cpy_qr_code', 'cpy_nama', 'cpy_lat', 'cpy_lang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('cpy_nama' => 'asc'); // default order  	private $db_sts;
+	var $order = array('cpy_nama' => 'asc'); // default order
 
 	public function __construct()
 	{

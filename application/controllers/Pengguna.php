@@ -16,6 +16,7 @@ class Pengguna extends CI_Controller
 		$this->load->model('Model_Login', 'pengguna');
 		$this->load->model('Model_Karyawan', 'karyawan');
 		$this->load->model('Model_Company', 'company');
+		$this->load->model('Model_Wilayah', 'wilayah');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -30,6 +31,7 @@ class Pengguna extends CI_Controller
 		$d = [
 			'karyawan' => $this->karyawan->get_karyawan(),
 			'company' => $this->company->get_company(),
+			'wilayah' => $this->wilayah->get_wilayah_am(),
 		];
 		$this->load->helper('url');
 		$this->load->view('background_atas', $ba);

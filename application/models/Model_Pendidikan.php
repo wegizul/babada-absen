@@ -4,7 +4,7 @@ class Model_Pendidikan extends CI_Model
 	var $table = 'ba_karyawan_pendidikan';
 	var $column_order = array('pdd_id', 'pdd_last_education', 'pdd_keahlian', 'pdd_school_name', 'pdd_jurusan', 'pdd_thn_masuk', 'pdd_thn_lulus'); //set column field database for datatable orderable
 	var $column_search = array('pdd_id', 'pdd_keahlian', 'pdd_school_name', 'pdd_jurusan'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('pdd_last_education' => 'asc'); // default order  	private $db_sts;
+	var $order = array('pdd_last_education' => 'asc'); // default order
 
 	public function __construct()
 	{

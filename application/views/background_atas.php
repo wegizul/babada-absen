@@ -239,6 +239,9 @@
                   <li class="menu-item">
                     <a href="<?= base_url('Shift') ?>" class="waves-effect"><span> Data Shift </span></a>
                   </li>
+                  <li class="menu-item">
+                    <a href="<?= base_url('Wilayah') ?>" class="waves-effect"><span> Data Wilayah </span></a>
+                  </li>
                 </ul>
               </li>
               <li class="has_sub">

@@ -1,10 +1,10 @@
 <?php
-class Model_Divisi extends CI_Model
+class Model_Wilayah extends CI_Model
 {
-	var $table = 'ba_divisi';
-	var $column_order = array('dvi_id', 'dvi_nama'); //set column field database for datatable orderable
-	var $column_search = array('dvi_id', 'dvi_nama'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('dvi_nama' => 'asc'); // default order
+	var $table = 'ba_wilayah_am';
+	var $column_order = array('wam_id', 'wam_kode_wilayah', 'wam_nama_wilayah'); //set column field database for datatable orderable
+	var $column_search = array('wam_id', 'wam_kode_wilayah', 'wam_nama_wilayah'); //set column field database for datatable searchable just firstname , lastname , address are searchable
+	var $order = array('wam_nama_wilayah' => 'asc'); // default order
 
 	public function __construct()
 	{
@@ -69,18 +69,18 @@ class Model_Divisi extends CI_Model
 		return $this->db->count_all_results();
 	}
 
-	public function get_divisi()
+	public function get_wilayah_am()
 	{
-		$this->db->from("ba_divisi");
+		$this->db->from("ba_wilayah_am");
 		$query = $this->db->get();
 
 		return $query->result();
 	}
 
-	public function cari_divisi($id)
+	public function cari_wilayah_am($id)
 	{
-		$this->db->from("ba_divisi");
-		$this->db->where('dvi_id', $id);
+		$this->db->from("ba_wilayah_am");
+		$this->db->where('wam_id', $id);
 		$query = $this->db->get();
 
 		return $query->row();

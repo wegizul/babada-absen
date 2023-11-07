@@ -4,7 +4,7 @@ class Model_Jabatan extends CI_Model
 	var $table = 'ba_jabatan';
 	var $column_order = array('jab_id', 'jab_nama', 'jab_level'); //set column field database for datatable orderable
 	var $column_search = array('jab_id', 'jab_nama', 'jab_level'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('jab_nama' => 'asc'); // default order  	private $db_sts;
+	var $order = array('jab_nama' => 'asc'); // default order
 
 	public function __construct()
 	{

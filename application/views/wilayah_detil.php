@@ -1,32 +1,12 @@
 <div class="row">
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:log_tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> &nbsp;&nbsp;&nbsp; Tambah</a>
+			<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> Tambah</a>
 		</div>
 	</div>
 	<div class="col-md-2 col-xs-6">
 		<div class="form-group">
-			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> &nbsp;&nbsp;&nbsp; Refresh</a>
-		</div>
-	</div>
-	<div class="col-md-2 col-xs-12">
-		<div class="form-group">
-			<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
-				<option value="">Filter Karyausahawan</option>
-				<?php foreach ($karyawan as $p) { ?>
-					<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
-				<?php } ?>
-			</select>
-		</div>
-	</div>
-	<div class="col-md-2 col-xs-12">
-		<div class="form-group">
-			<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
-				<option value="">Filter Company</option>
-				<?php foreach ($company as $q) { ?>
-					<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
-				<?php } ?>
-			</select>
+			<a href="javascript:drawTable()" class="btn btn-default btn-block"><i class="fa fa-refresh"></i> Refresh</a>
 		</div>
 	</div>
 </div>
@@ -35,15 +15,14 @@
 	<div class="col-sm-12">
 		<div class="card-box table-responsive">
 			<div class="row" id="isidata">
-				<h3 class="m-t-0 header-title"><b>Data Pengguna</b></h3>
+				<h3 class="m-t-0 header-title"><a href="javascript:window.history.back()" class="btn btn-default btn-xs"><i class="fas fa-share fa-flip-horizontal"></i> Back</a><b> Data Cabang Wilayah <?= $id ?></b></h3>
 				<h3 class="m-t-10 row"></h3>
-				<table id="tabel-pengguna" class="table table-striped table-bordered">
+				<table id="tabel-data" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th width="5%">No</th>
-							<th>Nama</th>
-							<th>Username</th>
-							<th>Level</th>
+							<th>Nama Wilayah</th>
+							<th>Nama Cabang</th>
 							<th>Status</th>
 							<th>Aksi</th>
 						</tr>
@@ -60,93 +39,41 @@
 </div>
 
 <!-- Bootstrap modal -->
-<div class="modal fade" id="modal_pengguna" role="dialog">
-	<div class="modal-dialog modal-lg">
+<div class="modal fade" id="modal_wilayah_detil" role="dialog">
+	<div class="modal-dialog modal-md">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Pengguna</h3>
+				<h3 class="modal-title"><i class="fas fa-store fa-xs"></i> Form Data Cabang</h3>
 			</div>
-			<form role="form col-lg-6" name="Pengguna" id="frm_pengguna">
+			<form role="form col-lg-6" name="WilayahDetil" id="frm_wilayah_detil">
 				<div class="modal-body form">
 					<div class="row">
-						<input type="hidden" id="usr_id" name="usr_id" value="">
-						<div class="col-lg-4">
+						<input type="hidden" id="wad_id" name="wad_id" value="">
+						<input type="hidden" id="wad_wam_id" name="wad_wam_id" value="<?= $id ?>">
+						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Nama Pengguna</label>
-								<select class="form-control select2" name="usr_kry_id" id="usr_kry_id" style="width:100%;line-height:100px;" required>
-									<option value="">Pilih Karyausahawan</option>
-									<?php foreach ($karyawan as $p) { ?>
-										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
+								<label>Nama Cabang</label>
+								<select class="form-control select2" name="wad_nama" id="wad_nama" required>
+									<option value="">Pilih Cabang</option>
+									<?php foreach ($cabang as $c) { ?>
+										<option value="<?= $c->cpy_nama ?>"><?= $c->cpy_nama ?></option>
 									<?php } ?>
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-4">
+						<div class="col-lg-12">
 							<div class="form-group">
-								<label>Username</label>
-								<input type="text" class="form-control" name="usr_username" id="usr_username" required>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Password</label>
-								<input type="password" class="form-control" name="usr_password" id="usr_password1" placeholder="Password" required>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Level</label>
-								<select class="form-control" name="usr_role" id="usr_role" required>
-									<option value="">Pilih Level</option>
-									<option value="2">Admin HRD</option>
-									<option value="3">Karyausahawan</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Perusahaan</label>
-								<select class="form-control select2" name="usr_cpy_kode" id="usr_cpy_kode" required>
-									<option value="">Pilih Perusahaan</option>
-									<?php foreach ($company as $c) { ?>
-										<option value="<?= $c->cpy_kode ?>"><?= $c->cpy_nama ?></option>
-									<?php } ?>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Karyausahawan Shift ?</label>
-								<select class="form-control" name="usr_shift" id="usr_shift">
-									<option value="0">Tidak</option>
-									<option value="1">Ya</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group">
-								<label>Akses Semua Lokasi ?</label>
-								<select class="form-control" name="usr_all_akses" id="usr_all_akses" onChange="pilihwilayah(this.value)">
-									<option value="0">Tidak</option>
-									<option value="1">Ya</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div class="form-group" id="wilayah" style="display: none;">
-								<label>Pilih Wilayah</label>
-								<select class="form-control select2" name="usr_wilayah" id="usr_wilayah">
-									<option value="0">Semua Wilayah</option>
-									<?php foreach ($wilayah as $w) { ?>
-										<option value="<?= $w->wam_id ?>"><?= $w->wam_nama_wilayah ?></option>
-									<?php } ?>
+								<label>Status</label>
+								<select class="form-control" name="wad_status" id="wad_status">
+									<option value="1">Aktif</option>
+									<option value="2">Tidak Aktif</option>
 								</select>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" id="log_simpan" class="btn btn-default">Simpan</button>
+					<button type="submit" id="simpan" class="btn btn-default">Simpan</button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()">Batal</button>
 				</div>
 			</form>
@@ -185,34 +112,27 @@
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="<?= base_url("aset"); ?>/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
-<!-- Toastr -->
-<script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
-
 <!-- Select 2 -->
 <script src="<?= base_url("aset"); ?>/plugins/select2/js/select2.full.js"></script>
 
-<script src="../assets/libs/mohithg-switchery/switchery.min.js"></script>
+<!-- Toastr -->
+<script src="<?= base_url("aset"); ?>/plugins/toastr/toastr.min.js"></script>
 
 <!-- Custom Java Script -->
 <script>
 	var save_method; //for save method string
 	var table;
+	var id = $('#wad_wam_id').val();
 
 	function drawTable() {
-		var karyawan = $('#karyawan').val();
-		var company = $('#company').val();
-		if (!karyawan) karyawan = null;
-		if (!company) company = null;
-		$('#tabel-pengguna').DataTable({
+		$('#tabel-data').DataTable({
 			"destroy": true,
 			dom: 'Bfrtip',
 			lengthMenu: [
 				[10, 25, 50, -1],
 				['10 rows', '25 rows', '50 rows', 'Show all']
 			],
-			buttons: [
-				'pageLength'
-			],
+			buttons: [],
 			"responsive": true,
 			"sort": true,
 			"processing": true, //Feature control the processing indicator.
@@ -220,7 +140,7 @@
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "Pengguna/ajax_list_pengguna/" + karyawan + "/" + company,
+				"url": "../ajax_list_wilayah_detil/" + id,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
@@ -236,24 +156,24 @@
 		});
 	}
 
-	function log_tambah() {
+	function tambah() {
 		reset_form();
-		$("#usr_id").val(0);
-		$("frm_pengguna").trigger("reset");
-		$('#modal_pengguna').modal({
+		$("#wad_id").val(0);
+		$("frm_wilayah_detil").trigger("reset");
+		$('#modal_wilayah_detil').modal({
 			show: true,
 			keyboard: false,
 			backdrop: 'static'
 		});
 	}
 
-	$("#frm_pengguna").submit(function(e) {
+	$("#frm_wilayah_detil").submit(function(e) {
 		e.preventDefault();
-		$("#log_simpan").html("Menyimpan...");
+		$("#simpan").html("Menyimpan...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "Pengguna/simpan",
+			url: "../simpan",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -264,24 +184,25 @@
 					toastr.success(res.desc);
 					drawTable();
 					reset_form();
-					$("#modal_pengguna").modal("hide");
+					$("#modal_wilayah_detil").modal("hide");
 				} else {
 					toastr.error(res.desc);
 				}
-				$("#log_simpan").html("Simpan");
+				$("#simpan").html("Simpan");
 				$(".btn").attr("disabled", false);
 			},
 			error: function(jqXHR, namaStatus, errorThrown) {
-				$("#log_simpan").html("Simpan");
+				$("#simpan").html("Simpan");
 				$(".btn").attr("disabled", false);
 				alert('Error get data from ajax');
 			}
 		});
+
 	});
 
-	function hapus_pengguna(id) {
+	function hapus_wilayah_detil(id) {
 		event.preventDefault();
-		$("#usr_id").val(id);
+		$("#wad_id").val(id);
 		$("#jdlKonfirm").html("Konfirmasi hapus data");
 		$("#isiKonfirm").html("Yakin ingin menghapus data ini ?");
 		$("#frmKonfirm").modal({
@@ -291,12 +212,12 @@
 		});
 	}
 
-	function ubah_pengguna(id) {
+	function ubah_wilayah_detil(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "Pengguna/cari",
-			data: "usr_id=" + id,
+			url: "../cari",
+			data: "wad_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
@@ -304,7 +225,7 @@
 					$("#" + dt[0]).val(dt[1]);
 				});
 				$(".inputan").attr("disabled", false);
-				$("#modal_pengguna").modal({
+				$("#modal_wilayah_detil").modal({
 					show: true,
 					keyboard: false,
 					backdrop: 'static'
@@ -315,18 +236,18 @@
 	}
 
 	function reset_form() {
-		$("#usr_id").val(0);
-		$("#frm_pengguna")[0].reset();
+		$("#wad_id").val(0);
+		$("#frm_wilayah_detil")[0].reset();
 	}
 
 	$("#yaKonfirm").click(function() {
-		var id = $("#usr_id").val();
+		var id = $("#wad_id").val();
 
 		$("#isiKonfirm").html("Sedang menghapus data...");
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "GET",
-			url: "Pengguna/hapus/" + id,
+			url: "../hapus/" + id,
 			success: function(d) {
 				var res = JSON.parse(d);
 				var msg = "";
@@ -344,22 +265,6 @@
 			}
 		});
 	});
-
-	function filter(fil) {
-		drawTable();
-	}
-
-	function filter_cpy(ftr) {
-		drawTable();
-	}
-
-	function pilihwilayah(haha) {
-		if (haha == 1) {
-			$("#wilayah").show();
-		} else {
-			$("#wilayah").hide();
-		}
-	}
 
 	$('.tgl').daterangepicker({
 		locale: {

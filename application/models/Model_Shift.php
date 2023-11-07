@@ -4,8 +4,7 @@ class Model_Shift extends CI_Model
 	var $table = 'ba_data_shift';
 	var $column_order = array('sft_id', 'sft_nama', 'sft_jam_masuk', 'sft_jam_pulang'); //set column field database for datatable orderable
 	var $column_search = array('sft_id', 'sft_nama', 'sft_jam_masuk', 'sft_jam_pulang'); //set column field database for datatable searchable just firstname , lastname , address are searchable
-	var $order = array('sft_nama' => 'asc'); // default order  	private $db_sts;
-
+	var $order = array('sft_nama' => 'asc'); // default order
 	public function __construct()
 	{
 		parent::__construct();
