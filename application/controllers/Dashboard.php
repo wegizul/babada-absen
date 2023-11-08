@@ -15,6 +15,7 @@ class Dashboard extends CI_Controller
 		$this->load->model('Model_Karyawan', 'karyawan');
 		$this->load->model('Model_Rekap', 'rekap');
 		$this->load->model('Model_Shift', 'shift');
+		$this->load->model('Model_WilayahDetil', 'wilayah');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -138,7 +139,22 @@ class Dashboard extends CI_Controller
 		}
 
 		$all_akses = 1;
-		if ($this->session->userdata('all_akses') == 0 && $this->session->userdata('cpy_kode') != $kode_lokasi) $all_akses = 0;
+		if ($this->session->userdata('all_akses') == 0) {
+			if ($this->session->userdata('cpy_kode') != $kode_lokasi) {
+				$all_akses = 0;
+			} else {
+				$all_akses = 1;
+			}
+		} else {
+			$ambil_wilayah = $this->wilayah->cari_cabang($this->session->userdata('id_wilayah'));
+			foreach ($ambil_wilayah as $w) {
+				if ($w->wad_cpy_kode != $kode_lokasi) {
+					$all_akses = 0;
+				} else {
+					$all_akses = 1;
+				}
+			}
+		}
 
 		$ba = [
 			'judul' => "Hasil Scan",

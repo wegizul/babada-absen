@@ -46,6 +46,7 @@ class Login extends CI_Controller
 					$sess_data['shift'] = $qad->usr_shift;
 					$sess_data['cpy_kode'] = $qad->usr_cpy_kode;
 					$sess_data['all_akses'] = $qad->usr_all_akses;
+					$sess_data['id_wilayah'] = $qad->usr_wilayah;
 					$this->session->set_userdata($sess_data);
 				}
 				$res['status'] = 1;

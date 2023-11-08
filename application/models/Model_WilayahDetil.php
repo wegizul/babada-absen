@@ -97,6 +97,15 @@ class Model_WilayahDetil extends CI_Model
 		return $query->result();
 	}
 
+	public function cari_cabang($id)
+	{
+		$this->db->from("ba_wilayah_detil");
+		$this->db->where('wad_wam_id', $id);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));

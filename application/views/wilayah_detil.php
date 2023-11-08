@@ -22,6 +22,7 @@
 						<tr>
 							<th width="5%">No</th>
 							<th>Nama Wilayah</th>
+							<th>Kode Cabang</th>
 							<th>Nama Cabang</th>
 							<th>Status</th>
 							<th>Aksi</th>
@@ -53,10 +54,10 @@
 						<div class="col-lg-12">
 							<div class="form-group">
 								<label>Nama Cabang</label>
-								<select class="form-control select2" name="wad_nama" id="wad_nama" required>
+								<select class="form-control select2" name="wad_cpy_kode" id="wad_cpy_kode" required>
 									<option value="">Pilih Cabang</option>
 									<?php foreach ($cabang as $c) { ?>
-										<option value="<?= $c->cpy_nama ?>"><?= $c->cpy_nama ?></option>
+										<option value="<?= $c->cpy_kode ?>"><?= $c->cpy_nama ?></option>
 									<?php } ?>
 								</select>
 							</div>

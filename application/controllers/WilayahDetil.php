@@ -12,6 +12,7 @@ class WilayahDetil extends CI_Controller
 		$this->load->library('upload');
 		$this->load->model('Model_WilayahDetil', 'wilayah_detil');
 		$this->load->model('Model_Karyawan', 'karyawan');
+		$this->load->model('Model_Company', 'company');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 
@@ -52,6 +53,7 @@ class WilayahDetil extends CI_Controller
 			$row = array();
 			$row[] = $no;
 			$row[] = $wilayah_detil->wam_nama_wilayah;
+			$row[] = $wilayah_detil->wad_cpy_kode;
 			$row[] = $wilayah_detil->wad_nama;
 			$row[] = $status;
 			$row[] = "<a href='#' onClick='ubah_wilayah_detil(" . $wilayah_detil->wad_id . ")' class='btn btn-default btn-sm' title='Ubah data wilayah'><i class='fa fa-edit'></i></a> <a href='#' onClick='hapus_wilayah_detil(" . $wilayah_detil->wad_id . ")' class='btn btn-danger btn-sm' title='Hapus data wilayah'><i class='fa fa-trash'></i></a>";
@@ -80,6 +82,9 @@ class WilayahDetil extends CI_Controller
 	{
 		$id = $this->input->post('wad_id');
 		$data = $this->input->post();
+
+		$ambil_company = $this->company->ambil_company($data['wad_cpy_kode']);
+		$data['wad_nama'] = $ambil_company->cpy_nama;
 
 		if ($id == 0) {
 			$insert = $this->wilayah_detil->simpan("ba_wilayah_detil", $data);
