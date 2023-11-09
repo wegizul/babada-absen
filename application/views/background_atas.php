@@ -259,6 +259,16 @@
               <li class="has_sub">
                 <a href="<?= base_url('Rekap') ?>" class="waves-effect"><i class="fa fa-copy"></i> <span> Rekap Absensi </span></a>
               </li>
+            <?php } else if ($this->session->userdata('level') == 3) { ?>
+              <li class="has_sub">
+                <a href="<?= base_url('Absensi') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>
+              </li>
+              <li class="has_sub">
+                <a href="<?= base_url('Absensi/absen_anggota') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Absensi Karyawan</span></a>
+              </li>
+              <li class="has_sub">
+                <a href="<?= base_url('Rekap') ?>" class="waves-effect"><i class="fa fa-copy"></i> <span> Rekap Absensi </span></a>
+              </li>
             <?php } else { ?>
               <li class="has_sub">
                 <a href="<?= base_url('Absensi') ?>" class="waves-effect"><i class="fa fa-history"></i> <span> Riwayat Absensi </span></a>

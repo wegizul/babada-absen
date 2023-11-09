@@ -42,9 +42,30 @@ class Absensi extends CI_Controller
 		$this->load->view('background_bawah');
 	}
 
-	public function ajax_list_absensi($karyawan, $bln, $cpy)
+	public function absen_anggota()
 	{
-		$list = $this->absensi->get_datatables($karyawan, $bln, $cpy);
+		$this->session->set_userdata("judul", "Data Absensi Karyawan");
+		$user = $this->session->userdata('id_karyawan');
+		$kode = $this->session->userdata('cpy_kode');
+
+		$ba = [
+			'judul' => "Data Absensi Karyawan",
+			'subjudul' => "History Absensi Karyawan",
+			'foto' => $this->karyawan->ambil_karyawan($user),
+		];
+		$d = [
+				'karyawan' => $this->karyawan->get_karyawan_holding($kode),
+				'company' => $this->company->get_company(),
+			];
+		$this->load->helper('url');
+		$this->load->view('background_atas', $ba);
+		$this->load->view('absensi_karyawan', $d);
+		$this->load->view('background_bawah');
+	}
+
+	public function ajax_list_absensi($karyawan, $bln, $cpy, $self)
+	{
+		$list = $this->absensi->get_datatables($karyawan, $bln, $cpy, $self);
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $absensi) {
@@ -100,7 +121,7 @@ class Absensi extends CI_Controller
 		$output = array(
 			"draw" => $_POST['draw'],
 			"recordsTotal" => $this->absensi->count_all(),
-			"recordsFiltered" => $this->absensi->count_filtered($karyawan, $bln, $cpy),
+			"recordsFiltered" => $this->absensi->count_filtered($karyawan, $bln, $cpy, $self),
 			"data" => $data,
 			"query" => $this->absensi->getlastquery(),
 		);

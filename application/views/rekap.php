@@ -23,7 +23,7 @@ $bulan = [
 	<div class="col-md-2 col-xs-6">
 		<a href="javascript:cetak()" class="btn btn-success btn-block"><i class="fa fa-print"></i> &nbsp;&nbsp;&nbsp; Cetak</a>
 	</div>
-	<?php if ($this->session->userdata('level') != 3) { ?>
+	<?php if ($this->session->userdata('level') < 3) { ?>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
 				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
@@ -36,20 +36,21 @@ $bulan = [
 		</div>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
-				<select class="form-control" id="bulan" onChange="filter_bln(this.value)">
-					<option value="">Filter Bulan</option>
-					<?php foreach ($bulan as $key => $b) { ?>
-						<option value="<?= $key ?>"><?= $b ?></option>
-					<?php } ?>
-				</select>
-			</div>
-		</div>
-		<div class="col-md-2 col-xs-12">
-			<div class="form-group">
 				<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
 					<option value="">Filter Company</option>
 					<?php foreach ($company as $q) { ?>
 						<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
+					<?php } ?>
+				</select>
+			</div>
+		</div>
+	<?php } else if ($this->session->userdata('level') == 3) { ?>
+		<div class="col-md-2 col-xs-12">
+			<div class="form-group">
+				<select class="form-control" id="bulan" onChange="filter_bln(this.value)">
+					<option value="">Filter Bulan</option>
+					<?php foreach ($bulan as $key => $b) { ?>
+						<option value="<?= $key ?>"><?= $b ?></option>
 					<?php } ?>
 				</select>
 			</div>

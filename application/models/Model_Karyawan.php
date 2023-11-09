@@ -107,6 +107,15 @@ class Model_Karyawan extends CI_Model
 		return $query->row();
 	}
 
+	public function get_karyawan_holding($kode)
+	{
+		$this->db->from("ba_karyawan");
+		$this->db->where("kry_cpy_kode", $kode);
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+
 	public function getlastquery()
 	{
 		$query = str_replace(array("\r", "\n", "\t"), '', trim($this->db->last_query()));

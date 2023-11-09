@@ -14,6 +14,9 @@ class Model_Rekap extends CI_Model
 
 	private function _get_datatables_query($kry, $bln, $cpy)
 	{
+		$level = $this->session->userdata('level');
+		$company = $this->session->userdata('cpy_kode');
+
 		$this->db->from($this->table);
 		$this->db->join('ba_rekap', 'rkp_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
@@ -24,6 +27,9 @@ class Model_Rekap extends CI_Model
 		}
 		if ($cpy != 'null') {
 			$this->db->where('rkp_cpy_kode', $cpy);
+		}
+		if ($level == 3) {
+			$this->db->where('kry_cpy_kode', $company);
 		}
 		$this->db->group_by('kry_id');
 		$i = 0;
@@ -172,6 +178,9 @@ class Model_Rekap extends CI_Model
 
 	public function ambil_rekap($kry, $bln, $cpy)
 	{
+		$level = $this->session->userdata('level');
+		$company = $this->session->userdata('cpy_kode');
+
 		$this->db->from("ba_karyawan");
 		$this->db->join('ba_rekap', 'rkp_kry_id = kry_id', 'left');
 		if ($kry != 'null') {
@@ -182,6 +191,9 @@ class Model_Rekap extends CI_Model
 		}
 		if ($cpy != 'null') {
 			$this->db->where('rkp_cpy_kode', $cpy);
+		}
+		if ($level == 3) {
+			$this->db->where('kry_cpy_kode', $company);
 		}
 		$this->db->group_by('kry_id');
 		$query = $this->db->get();

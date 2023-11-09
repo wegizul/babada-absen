@@ -12,10 +12,12 @@ class Model_Absensi extends CI_Model
 		$this->load->database();
 	}
 
-	private function _get_datatables_query($karyawan, $bln, $cpy)
+	private function _get_datatables_query($karyawan, $bln, $cpy, $self)
 	{
 		$level = $this->session->userdata('level');
 		$user = $this->session->userdata('id_karyawan');
+		$company = $this->session->userdata('cpy_kode');
+		
 		$this->db->from($this->table);
 		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
 		$this->db->join('ba_company', 'cpy_kode = abs_cpy_kode', 'left');
@@ -28,8 +30,12 @@ class Model_Absensi extends CI_Model
 		if ($cpy != 'null') {
 			$this->db->where('abs_cpy_kode', $cpy);
 		}
-		if ($level == 3) {
-			$this->db->where('abs_kry_id', $user);
+		if ($self == 0) {
+			$this->db->where('kry_cpy_kode', $company);
+		} else {
+			if ($level > 2) {
+				$this->db->where('abs_kry_id', $user);
+			}
 		}
 		$i = 0;
 
@@ -62,18 +68,18 @@ class Model_Absensi extends CI_Model
 		}
 	}
 
-	function get_datatables($karyawan, $bln, $cpy)
+	function get_datatables($karyawan, $bln, $cpy, $self)
 	{
-		$this->_get_datatables_query($karyawan, $bln, $cpy);
+		$this->_get_datatables_query($karyawan, $bln, $cpy, $self);
 		if ($_POST['length'] != -1)
 			$this->db->limit($_POST['length'], $_POST['start']);
 		$query = $this->db->get();
 		return $query->result();
 	}
 
-	function count_filtered($karyawan, $bln, $cpy)
+	function count_filtered($karyawan, $bln, $cpy, $self)
 	{
-		$this->_get_datatables_query($karyawan, $bln, $cpy);
+		$this->_get_datatables_query($karyawan, $bln, $cpy, $self);
 		$query = $this->db->get();
 		return $query->num_rows();
 	}

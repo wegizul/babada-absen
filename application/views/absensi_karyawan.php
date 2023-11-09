@@ -15,45 +15,26 @@ $bulan = [
 ]
 ?>
 <div class="row">
-	<?php if ($this->session->userdata('level') > 2) { ?>
-		<div class="col-md-4 col-xs-12">
-			<div class="form-group">
-				<div class="card-box">Total Denda Terlambat : <b>Rp <?= $total_denda ?></b></div>
-			</div>
+	<div class="col-md-3 col-xs-12">
+		<div class="form-group">
+			<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
+				<option value="">Filter Karyausahawan</option>
+				<?php foreach ($karyawan as $p) { ?>
+					<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
+				<?php } ?>
+			</select>
 		</div>
-	<?php } ?>
-	<?php if ($this->session->userdata('level') < 3) { ?>
-		<div class="col-md-2 col-xs-12">
-			<div class="form-group">
-				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
-					<option value="">Filter Karyausahawan</option>
-					<?php foreach ($karyawan as $p) { ?>
-						<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
-					<?php } ?>
-				</select>
-			</div>
+	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="form-group">
+			<select class="form-control" id="bulan" onChange="filter_bln(this.value)">
+				<option value="">Filter Bulan</option>
+				<?php foreach ($bulan as $key => $b) { ?>
+					<option value="<?= $key ?>"><?= $b ?></option>
+				<?php } ?>
+			</select>
 		</div>
-		<div class="col-md-2 col-xs-12">
-			<div class="form-group">
-				<select class="form-control" id="bulan" onChange="filter_bln(this.value)">
-					<option value="">Filter Bulan</option>
-					<?php foreach ($bulan as $key => $b) { ?>
-						<option value="<?= $key ?>"><?= $b ?></option>
-					<?php } ?>
-				</select>
-			</div>
-		</div>
-		<div class="col-md-2 col-xs-12">
-			<div class="form-group">
-				<select class="form-control select2" id="company" onChange="filter_cpy(this.value)">
-					<option value="">Filter Company</option>
-					<?php foreach ($company as $q) { ?>
-						<option value="<?= $q->cpy_kode ?>"><?= $q->cpy_nama ?></option>
-					<?php } ?>
-				</select>
-			</div>
-		</div>
-	<?php } ?>
+	</div>
 </div>
 
 <div class="row">
@@ -135,10 +116,9 @@ $bulan = [
 	function drawTable() {
 		var karyawan = $('#karyawan').val();
 		var bulan = $('#bulan').val();
-		var company = $('#company').val();
+		var company = null;
 		if (!karyawan) karyawan = null;
 		if (!bulan) bulan = null;
-		if (!company) company = null;
 		$('#tabel-data').DataTable({
 			"destroy": true,
 			dom: 'Bfrtip',
@@ -156,7 +136,7 @@ $bulan = [
 			"order": [], //Initial no order.
 			// Load data for the table's content from an Ajax source
 			"ajax": {
-				"url": "Absensi/ajax_list_absensi/" + karyawan + '/' + bulan + '/' + company + '/' + 1,
+				"url": "ajax_list_absensi/" + karyawan + '/' + bulan + '/' + company + '/' + 0,
 				"type": "POST"
 			},
 			//Set column definition initialisation properties.
