@@ -99,7 +99,8 @@
 								<select class="form-control" name="usr_role" id="usr_role" required>
 									<option value="">Pilih Level</option>
 									<option value="2">Admin HRD</option>
-									<option value="3">Karyausahawan</option>
+									<option value="3">DIC</option>
+									<option value="4">Karyausahawan</option>
 								</select>
 							</div>
 						</div>

@@ -148,11 +148,11 @@ class Dashboard extends CI_Controller
 		} else {
 			$ambil_wilayah = $this->wilayah->cari_cabang($this->session->userdata('id_wilayah'));
 			foreach ($ambil_wilayah as $w) {
-				if ($kode_lokasi != $w->wad_cpy_kode) {
-					$all_akses = 0;
-				} else {
+				if ($kode_lokasi == $w->wad_cpy_kode || $this->session->userdata('cpy_kode') == 'CPY103251') {
 					$all_akses = 1;
 					break;
+				} else {
+					$all_akses = 0;
 				}
 			}
 		}
