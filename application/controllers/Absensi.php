@@ -102,6 +102,15 @@ class Absensi extends CI_Controller
 			if ($ambil_masuk) $lok_masuk = $ambil_masuk->cpy_nama;
 			if ($ambil_pulang) $lok_pulang = $ambil_pulang->cpy_nama;
 
+			if ($this->session->userdata('level') < 3) {
+				if ($this->session->userdata('id_user') == 509) {
+					$aksi = "<a href='#' onClick='ubah_absensi(" . $absensi->abs_id . ")' class='btn btn-default btn-xs' title='Ubah Absensi'><i class='fa fa-pen'></i></a> <a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
+				} else {
+					$aksi = "<a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
+				}
+			} else {
+				$aksi = "";
+			}
 			$row = array();
 			$row[] = $no;
 			$row[] = $absensi->abs_tanggal;
@@ -112,9 +121,7 @@ class Absensi extends CI_Controller
 			$row[] = $lok_pulang;
 			$row[] = $status;
 			$row[] = $absensi->abs_ket;
-			if ($this->session->userdata('level') < 3) {
-				$row[] = "<a href='#' onClick='hapus_absensi(" . $absensi->abs_id . ")' class='btn btn-danger btn-xs' title='Hapus Absensi'><i class='fa fa-trash'></i></a>";
-			}
+			$row[] = $aksi;
 			$data[] = $row;
 		}
 
@@ -249,7 +256,104 @@ class Absensi extends CI_Controller
 		} else {
 			$insert = $this->absensi->simpan("ba_absensi", $simpan_absen_pulang);
 		}
-		
+
+		$error = $this->db->error();
+		if (!empty($error)) {
+			$err = $error['message'];
+		} else {
+			$err = "";
+		}
+		if ($insert) {
+			$resp['status'] = 1;
+			$resp['desc'] = "Berhasil melakukan absen";
+		} else {
+			$resp['status'] = 0;
+			$resp['desc'] = "Ada kesalahan dalam penyimpanan!";
+			$resp['error'] = $err;
+		}
+		echo json_encode($resp);
+	}
+
+	public function simpan_absen_manual()
+	{
+		$id = $this->input->post('abs_id');
+		$waktu_in = $this->input->post('abs_jam_masuk');
+		$kode_shift = $this->input->post('abs_shift_id');
+		$batas_masuk = "08:01:00";
+		$terlambat = 0;
+		$status = 0;
+		$shift = $this->session->userdata('shift');
+
+		if ($shift == 1) {
+			if ($kode_shift == 1) {
+				if ($waktu_in < "06:01:00") {
+					$status = 1;
+				} else {
+					$terlambat = strtotime($waktu_in) - strtotime("06:01:00");
+					$status = 2;
+				}
+			} else {
+				if ($waktu_in > "08:01:00" && $waktu_in < "13:01:00") {
+					$status = 1;
+				} else {
+					$terlambat = strtotime($waktu_in) - strtotime("13:01:00");
+					$status = 2;
+				}
+			}
+		} else {
+			if (strtotime($waktu_in) < strtotime($batas_masuk)) {
+				$status = 1;
+			} else {
+				$terlambat = strtotime($waktu_in) - strtotime($batas_masuk);
+				$status = 2;
+			}
+		}
+
+		$data = $this->input->post();
+		$data['abs_terlambat'] = floor($terlambat / 60);
+		$data['abs_denda'] = floor($data['abs_terlambat'] * 1000);
+
+		$data['abs_status'] = $status;
+
+		$str = $data['abs_tanggal'];
+		$explode = explode("-", $str);
+
+		$cek_rekap = $this->rekap->cek_rekap($data['abs_kry_id'], $explode[1]);
+
+		$terlambat = 0;
+		$denda = 0;
+		$total_terlambat = 0;
+		$total_denda = 0;
+		if ($cek_rekap) $terlambat = $cek_rekap->rkp_terlambat;
+		if ($cek_rekap) $denda = $cek_rekap->rkp_denda;
+		if ($data['abs_terlambat']) $total_terlambat = $data['abs_terlambat'];
+		if ($data['abs_denda']) $total_denda = $data['abs_denda'];
+
+		$data2 = [
+			'rkp_bulan' => $explode[1],
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_cpy_kode' => $data['abs_cpy_kode'],
+			'rkp_terlambat' => $terlambat + $total_terlambat,
+			'rkp_denda' => $denda + $total_denda,
+		];
+
+		$where2 = [
+			'rkp_kry_id' => $data['abs_kry_id'],
+			'rkp_bulan' => $explode[1],
+		];
+
+		if ($id == 0) {
+			$insert = $this->absensi->simpan("ba_absensi", $data);
+		} else {
+			$insert = $this->absensi->update("ba_absensi", array('abs_id' => $id), $data);
+		}
+
+		if (!$cek_rekap) {
+			$this->absensi->simpan("ba_rekap", $data2);
+		} else {
+			$this->absensi->update("ba_rekap", $where2, $data2);
+		}
+
 		$error = $this->db->error();
 		if (!empty($error)) {
 			$err = $error['message'];

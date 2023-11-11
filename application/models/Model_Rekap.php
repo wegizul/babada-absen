@@ -31,7 +31,7 @@ class Model_Rekap extends CI_Model
 		if ($level == 3) {
 			$this->db->where('kry_cpy_kode', $company);
 		}
-		$this->db->group_by('kry_id');
+		// $this->db->group_by('kry_id');
 		$i = 0;
 
 		foreach ($this->column_search as $item) // loop column 

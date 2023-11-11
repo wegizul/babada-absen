@@ -23,6 +23,13 @@ $bulan = [
 		</div>
 	<?php } ?>
 	<?php if ($this->session->userdata('level') < 3) { ?>
+		<?php if ($this->session->userdata('id_user') == 509) { ?>
+			<div class="col-md-1 col-xs-12">
+				<div class="form-group">
+					<a href="javascript:tambah()" class="btn btn-default btn-block"><i class="fa fa-plus-circle"></i> Add</a>
+				</div>
+			</div>
+		<?php } ?>
 		<div class="col-md-2 col-xs-12">
 			<div class="form-group">
 				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
@@ -75,7 +82,7 @@ $bulan = [
 							<th>Status</th>
 							<th>Keterangan</th>
 							<?php if ($this->session->userdata('level') < 3) { ?>
-								<th><i class="fa fa-trash-alt"></i></th>
+								<th>Aksi</th>
 							<?php } ?>
 						</tr>
 					</thead>
@@ -89,7 +96,94 @@ $bulan = [
 		</div>
 	</div>
 </div>
-<input type="hidden" name="abs_id" id="abs_id" value="">
+
+<div class="modal fade" id="modal_tambah" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title"><i class="glyphicon glyphicon-info"></i> Form Absensi</h3>
+			</div>
+			<form role="form col-lg-6" name="Tambah" id="frm_tambah">
+				<div class="modal-body form">
+					<div class="row">
+						<input type="hidden" id="abs_id" name="abs_id" value="">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Nama Karyausahawan</label>
+								<select class="form-control select2" name="abs_kry_id" id="abs_kry_id" style="width:100%;line-height:100px;" required>
+									<option value="">Pilih Karyausahawan</option>
+									<?php foreach ($karyawan as $p) { ?>
+										<option value="<?= $p->kry_id ?>"><?= $p->kry_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Lokasi Masuk</label>
+								<select class="form-control select2" name="abs_cpy_kode" id="abs_cpy_kode" required>
+									<option value="">Pilih Perusahaan</option>
+									<?php foreach ($company as $com) { ?>
+										<option value="<?= $com->cpy_kode ?>"><?= $com->cpy_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Tanggal</label>
+								<input type="date" class="form-control" name="abs_tanggal" id="abs_tanggal" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Pilih Shift</label>
+								<select class="form-control" name="abs_shift_id" id="abs_shift_id">
+									<option value="0">Bukan Shift</option>
+									<option value="1">Shift Pagi</option>
+									<option value="2">Shift Siang</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jam Masuk</label>
+								<input type="time" class="form-control" name="abs_jam_masuk" id="abs_jam_masuk" required>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jam Pulang</label>
+								<input type="time" class="form-control" name="abs_jam_pulang" id="abs_jam_pulang">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Tambahkan Keterangan</label><small><i> (Optional)</i></small>
+								<input type="text" class="form-control" name="abs_ket" id="abs_ket">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Lokasi Pulang</label>
+								<select class="form-control select2" name="abs_cpy_pulang" id="abs_cpy_pulang">
+									<option value="">Pilih Perusahaan</option>
+									<?php foreach ($company as $com) { ?>
+										<option value="<?= $com->cpy_kode ?>"><?= $com->cpy_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="simpan" class="btn btn-default">Simpan</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset_form()">Batal</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
@@ -186,7 +280,7 @@ $bulan = [
 
 	function tambah() {
 		reset_form();
-		$("#his_id").val(0);
+		$("#abs_id").val(0);
 		$("frm_tambah").trigger("reset");
 		$('#modal_tambah').modal({
 			show: true,
@@ -201,7 +295,7 @@ $bulan = [
 		$(".btn").attr("disabled", true);
 		$.ajax({
 			type: "POST",
-			url: "Absensi/simpan",
+			url: "Absensi/simpan_absen_manual",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -239,12 +333,12 @@ $bulan = [
 		});
 	}
 
-	function ubah_history(id) {
+	function ubah_absensi(id) {
 		event.preventDefault();
 		$.ajax({
 			type: "POST",
 			url: "Absensi/cari",
-			data: "his_id=" + id,
+			data: "abs_id=" + id,
 			dataType: "json",
 			success: function(data) {
 				var obj = Object.entries(data);
@@ -263,9 +357,8 @@ $bulan = [
 	}
 
 	function reset_form() {
-		$("#his_id").val(0);
+		$("#abs_id").val(0);
 		$("#frm_tambah")[0].reset();
-		$("#preview").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
