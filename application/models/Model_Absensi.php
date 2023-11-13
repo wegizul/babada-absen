@@ -31,7 +31,11 @@ class Model_Absensi extends CI_Model
 			$this->db->where('abs_cpy_kode', $cpy);
 		}
 		if ($self == 0) {
-			$this->db->where('kry_cpy_kode', $company);
+			if ($company == "CPY090215") {
+				$this->db->where("kry_cpy_kode = '$company' OR kry_cpy_kode = 'CPY115933'");
+			} else {
+				$this->db->where('kry_cpy_kode', $company);
+			}
 		} else {
 			if ($level > 2) {
 				$this->db->where('abs_kry_id', $user);

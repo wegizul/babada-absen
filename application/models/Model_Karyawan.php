@@ -109,8 +109,15 @@ class Model_Karyawan extends CI_Model
 
 	public function get_karyawan_holding($kode)
 	{
+		$level = $this->session->userdata('level');
 		$this->db->from("ba_karyawan");
-		$this->db->where("kry_cpy_kode", $kode);
+		if ($level == 3) {
+			if ($kode == "CPY090215") {
+				$this->db->where("kry_cpy_kode = '$kode' OR kry_cpy_kode = 'CPY115933'");
+			} else {
+				$this->db->where('kry_cpy_kode', $kode);
+			}
+		}
 		$query = $this->db->get();
 
 		return $query->result();

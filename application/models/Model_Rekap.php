@@ -29,7 +29,11 @@ class Model_Rekap extends CI_Model
 			$this->db->where('rkp_cpy_kode', $cpy);
 		}
 		if ($level == 3) {
-			$this->db->where('kry_cpy_kode', $company);
+			if ($company == "CPY090215") {
+				$this->db->where("kry_cpy_kode = '$company' OR kry_cpy_kode = 'CPY115933'");
+			} else {
+				$this->db->where('kry_cpy_kode', $company);
+			}
 		}
 		// $this->db->group_by('kry_id');
 		$i = 0;
