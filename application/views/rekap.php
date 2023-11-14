@@ -24,7 +24,7 @@ $bulan = [
 		<a href="javascript:cetak()" class="btn btn-success btn-block"><i class="fa fa-print"></i> &nbsp;&nbsp;&nbsp; Cetak</a>
 	</div>
 	<?php if ($this->session->userdata('level') < 3) { ?>
-		<div class="col-md-2 col-xs-12">
+		<div class="col-md-3 col-xs-12">
 			<div class="form-group">
 				<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
 					<option value="">Filter Karyausahawan</option>

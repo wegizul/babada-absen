@@ -15,6 +15,9 @@ $bulan = [
 ]
 ?>
 <div class="row">
+	<div class="col-md-1 col-xs-12">
+		<a href="javascript:cetak()" class="btn btn-success btn-block"><i class="fa fa-print"></i> Print</a>
+	</div>
 	<div class="col-md-3 col-xs-12">
 		<div class="form-group">
 			<select class="form-control select2" id="karyawan" onChange="filter(this.value)">
@@ -273,6 +276,15 @@ $bulan = [
 			}
 		});
 	});
+
+	function cetak() {
+		var kry = $('#karyawan').val();
+		var bln = $('#bulan').val();
+		if (!kry) kry = null;
+		if (!bln) bln = null;
+		window.open("<?= base_url('Absensi/cetak/') ?>" + kry + "/" + bln, "_blank");
+		window.location.href = "<?= base_url('Absensi/absen_anggota') ?>";
+	}
 
 	$('.tgl').daterangepicker({
 		locale: {

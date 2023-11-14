@@ -370,4 +370,23 @@ class Absensi extends CI_Controller
 		}
 		echo json_encode($resp);
 	}
+
+	public function cetak($kry, $bln, $cpy)
+	{
+		$ambil_absensi = $this->absensi->cetak_absensi($kry, $bln, $cpy);
+
+		$bulan = date('n');
+		if ($bln != 'null') $bulan = $bln;
+
+		$cari_company = $this->company->ambil_company($cpy);
+		$company = 'Semua Unit Usaha';
+		if ($cpy != 'null') $company = $cari_company->cpy_nama;
+
+		$data = [
+			'tampil' => $ambil_absensi,
+			'bulan' => $this->rekap->bulan($bulan),
+			'company' => $company,
+		];
+		$this->load->view('cetak_absensi', $data);
+	}
 }

@@ -21,24 +21,34 @@ class Model_Absensi extends CI_Model
 		$this->db->from($this->table);
 		$this->db->join('ba_karyawan', 'kry_id = abs_kry_id', 'left');
 		$this->db->join('ba_company', 'cpy_kode = abs_cpy_kode', 'left');
-		if ($karyawan != 'null') {
-			$this->db->where('kry_id', $karyawan);
-		}
-		if ($bln != 'null') {
-			$this->db->where('MONTH(abs_tanggal)', $bln);
-		}
-		if ($cpy != 'null') {
-			$this->db->where('abs_cpy_kode', $cpy);
-		}
+
 		if ($self == 0) {
 			if ($company == "CPY090215") {
-				$this->db->where("kry_cpy_kode = '$company' OR kry_cpy_kode = 'CPY115933'");
+				if ($karyawan != 'null' && $bln != 'null') {
+					$this->db->where('kry_id', $karyawan);
+					$this->db->where('MONTH(abs_tanggal)', $bln);
+				} else if ($karyawan != 'null') {
+					$this->db->where('kry_id', $karyawan);
+				} else if ($bln != 'null') {
+					$this->db->where('MONTH(abs_tanggal)', $bln);
+				} else {
+					$this->db->where("kry_cpy_kode = '$company' OR kry_cpy_kode = 'CPY115933'");
+				}
 			} else {
 				$this->db->where('kry_cpy_kode', $company);
 			}
 		} else {
 			if ($level > 2) {
 				$this->db->where('abs_kry_id', $user);
+			}
+			if ($karyawan != 'null') {
+				$this->db->where('kry_id', $karyawan);
+			}
+			if ($bln != 'null') {
+				$this->db->where('MONTH(abs_tanggal)', $bln);
+			}
+			if ($cpy != 'null') {
+				$this->db->where('abs_cpy_kode', $cpy);
 			}
 		}
 		$i = 0;
@@ -131,6 +141,41 @@ class Model_Absensi extends CI_Model
 		$query = $this->db->get();
 
 		return $query->row();
+	}
+
+	public function cetak_absensi($kry, $bln, $cpy)
+	{
+		$company = $this->session->userdata('cpy_kode');
+
+		$this->db->from("ba_absensi");
+		$this->db->join("ba_karyawan", "kry_id = abs_kry_id", "left");
+		if ($company == "CPY090215") {
+			if ($kry != 'null' && $bln != 'null') {
+				$this->db->where('kry_id', $kry);
+				$this->db->where('MONTH(abs_tanggal)', $bln);
+			} else if ($kry != 'null') {
+				$this->db->where('kry_id', $kry);
+			} else if ($bln != 'null') {
+				$this->db->where('MONTH(abs_tanggal)', $bln);
+			} else {
+				$this->db->where("kry_cpy_kode = '$company' OR kry_cpy_kode = 'CPY115933'");
+			}
+		} else {
+			if ($kry != 'null') {
+				$this->db->where('kry_id', $kry);
+			}
+			if ($bln != 'null') {
+				$this->db->where('MONTH(abs_tanggal)', $bln);
+			}
+			if ($cpy != 'null') {
+				$this->db->where('kry_cpy_kode', $cpy);
+			}
+		}
+		$this->db->order_by("kry_nama", "asc");
+		$this->db->order_by("abs_tanggal", "desc");
+		$query = $this->db->get();
+
+		return $query->result();
 	}
 
 	public function getlastquery()
