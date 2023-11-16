@@ -203,12 +203,21 @@ class Dashboard extends CI_Controller
 		$explode = explode("-", $str);
 
 		$cek_rekap = $this->rekap->cek_rekap($data['abs_kry_id'], $explode[1]);
+
+		$tambah_sakit = 0;
+		$tambah_izin = 0;
+		if ($data['abs_status'] == 5) {
+			$tambah_sakit = $cek_rekap->rkp_sakit + 1;
+		} else if ($data['abs_status'] == 6) {
+			$tambah_izin = $cek_rekap->rkp_izin + 1;
+		}
 		
 		$data2 = [
 			'rkp_bulan' => $explode[1],
 			'rkp_kry_id' => $data['abs_kry_id'],
 			'rkp_cpy_kode' => $ambil_kry->kry_cpy_kode,
-			'rkp_sakit' => $cek_rekap->rkp_sakit + 1,
+			'rkp_sakit' => $tambah_sakit,
+			'rkp_izin' => $tambah_izin,
 		];
 
 		$where2 = [

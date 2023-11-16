@@ -127,7 +127,7 @@ class Model_Dashboard extends CI_Model
 	{
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status", 6);
+		$this->db->where("abs_status", 7);
 		$query = $this->db->get();
 
 		return $query->num_rows();
@@ -171,7 +171,7 @@ class Model_Dashboard extends CI_Model
 		$this->db->from("ba_absensi");
 		$this->db->where("abs_kry_id", $id);
 		$this->db->where("abs_tanggal", date('Y-m-d'));
-		$this->db->where("abs_status =", 5);
+		$this->db->where("abs_status >", 4);
 		$query = $this->db->get();
 
 		return $query->row();

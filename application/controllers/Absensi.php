@@ -93,6 +93,9 @@ class Absensi extends CI_Controller
 				case 5:
 					$status = "<span class='badge badge-info' style='font-size: 10px;'>Sakit</span>";
 					break;
+				case 6:
+					$status = "<span class='badge badge-default' style='font-size: 10px;'>Izin</span>";
+					break;
 			}
 
 			$lok_masuk = 'Lokasi Tidak Diketahui';

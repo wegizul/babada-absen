@@ -65,10 +65,13 @@ if ($this->session->userdata('level') < 3) { ?>
 												$status = "<span class='badge badge-warning'>Terlambat</span>";
 												break;
 											case 3:
-												$status = "<span class='badge badge-danger'>Sakit</span>";
+												$status = "<span class='badge badge-danger'>Tidak Absen Masuk</span>";
 												break;
 											case 4:
-												$status = "<span class='badge badge-info'>Izin</span>";
+												$status = "<span class='badge badge-warning'>Pulang Cepat</span>";
+												break;
+											case 5:
+												$status = "<span class='badge badge-info'>Sakit</span>";
 												break;
 										} ?>
 										<tr>
@@ -226,7 +229,16 @@ if ($this->session->userdata('level') < 3) { ?>
 							<div class="col-lg-8 text-center">
 								<img src="<?= base_url('aset/assets/images/done.png') ?>" width="100px" style="margin-bottom: 20px">
 								<div class="form-group">
-									Terimakasih atas kerja kerasnya hari ini. <br>Selamat istirahat agar besok kembali dengan semangat baru
+									Terimakasih untuk kerja hebatnya hari ini. <br>Selamat istirahat agar besok kembali dengan semangat baru<br>Semoga Allah SWT meridhoi
+								</div>
+							</div>
+							<div class="col-lg-2">
+							</div>
+							<div class="col-lg-2">
+							</div>
+							<div class="col-lg-8 text-center">
+								<div class="form-group">
+									<i>"Jika kamu menghitung nikmat Allah, niscaya kamu tidak akan mampu menghitungnya. Sesungguhnya Allah benar-benar Maha Pengampun lagi Maha Penyayang"<br><b>(Q.S An Nahl ayat 18)</b></i>
 								</div>
 							</div>
 							<div class="col-lg-2">
@@ -243,7 +255,7 @@ if ($this->session->userdata('level') < 3) { ?>
 							</div>
 							<div class="col-lg-8 text-center">
 								<i class="fas fa-exclamation-circle text-warning fa-3x"></i>
-								<div class="form-group mt-5">
+								<div class="form-group" style="margin-top: 10px;">
 									Anda sudah melakukan absen Sakit/Izin
 								</div>
 							</div>
@@ -339,6 +351,7 @@ if ($this->session->userdata('level') < 3) { ?>
 								<label>Status</label>
 								<select class="form-control" name="abs_status" id="abs_status">
 									<option value="5">Sakit</option>
+									<option value="6">Izin</option>
 								</select>
 							</div>
 						</div>
