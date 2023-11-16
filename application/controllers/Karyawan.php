@@ -63,7 +63,7 @@ class Karyawan extends CI_Controller
 			$row = array();
 			$row[] = $no;
 			$row[] = '<a href="#" onClick="lihat_foto(' . $karyawan->kry_id . ')"><img width="100" src="' . base_url("aset/foto/karyawan/{$karyawan->kry_foto}") . '" alt=""></a>';
-			$row[] = $karyawan->kry_nama;
+			$row[] = '<a href="#" onClick="lihat_karyawan(' . $karyawan->kry_id . ')">' . $karyawan->kry_nama . '</a>';
 			$row[] = $karyawan->kry_jk == 1 ? "Laki-laki" : "Perempuan";
 			$row[] = $karyawan->kry_notelp;
 			$row[] = $karyawan->cpy_nama;

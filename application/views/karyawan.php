@@ -273,6 +273,138 @@
 	</div>
 </div>
 
+<div class="modal fade" id="modal_lihat" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title"><i class="fas fa-user-tie fa-xs"></i> Data Karyausahawan <small><i>(id karyausahawan : <span id="kry_id3"></span>)</i></small></h3>
+			</div>
+			<form role="form" name="Lihat" id="frm_lihat">
+				<div class="modal-body form">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<div id="preview3"></div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>No. Induk Karyausahawan</label><br>
+								<input type="text" class="form-control" id="kry_kode3" disabled></input>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Perusahaan</label><br>
+								<select class="form-control" id="kry_cpy_kode3" disabled>
+									<?php foreach ($company as $c) { ?>
+										<option value="<?= $c->cpy_kode ?>"><?= $c->cpy_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Divisi</label><br>
+								<select class="form-control" id="kry_dvi_id3" disabled>
+									<?php foreach ($divisi as $dvi) { ?>
+										<option value="<?= $dvi->dvi_id ?>"><?= $dvi->dvi_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jabatan</label><br>
+								<select class="form-control" id="kry_jab_id3" disabled>
+									<?php foreach ($jabatan as $j) { ?>
+										<option value="<?= $j->jab_id ?>"><?= $j->jab_nama ?></option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Tanggal Masuk</label><br>
+								<input type="text" class="form-control" id="kry_tgl_masuk3" disabled></input>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Nama Karyausahawan</label><br>
+								<span id="kry_nama3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Status Nikah</label><br>
+								<span id="kry_status_nikah3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Jenis Kelamin</label><br>
+								<span id="kry_jk3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Golongan Darah</label><br>
+								<span id="kry_gol_darah3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Nomor Handphone</label><br>
+								<span id="kry_notelp3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Riwayat Penyakit</label><br>
+								<span id="kry_penyakit3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Tempat, Tanggal Lahir</label><br>
+								<span id="kry_tpt_lahir3"></span>, <span id="kry_tgl_lahir3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Map Rumah</label><br>
+								<span id="kry_map_rumah3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Nomor KTP</label><br>
+								<span id="kry_no_ktp3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Status</label><br>
+								<span id="kry_status3"></span>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Alamat</label><br>
+								<span id="kry_alamat3"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="reset_form()">Tutup</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <!-- jQuery  -->
 <script src="<?= base_url('aset/') ?>assets/js/jquery.min.js"></script>
 
@@ -522,6 +654,7 @@
 		$("#frm_tambah")[0].reset();
 		$("#preview").html('');
 		$("#preview2").html('');
+		$("#preview3").html('');
 	}
 
 	$("#yaKonfirm").click(function() {
@@ -556,6 +689,55 @@
 
 	function filter_cpy(ftr) {
 		drawTable();
+	}
+
+	function lihat_karyawan(id) {
+		$.ajax({
+			type: "POST",
+			url: "Karyawan/cari",
+			data: "kry_id=" + id,
+			dataType: "json",
+			success: function(data) {
+				var obj = Object.entries(data);
+				obj.map((dt) => {
+					if (dt[0] == "kry_foto") {
+						if (dt[1] != null) {
+							$("#preview3").append('<img src="<?= base_url('aset/foto/karyawan/') ?>' + dt[1] + '" width="80%">');
+						} else {
+							$("#preview3").append('<img src="<?= base_url('aset/assets/images/users/avatar-1.png') ?>" width="80%">');
+						}
+					} else {
+						if (dt[0] == "kry_kode" || dt[0] == "kry_cpy_kode" || dt[0] == "kry_tgl_masuk" || dt[0] == "kry_dvi_id" || dt[0] == "kry_jab_id") {
+							$("#" + dt[0] + "3").val(dt[1]);
+						} else {
+							$("#" + dt[0] + "3").text(dt[1]);
+						}
+
+						if (dt[1] == 1) {
+							if (dt[0] == "kry_jk") {
+								$("#" + dt[0] + "3").text("Laki-laki");
+							}
+							if (dt[0] == "kry_status") {
+								$("#" + dt[0] + "3").text("Aktif");
+							}
+						} else {
+							if (dt[0] == "kry_jk") {
+								$("#" + dt[0] + "3").text("Perempuan");
+							}
+							if (dt[0] == "kry_status") {
+								$("#" + dt[0] + "3").text("Tidak Aktif");
+							}
+						}
+					}
+				});
+				$("#modal_lihat").modal({
+					show: true,
+					keyboard: false,
+					backdrop: 'static'
+				});
+				return false;
+			}
+		});
 	}
 
 	$('.tgl').daterangepicker({
